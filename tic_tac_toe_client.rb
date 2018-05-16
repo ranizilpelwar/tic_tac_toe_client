@@ -16,7 +16,7 @@ class TicTacToeClient
 
   def match_types
     route_string = "/match_types"
-    request = RequestGenerator.new.put(route_string, data)
+    request = RequestGenerator.new.get(route_string)
     response = ResponseRetriever.new.response(route_string, request)
   end
 end
