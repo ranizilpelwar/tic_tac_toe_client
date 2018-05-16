@@ -1,11 +1,11 @@
 require 'uri'
 require 'net/http'
 require 'json'
+require './request/request_generator.rb'
 
 class TicTacToeClient
   def welcome_message
-    uri = URI("http://localhost:4567/message_content")
-
+    uri = RequestGenerator.new.uri("/message_content")
     http = Net::HTTP.new(uri.host, uri.port)
 
     request = Net::HTTP::Put.new(uri)
@@ -20,7 +20,7 @@ class TicTacToeClient
   end
 
   def match_types
-    uri = URI("http://localhost:4567/match_types")
+    uri = RequestGenerator.new.uri("/match_types")
 
     http = Net::HTTP.new(uri.host, uri.port)
 
