@@ -1,4 +1,5 @@
 require 'uri'
+require 'net/http'
 
 class URIGenerator
   SITE = "http://localhost:4567"
@@ -6,4 +7,5 @@ class URIGenerator
   def uri(route_string)
     URI(SITE + route_string)
   end
+
 end
