@@ -1,8 +1,8 @@
 require 'uri'
 require 'net/http'
 require 'json'
-require_relative './request/request_generator.rb'
-require_relative './request/uri_generator.rb'
+require_relative './helpers/request/request_generator.rb'
+require_relative './helpers/request/uri_generator.rb'
 
 class TicTacToeClient
   def message(language_tag, message_type)
