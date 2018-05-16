@@ -5,11 +5,11 @@ require_relative './request/request_generator.rb'
 require_relative './request/uri_generator.rb'
 
 class TicTacToeClient
-  def welcome_message
+  def message(language_tag, message_type)
     route_string = "/message_content"
     data = { "message": {
-           "language_tag": "en",
-           "type": "welcome"}}
+           "language_tag": language_tag,
+           "type": message_type}}
     request = RequestGenerator.new.put(route_string, data)
     response = ResponseRetriever.new.response(route_string, request)
   end

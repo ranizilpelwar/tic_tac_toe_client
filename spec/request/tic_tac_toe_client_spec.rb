@@ -12,7 +12,7 @@ RSpec.describe "A TicTacToeClient" do
                             "text"=>["Welcome to Tic Tac Toe! Let's play a game!"]}, 
                           "errors"=>{
                             "error_message"=>""}}
-      actual_result = JSON.parse(TicTacToeClient.new.welcome_message)
+      actual_result = JSON.parse(TicTacToeClient.new.message("en", "welcome"))
       expect(actual_result).to eq(expected_result)
     end
   end
