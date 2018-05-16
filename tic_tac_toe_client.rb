@@ -6,11 +6,12 @@ require_relative './request/uri_generator.rb'
 
 class TicTacToeClient
   def welcome_message
+    route_string = "/message_content"
     data = { "message": {
            "language_tag": "en",
            "type": "welcome"}}
-    response_body = RequestGenerator.new.put("/message_content", data)
-    #puts "welcome_message response = #{response_body}"
+    request = RequestGenerator.new.put(route_string, data)
+    response = ResponseRetriever.new.response(route_string, request)
   end
 
   def match_types

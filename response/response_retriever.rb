@@ -10,7 +10,7 @@ class ResponseRetriever
     Net::HTTP.new(site.host, site.port)
   end
 
-  def response(route_string)
+  def response(route_string, request)
     http = http(route_string)
     response = http.request(request)
     response.read_body
