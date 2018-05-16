@@ -4,11 +4,11 @@ require 'json'
 
 class TicTacToeClient
   def welcome_message
-    url = URI("http://localhost:4567/message_content")
+    uri = URI("http://localhost:4567/message_content")
 
-    http = Net::HTTP.new(url.host, url.port)
+    http = Net::HTTP.new(uri.host, uri.port)
 
-    request = Net::HTTP::Put.new(url)
+    request = Net::HTTP::Put.new(uri)
     request["Content-Type"] = 'application/json'
     request["Cache-Control"] = 'no-cache'
     data = { "message": {
@@ -20,11 +20,11 @@ class TicTacToeClient
   end
 
   def match_types
-    url = URI("http://localhost:4567/match_types")
+    uri = URI("http://localhost:4567/match_types")
 
-    http = Net::HTTP.new(url.host, url.port)
+    http = Net::HTTP.new(uri.host, uri.port)
 
-    request = Net::HTTP::Get.new(url)
+    request = Net::HTTP::Get.new(uri)
     request["Content-Type"] = 'application/json'
     request["Cache-Control"] = 'no-cache'
 
