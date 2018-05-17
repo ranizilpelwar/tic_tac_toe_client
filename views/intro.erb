@@ -3,14 +3,13 @@
     <p><%= text %><p>
   <% end %>
   <% @match_selection_prompt.each do |text| %>
-    <p><%= text %><p>
+    <p><%= text %></p>
   <% end %>
   <table align="center">
   <% @match_types.each do |match| %>
-    <tr>
-      <td><%= match["player1_type"] %></td>
-      <td> Vs </td>
-      <td><%= match["player2_type"] %></td>
+    <tr align="left">
+      <td><input type="radio" name="match_types" value="1" checked="checked">
+        <%= match["player1_type"] %> Vs <%= match["player2_type"] %></td>
     </tr>
   <% end %>
   </table>
