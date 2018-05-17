@@ -19,4 +19,5 @@ class TicTacToeClient
     request = RequestGenerator.new.get(route_string)
     response = ResponseRetriever.new.response(route_string, request)
   end
+
 end
