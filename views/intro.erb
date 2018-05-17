@@ -1,5 +1,17 @@
 <div style="text-align: center;">
-	<p><%= @intro_text %><p>
-  <p><%= @match_selection_prompt %><p>
-  <p><%= @match_types %><p>
+	<% @intro_text.each do |text| %>
+    <p><%= text %><p>
+  <% end %>
+  <% @match_selection_prompt.each do |text| %>
+    <p><%= text %><p>
+  <% end %>
+  <table align="center">
+  <% @match_types.each do |match| %>
+    <tr>
+      <td><%= match["player1_type"] %></td>
+      <td> Vs </td>
+      <td><%= match["player2_type"] %></td>
+    </tr>
+  <% end %>
+  </table>
 </div>
