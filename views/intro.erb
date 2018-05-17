@@ -1,16 +1,19 @@
-<div style="text-align: center;">
+<div>
 	<% @intro_text.each do |text| %>
     <p><%= text %><p>
   <% end %>
   <% @match_selection_prompt.each do |text| %>
     <p><%= text %></p>
   <% end %>
-  <table align="center">
-  <% @match_types.each do |match| %>
-    <tr align="left">
-      <td><input type="radio" name="match_types" value="1" checked="checked">
-        <%= match["player1_type"] %> Vs <%= match["player2_type"] %></td>
-    </tr>
-  <% end %>
-  </table>
+  <form>
+    <table>
+    <% @match_types.each do |match| %>
+      <tr>
+        <td><input type="radio" name="match_types" value="1" checked="checked">
+          <%= match["player1_type"] %> Vs <%= match["player2_type"] %></td>
+      </tr>
+    <% end %>
+    </table>
+    <input type="submit" value="Let's Get Started!">
+  </form>
 </div>
