@@ -3,7 +3,7 @@ require 'sinatra/reloader'
 require 'json'
 require_relative './tic_tac_toe_client.rb'
 require_relative './helpers/response/response_parser.rb'
-
+require_relative './routes/game.rb'
 
 set :port, 8080
 
@@ -23,7 +23,6 @@ get '/' do
 
   response = TicTacToeClient.new.message("en", "player_symbol_option")
   @player_symbol_option = ResponseParser.parse(response, "message", "text")
-
 
   erb :intro, :layout => :layout
 end

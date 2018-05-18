@@ -5,7 +5,7 @@
   <% @match_selection_prompt.each do |text| %>
     <p><%= text %></p>
   <% end %>
-  <form>
+  <form action='/game' method="post">
     <table>
       <tr>
         <td><input type="radio" name="match_number" value="1" checked="checked">
