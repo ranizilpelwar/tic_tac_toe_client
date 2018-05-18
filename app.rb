@@ -24,7 +24,7 @@ get '/' do
   response = TicTacToeClient.new.message("en", "player_symbol_option")
   @player_symbol_option = ResponseParser.parse(response, "message", "text")
 
-  
+
   erb :intro, :layout => :layout
 end
 

@@ -7,12 +7,18 @@
   <% end %>
   <form>
     <table>
-    <% @match_types.each do |match| %>
       <tr>
-        <td><input type="radio" name="match_types" value="1" checked="checked">
-          <%= match["player1_type"] %> Vs <%= match["player2_type"] %></td>
+        <td><input type="radio" name="match_number" value="1" checked="checked">
+          <%= @match_types[0]["player1_type"] %> Vs <%= @match_types[0]["player2_type"] %></td>
       </tr>
-    <% end %>
+      <tr>
+        <td><input type="radio" name="match_number" value="2">
+          <%= @match_types[1]["player1_type"] %> Vs <%= @match_types[1]["player2_type"] %></td>
+      </tr>
+      <tr>
+        <td><input type="radio" name="match_number" value="3">
+          <%= @match_types[2]["player1_type"] %> Vs <%= @match_types[2]["player2_type"] %></td>
+      </tr>
     </table>
     <br>
     <% @player_setup_prompt.each do |text| %>
