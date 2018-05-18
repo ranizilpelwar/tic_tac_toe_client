@@ -17,6 +17,14 @@ get '/' do
 
   response = TicTacToeClient.new.match_types
   @match_types = ResponseParser.parse(response, nil, "matches")
+
+  response = TicTacToeClient.new.message("en", "player_setup_prompt")
+  @player_setup_prompt = ResponseParser.parse(response, "message", "text")
+
+  response = TicTacToeClient.new.message("en", "player_symbol_option")
+  @player_symbol_option = ResponseParser.parse(response, "message", "text")
+
+  
   erb :intro, :layout => :layout
 end
 
