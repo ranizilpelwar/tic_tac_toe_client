@@ -22,6 +22,12 @@ var request_generator = function(route_string, callback){
       xmlHttp.setRequestHeader("Content-Type", "application/json");
       request();
       xmlHttp.send(data_to_send);
+    },
+    put: function(data_to_send){
+      xmlHttp.open("PUT", url, true);
+      xmlHttp.setRequestHeader("Content-Type", "application/json");
+      request();
+      xmlHttp.send(data_to_send);
     }
   }
 };
@@ -32,4 +38,8 @@ var get_request = function(route_string, callback){
 
 var post_request = function(route_string, callback, data_to_send){
   request_generator(route_string, callback).post(data_to_send);
+};
+
+var put_request = function(route_string, callback, data_to_send){
+  request_generator(route_string, callback).put(data_to_send);
 };

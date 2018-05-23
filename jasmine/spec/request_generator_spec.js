@@ -17,6 +17,14 @@ var post_results = function(data){
   console.log(data["game"]["board"]);
 };
 
+var put_results = function(data){
+  results = data;
+  console.log("inside put_results callback function:");
+  console.log(data);
+  console.log("tie?:");
+  console.log(data["statuses"]["tie_game"]);
+};
+
 // Code under test
 var flag = false;
 console.log("initial flag value:");
@@ -53,6 +61,46 @@ function testPost(done) {
     }, jasmine.DEFAULT_TIMEOUT_INTERVAL);
 };
 
+
+function testPut(done) {
+    // Wait two seconds, then set the flag to true
+    console.log("Default timeout = " + jasmine.DEFAULT_TIMEOUT_INTERVAL);
+    setTimeout(function () {
+        flag = true;
+        console.log("inside testPut");
+        var data = JSON.stringify({
+          "game": {
+            "language_tag": "en",
+            "match_number": 2,
+            "player1_symbol": "X",
+            "player2_symbol": "Y",
+            "current_player_symbol": "X",
+            "board": [
+              "X",
+              "X",
+              "O",
+              "O",
+              "O",
+              "X",
+              "X",
+              "O",
+              "X"
+            ],
+            "record_moves": false,
+            "last_move_for_player1": -1,
+            "last_move_for_player2": -1
+          },
+          "actions": {
+            "tile_on_board": "5"
+          }
+        });
+        put_request("/game_status", put_results, data);
+        // Invoke the special done callback
+        done();
+        console.log("after testPut done");
+    }, jasmine.DEFAULT_TIMEOUT_INTERVAL);
+};
+
 // Specs
 describe("TestGET: Testing async calls with beforeEach and passing the special done callback around", function () {
     console.log("beforeeach start:");
@@ -84,6 +132,20 @@ describe("TestPost: Post request for /game returns a game object", function() {
     });
 
     it("TestPost: Should be true if the async call has completed", function () {
+        expect(flag).toEqual(true);
+    });
+});
+
+describe("TestPUT: Put request for /game_status returns a game_status object", function() {
+  console.log("beforeeach start:");
+    beforeEach(function (done) {
+      console.log("beforeeach 1");
+        // Make an async call, passing the special done callback        
+        testPut(done);
+      console.log("beforeeach end");
+    });
+
+    it("TestPut: Should be true if the async call has completed", function () {
         expect(flag).toEqual(true);
     });
 });
