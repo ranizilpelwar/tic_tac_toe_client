@@ -1,17 +1,30 @@
 document.title = 'Tic Tac Toe';
+var message_properties;
 
-var display_match_selection_prompt_text = function(response_data){
-  var insertionPoint = document.getElementById("start_game");
-  var text_array = response_data["message"]["text"];
-  insert_text(insertionPoint, text_array);
+message_properties = {
+  "language_tag": "en",
+  "type": "welcome"
 };
+display_message("start_game", message_properties);
 
-var message_properties = {
+message_properties = {
   "language_tag": "en",
   "type": "match_selection_prompt"
 };
+display_message("start_game", message_properties);
 
-var message_data_to_request = message(message_properties).data();
+display_match_types("start_game");
 
-put_request("/message_content", display_match_selection_prompt_text, message_data_to_request);
+message_properties = {
+  "language_tag": "en",
+  "type": "player_setup_prompt"
+};
+display_message("start_game", message_properties);
 
+message_properties = {
+  "language_tag": "en",
+  "type": "player_symbol_option"
+};
+display_message("start_game", message_properties);
+
+display_player_input_boxes("start_game");
