@@ -25,6 +25,14 @@ var put_results = function(data){
   console.log(data["statuses"]["tie_game"]);
 };
 
+var put_results_message = function(data){
+  results = data;
+  console.log("inside put_results_message callback function:");
+  console.log(data);
+  console.log("message text:");
+  console.log(data["message"]["text"][0]);
+};
+
 // Code under test
 var flag = false;
 console.log("initial flag value:");
@@ -101,6 +109,24 @@ function testPut(done) {
     }, jasmine.DEFAULT_TIMEOUT_INTERVAL);
 };
 
+function testPutmessage(done) {
+    // Wait two seconds, then set the flag to true
+    console.log("Default timeout = " + jasmine.DEFAULT_TIMEOUT_INTERVAL);
+    setTimeout(function () {
+        flag = true;
+        console.log("inside testPut");
+        var requested_message_type = JSON.stringify({
+          "message": {
+            "language_tag": "en",
+            "type": "welcome"
+          }
+        });
+        put_request("/message_content", put_results_message, requested_message_type);
+        // Invoke the special done callback
+        done();
+        console.log("after testPutmessage done");
+    }, jasmine.DEFAULT_TIMEOUT_INTERVAL);
+};
 // Specs
 describe("TestGET: Testing async calls with beforeEach and passing the special done callback around", function () {
     console.log("beforeeach start:");
@@ -149,3 +175,18 @@ describe("TestPUT: Put request for /game_status returns a game_status object", f
         expect(flag).toEqual(true);
     });
 });
+
+describe("TestPUT: Put request for /message_content returns a message object", function() {
+  console.log("beforeeach start:");
+    beforeEach(function (done) {
+      console.log("beforeeach 1");
+        // Make an async call, passing the special done callback        
+        testPutmessage(done);
+      console.log("beforeeach end");
+    });
+
+    it("TestPutmessage: Should be true if the async call has completed", function () {
+        expect(flag).toEqual(true);
+    });
+});
+
