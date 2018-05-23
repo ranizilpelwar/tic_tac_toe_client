@@ -4,10 +4,7 @@ var request_generator = function(route_string, callback){
 
   var request = function(){
     xmlHttp.responseType = "json";
-    xmlHttp.setRequestHeader("Content-Type", "application/json");
     
-    xmlHttp.send();
-
     xmlHttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         callback(this.response);
@@ -18,10 +15,21 @@ var request_generator = function(route_string, callback){
     get: function() {
       xmlHttp.open("GET", url, true);
       request();
+      xmlHttp.send();
+    },
+    post: function(data_to_send){
+      xmlHttp.open("POST", url, true);
+      xmlHttp.setRequestHeader("Content-Type", "application/json");
+      request();
+      xmlHttp.send(data_to_send);
     }
   }
 };
 
 var get_request = function(route_string, callback){
   request_generator(route_string, callback).get();
+};
+
+var post_request = function(route_string, callback, data_to_send){
+  request_generator(route_string, callback).post(data_to_send);
 };
