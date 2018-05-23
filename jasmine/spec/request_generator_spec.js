@@ -19,7 +19,7 @@ function testAsync(done) {
     setTimeout(function () {
         flag = true;
         console.log("inside testAsync");
-        request_generator(get_results);
+        request_generator("/match_types", get_results);
         // Invoke the special done callback
         done();
         console.log("after testAsync done");

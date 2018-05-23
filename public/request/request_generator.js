@@ -1,6 +1,6 @@
-var request_generator = function(callback){
+var request_generator = function(route_string, callback){
   var xmlHttp = new XMLHttpRequest();
-  var url = uri_generator("/match_types").uri();
+  var url = uri_generator(route_string).uri();
   console.log("url = ");
   console.log(url);
   var data;
