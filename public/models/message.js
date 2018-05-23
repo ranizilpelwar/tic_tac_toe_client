@@ -9,7 +9,7 @@ var message = function(message_properties){
 
   return {
     data: function() {
-      return JSON.stringify(message_data);
+      return data_converter().convert(message_data);
     }
   }
 };
