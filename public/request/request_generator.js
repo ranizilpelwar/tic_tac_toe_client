@@ -1,6 +1,8 @@
 var request_generator = function(callback){
   var xmlHttp = new XMLHttpRequest();
-  var url = "http://localhost:4567/match_types";
+  var url = uri_generator("/match_types").uri();
+  console.log("url = ");
+  console.log(url);
   var data;
   
   xmlHttp.open("GET", url, true);
