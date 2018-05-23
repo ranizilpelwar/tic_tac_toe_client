@@ -2,7 +2,7 @@ var request_generator = function(route_string, callback){
   var xmlHttp = new XMLHttpRequest();
   var url = uri_generator(route_string).uri();
 
-  var request = function(){
+  var async_request = function(){
     xmlHttp.responseType = "json";
     
     xmlHttp.onreadystatechange = function() {
@@ -14,19 +14,19 @@ var request_generator = function(route_string, callback){
   return {
     get: function() {
       xmlHttp.open("GET", url, true);
-      request();
+      async_request();
       xmlHttp.send();
     },
     post: function(data_to_send){
       xmlHttp.open("POST", url, true);
       xmlHttp.setRequestHeader("Content-Type", "application/json");
-      request();
+      async_request();
       xmlHttp.send(data_to_send);
     },
     put: function(data_to_send){
       xmlHttp.open("PUT", url, true);
       xmlHttp.setRequestHeader("Content-Type", "application/json");
-      request();
+      async_request();
       xmlHttp.send(data_to_send);
     }
   }
