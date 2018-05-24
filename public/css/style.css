@@ -5,3 +5,7 @@ body {
   font-size: 16px;
   text-align: "center";
 }
+
+table {
+  border-spacing: 5px;
+}
