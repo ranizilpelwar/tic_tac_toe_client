@@ -46,5 +46,8 @@ put("/message_content", convertedData)
 }, function(error) {console.error("Display message_content: player_symbol_option Failed");})
 .then(function(){
   displayPlayerSymbolInputs("start_game");
-}, function(error) {console.error("Display player_input_boxes Failed");});
+}, function(error) {console.error("Display player_input_boxes Failed");})
+.then(function(){
+  displaySubmitButton("Let's get started!", "start_game");
+}, function(error) {console.error("Display submit_button Failed");});
 
