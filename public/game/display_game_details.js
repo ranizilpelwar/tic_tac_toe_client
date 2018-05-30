@@ -14,10 +14,18 @@ function displayGameDetails(elementNameOfInsertionPoint, allMessages){
     let gameDetailsContainer = document.createElement("div");
     gameDetailsContainer.setAttribute("id", "game_content");
 
-    let playersIntroMessage = allMessages["messages"]["players_intro"];
+    let playersIntroTemplate = allMessages["messages"]["players_intro"];
 
+    console.log("responseData = " + JSON.stringify(responseData));
 
-    insertText(gameDetailsContainer, playersIntroMessage);
+    match_number = responseData["game"]["match_number"]
+    index = match_number - 1;
+    let updatedMessageText = playersIntroTemplate.replace("[1]", responseData["game"]["player1_symbol"].toUpperCase());
+    updatedMessageText = updatedMessageText.replace("[2]", allMessages["matches"][index]["player1_type"]);
+    updatedMessageText = updatedMessageText.replace("[3]", responseData["game"]["player2_symbol"].toUpperCase());
+    updatedMessageText = updatedMessageText.replace("[4]", allMessages["matches"][index]["player2_type"]);
+
+    insertText(gameDetailsContainer, updatedMessageText);
 
     parent.appendChild(gameDetailsContainer);
 
