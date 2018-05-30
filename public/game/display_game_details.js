@@ -1,30 +1,36 @@
 function displayGameDetails(elementNameOfInsertionPoint, allMessages){
   console.log("displayGameDetails" + Date.now());
-  
-  //clear div contents
-  var wrapper = document.getElementById("initialization_content");
-  var parent = wrapper.parentElement;
-  wrapper.remove();
-  //Player vs Player
+  let browserData = getGameSetupData();
+  console.log("browser data =" + browserData);
+  let gameSetupRequestData = gameSetupRequest(browserData);
+  console.log("gamesetupdata = " + gameSetupRequestData);
 
-  var fragment = document.createDocumentFragment();
+  post("/game", gameSetupRequestData)
+  .then(function(responseData){
+    let gameElements = document.getElementById("initialization_content");
+    let parent = gameElements.parentElement;
+    gameElements.remove();
+    
+    let gameDetailsContainer = document.createElement("div");
+    gameDetailsContainer.setAttribute("id", "game_content");
 
-  //containing element
-  var wrapper = document.createElement("div");
-  wrapper.setAttribute("id", "initialization_content");
-  insertText(wrapper, allMessages["messages"]["players_intro"]);
+    let playersIntroMessage = allMessages["messages"]["players_intro"];
 
-  fragment.appendChild(wrapper);
-  parent.appendChild(fragment);
 
-  //player value label or "" if first time
+    insertText(gameDetailsContainer, playersIntroMessage);
 
-  //Board label
+    parent.appendChild(gameDetailsContainer);
 
-  //Display board
+    //player value label or "" if first time
 
-  //current player prompt
+    //Board label
 
-  //submit button
+    //Display board
+
+    //current player prompt
+
+    //submit button
+      }, function(error){console.error("Post game: Failed." + error);}
+  );
 }
 
