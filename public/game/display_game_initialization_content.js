@@ -16,7 +16,7 @@ var displayGameInitializationContent = function(){
   
   displayPlayerSymbolInputs(gameContentParent);
 
-  let br = document.createElement("BR");
+  let br = document.createElement("br");
   gameContentParent.appendChild(br);
 
   let button = displaySubmitButton(gameContentParent, "start_game_submit", "Let's get started!");

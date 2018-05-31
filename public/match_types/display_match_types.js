@@ -1,10 +1,10 @@
 var displayMatchTypes = function(parentElement, responseData) {
   let matches = responseData["matches"];
 
-  let table = document.createElement('table');
+  let table = document.createElement("table");
   for (var index = 0; index < matches.length; index++){
-      let tr = document.createElement('tr');   
-      let td = document.createElement('td');
+      let tr = document.createElement("tr");   
+      let td = document.createElement("td");
       let radioButton = document.createElement("input");
       radioButton.setAttribute("type", "radio");
       radioButton.setAttribute("name", "match_number");
