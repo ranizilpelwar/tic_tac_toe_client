@@ -7,7 +7,7 @@ function createGame(elementNameOfInsertionPoint) {
 
   post("/game", gameSetupRequestData)
   .then(function(responseData){
-    displayGameDetails(elementNameOfInsertionPoint, responseData);
+    displayGameDetails(responseData);
     }, function(error){console.error("Create Game: Failed." + error);}
   );
 }
