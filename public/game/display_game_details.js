@@ -77,3 +77,9 @@ function displayGameDetails(responseData){
   parent.appendChild(gameDetailsContainer);
 }
 
+function updateGameDetailsContent(responseData){
+  //update board
+  //update next move prompt for player symbol as current player
+  //update input boxes - enable/disable
+  //update Go button to display next to current player
+}
