@@ -37,25 +37,29 @@ function displayGameDetails(elementNameOfInsertionPoint, responseData){
   insertText(gameDetailsContainer, updatedMessageText);
 
   //player input boxes - enabled or disabled based on player type and if player is current player
+  let divPlayer1 = document.createElement("div");
   let inputText1 = "Player " + player1_symbol + ":";
   let id1 = "player1_input";
-  input1 = displayInput(gameDetailsContainer, inputText1, id1);
+  input1 = displayInput(divPlayer1, inputText1, id1);
+  gameDetailsContainer.appendChild(divPlayer1);
 
   let br = document.createElement("BR");
   gameDetailsContainer.appendChild(br);
 
+  let divPlayer2 = document.createElement("div");
   let inputText2 = "Player " + player2_symbol + ":";
   let id2 = "player2_input";
-  input2 = displayInput(gameDetailsContainer, inputText2, id2);
+  input2 = displayInput(divPlayer2, inputText2, id2);
+  gameDetailsContainer.appendChild(divPlayer2);
 
   if (currentPlayerSymbol === player1_symbol) {
     input2.disabled = true;
+    displaySubmitButton(divPlayer1, "game_play_submit", "Go!");
   } else {
     input1.disabled = true;
+    displaySubmitButton(divPlayer2, "game_play_submit", "Go!");
   }
-  //submit button
-
-
+  
   parent.appendChild(gameDetailsContainer);
 }
 
