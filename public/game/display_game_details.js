@@ -79,6 +79,7 @@ var displayGameDetails = function(responseData){
 
 var updateGameDetailsContent = function(responseData){
   //update board
+  //indicate who made what move
   //update next move prompt for player symbol as current player
   //update input boxes - enable/disable
   //update Go button to display next to current player

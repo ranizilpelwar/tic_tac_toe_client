@@ -5,15 +5,19 @@ var displayPlayerSymbolInputs = function(parentElement) {
       let td = document.createElement('td');
       
       let text = "Symbol for Player " + index + ":";
-      let textNode = document.createTextNode(text);
-      let input = document.createElement('input');
-      input.setAttribute("type", "text");
-      let id = "player" + index + "_symbol"
-      input.setAttribute("id", id);
-      td.appendChild(textNode);
-      td.appendChild(input);
+      let id = "player" + index + "_symbol";
+      displayInput(td, text, id);
       tr.appendChild(td);
       table.appendChild(tr);
   }
+
+  let tr = document.createElement('tr');
+  let td = document.createElement('td');
+  let firstPlayerPromptTemplate = applicationMessages["messages"]["first_player_of_game_prompt"];
+  let firstPlayerPrompt = firstPlayerPromptTemplate.replace(", [1] or [2]", "");
+  displayInput(td, firstPlayerPrompt, "first_player_symbol_input");
+  tr.appendChild(td);
+  table.appendChild(tr);
+
   parentElement.appendChild(table);
 };
