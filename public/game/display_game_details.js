@@ -29,6 +29,7 @@ function displayGameDetails(elementNameOfInsertionPoint, responseData){
   insertText(gameDetailsContainer, applicationMessages["messages"]["board_intro"]);
 
   //Display board
+  displayBoard(gameDetailsContainer, responseData);
 
   //current player prompt
   let nextMoveTemplate = applicationMessages["messages"]["next_move_prompt"];
