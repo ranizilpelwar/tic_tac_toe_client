@@ -1,4 +1,4 @@
-function createGame(elementNameOfInsertionPoint, allMessages) {
+function createGame(elementNameOfInsertionPoint) {
   console.log("createGame" + Date.now());
   let browserData = getGameSetupData();
   console.log("browser data =" + browserData);
@@ -7,7 +7,7 @@ function createGame(elementNameOfInsertionPoint, allMessages) {
 
   post("/game", gameSetupRequestData)
   .then(function(responseData){
-    displayGameDetails(elementNameOfInsertionPoint, responseData, allMessages);
+    displayGameDetails(elementNameOfInsertionPoint, responseData);
     }, function(error){console.error("Create Game: Failed." + error);}
   );
 }

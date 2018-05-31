@@ -1,10 +1,11 @@
 var displayGameInitializationForm = function(){
   elementNameOfInsertionPoint = "start_game";
+  
   let form = document.createElement("form");
   form.setAttribute("id", "start_game_form");
   form.setAttribute("method", "post");
   form.setAttribute("action", "javascript:;");
-  form.onsubmit = function() {createGame("start_game", applicationMessages);};
+  form.onsubmit = function() {createGame("start_game");};
   
   let gameContentParent = document.createElement("div");
   gameContentParent.setAttribute("id", "initialization_content");

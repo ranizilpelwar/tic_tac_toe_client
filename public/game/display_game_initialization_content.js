@@ -1,5 +1,6 @@
 var displayGameInitializationContent = function(){
   elementNameOfInsertionPoint = "start_game";
+  
   let gameContentParent = document.createElement("div");
   gameContentParent.setAttribute("id", "initialization_content");
 
@@ -16,7 +17,7 @@ var displayGameInitializationContent = function(){
   displayPlayerSymbolInputs(gameContentParent);
   
   let button = displaySubmitButton(gameContentParent, "start_game_submit", "Let's get started!");
-  button.onclick = function() {createGame("start_game", applicationMessages)};
+  button.onclick = function() {createGame("start_game")};
 
   let insertionPoint = document.getElementById(elementNameOfInsertionPoint);
   insertionPoint.appendChild(gameContentParent);

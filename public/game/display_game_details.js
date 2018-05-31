@@ -1,4 +1,4 @@
-function displayGameDetails(elementNameOfInsertionPoint, responseData, allMessages){
+function displayGameDetails(elementNameOfInsertionPoint, responseData){
   let gameElements = document.getElementById("initialization_content");
   let parent = gameElements.parentElement;
   gameElements.remove();
@@ -6,7 +6,7 @@ function displayGameDetails(elementNameOfInsertionPoint, responseData, allMessag
   let gameDetailsContainer = document.createElement("div");
   gameDetailsContainer.setAttribute("id", "game_content");
 
-  let playersIntroTemplate = allMessages["messages"]["players_intro"];
+  let playersIntroTemplate = applicationMessages["messages"]["players_intro"];
 
   console.log("responseData = " + JSON.stringify(responseData));
 
@@ -14,8 +14,8 @@ function displayGameDetails(elementNameOfInsertionPoint, responseData, allMessag
   index = match_number - 1;
   let player1_symbol = responseData["game"]["player1_symbol"].toUpperCase();
   let player2_symbol = responseData["game"]["player2_symbol"].toUpperCase();
-  let player1_type = allMessages["matches"][index]["player1_type"];
-  let player2_type = allMessages["matches"][index]["player2_type"];
+  let player1_type = applicationMessages["matches"][index]["player1_type"];
+  let player2_type = applicationMessages["matches"][index]["player2_type"];
   let currentPlayerSymbol = responseData["game"]["current_player_symbol"].toUpperCase();
   
   let updatedMessageText = playersIntroTemplate.replace("[1]", player1_symbol);
@@ -26,12 +26,12 @@ function displayGameDetails(elementNameOfInsertionPoint, responseData, allMessag
   insertText(gameDetailsContainer, updatedMessageText);
 
   //Board label
-  insertText(gameDetailsContainer, allMessages["messages"]["board_intro"]);
+  insertText(gameDetailsContainer, applicationMessages["messages"]["board_intro"]);
 
   //Display board
 
   //current player prompt
-  let nextMoveTemplate = allMessages["messages"]["next_move_prompt"];
+  let nextMoveTemplate = applicationMessages["messages"]["next_move_prompt"];
   updatedMessageText = nextMoveTemplate.replace("[1]", currentPlayerSymbol);
   insertText(gameDetailsContainer, updatedMessageText);
 
