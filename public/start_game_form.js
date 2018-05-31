@@ -6,7 +6,7 @@ var applicationMessages;
 get("/message_content")
 .then(function(responseData){
   applicationMessages = responseData;
-  displayGameInitializationForm("start_game", applicationMessages);
+  displayGameInitializationForm();
 }, function(error){console.error("Get message_content: Failed");})
 .then(function(){
   return get("/match_types");

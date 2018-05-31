@@ -1,22 +1,23 @@
-var displayGameInitializationForm = function(elementNameOfInsertionPoint, allMessages){
+var displayGameInitializationForm = function(){
+  elementNameOfInsertionPoint = "start_game";
   let form = document.createElement("form");
   form.setAttribute("id", "start_game_form");
   form.setAttribute("method", "post");
   form.setAttribute("action", "javascript:;");
-  form.onsubmit = function() {displayGameDetails("start_game", applicationMessages);};
+  form.onsubmit = function() {createGame("start_game", applicationMessages);};
   
   let gameContentParent = document.createElement("div");
   gameContentParent.setAttribute("id", "initialization_content");
 
-  insertText(gameContentParent, allMessages["messages"]["welcome"]);
-  insertText(gameContentParent, allMessages["messages"]["match_selection_prompt"]);
+  insertText(gameContentParent, applicationMessages["messages"]["welcome"]);
+  insertText(gameContentParent, applicationMessages["messages"]["match_selection_prompt"]);
   
   let matchTypesContainer = document.createElement('div');
   matchTypesContainer.setAttribute("id", "match_types");
   gameContentParent.appendChild(matchTypesContainer);
 
-  insertText(gameContentParent, allMessages["messages"]["player_setup_prompt"]);
-  insertText(gameContentParent, allMessages["messages"]["player_symbol_option"]);
+  insertText(gameContentParent, applicationMessages["messages"]["player_setup_prompt"]);
+  insertText(gameContentParent, applicationMessages["messages"]["player_symbol_option"]);
   
   displayPlayerSymbolInputs(gameContentParent);
   
