@@ -5,32 +5,37 @@ function removeExistingContent(){
   return parent;
 }
 
-
-
-function displayGameDetails(elementNameOfInsertionPoint, responseData){
-  parent = removeExistingContent();
-  
-  let gameDetailsContainer = document.createElement("div");
-  gameDetailsContainer.setAttribute("id", "game_content");
-
+function displayPlayersIntroduction(elementNameOfInsertionPoint, responseData){
   let playersIntroTemplate = applicationMessages["messages"]["players_intro"];
-
-  console.log("responseData = " + JSON.stringify(responseData));
-
   match_number = responseData["game"]["match_number"]
   index = match_number - 1;
   let player1_symbol = responseData["game"]["player1_symbol"].toUpperCase();
   let player2_symbol = responseData["game"]["player2_symbol"].toUpperCase();
   let player1_type = applicationMessages["matches"][index]["player1_type"];
   let player2_type = applicationMessages["matches"][index]["player2_type"];
-  let currentPlayerSymbol = responseData["game"]["current_player_symbol"].toUpperCase();
   
   let updatedMessageText = playersIntroTemplate.replace("[1]", player1_symbol);
   updatedMessageText = updatedMessageText.replace("[2]", player1_type);
   updatedMessageText = updatedMessageText.replace("[3]", player2_symbol);
   updatedMessageText = updatedMessageText.replace("[4]", player2_type);
 
-  insertText(gameDetailsContainer, updatedMessageText);
+  insertText(elementNameOfInsertionPoint, updatedMessageText);
+}
+
+
+function displayGameDetails(elementNameOfInsertionPoint, responseData){
+  console.log("responseData = " + JSON.stringify(responseData));
+
+  parent = removeExistingContent();
+  
+  let gameDetailsContainer = document.createElement("div");
+  gameDetailsContainer.setAttribute("id", "game_content");
+  
+  displayPlayersIntroduction(gameDetailsContainer, responseData);
+  
+  let currentPlayerSymbol = responseData["game"]["current_player_symbol"].toUpperCase();
+  let player1_symbol = responseData["game"]["player1_symbol"].toUpperCase();
+  let player2_symbol = responseData["game"]["player2_symbol"].toUpperCase();
 
   //Board label
   insertText(gameDetailsContainer, applicationMessages["messages"]["board_intro"]);
