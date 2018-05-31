@@ -22,32 +22,32 @@ function displayPlayersIntroduction(elementNameOfInsertionPoint, responseData){
   insertText(elementNameOfInsertionPoint, updatedMessageText);
 }
 
+function displayBoardLabel(elementNameOfInsertionPoint){
+  insertText(elementNameOfInsertionPoint, applicationMessages["messages"]["board_intro"]);
+}
+
+function displayNextMovePrompt(elementNameOfInsertionPoint, currentPlayerSymbol){
+  let nextMoveTemplate = applicationMessages["messages"]["next_move_prompt"];
+  updatedMessageText = nextMoveTemplate.replace("[1]", currentPlayerSymbol);
+  insertText(elementNameOfInsertionPoint, updatedMessageText);
+}
 
 function displayGameDetails(elementNameOfInsertionPoint, responseData){
   console.log("responseData = " + JSON.stringify(responseData));
-
   parent = removeExistingContent();
   
   let gameDetailsContainer = document.createElement("div");
   gameDetailsContainer.setAttribute("id", "game_content");
   
-  displayPlayersIntroduction(gameDetailsContainer, responseData);
-  
-  let currentPlayerSymbol = responseData["game"]["current_player_symbol"].toUpperCase();
   let player1_symbol = responseData["game"]["player1_symbol"].toUpperCase();
   let player2_symbol = responseData["game"]["player2_symbol"].toUpperCase();
-
-  //Board label
-  insertText(gameDetailsContainer, applicationMessages["messages"]["board_intro"]);
-
-  //Display board
+  let currentPlayerSymbol = responseData["game"]["current_player_symbol"].toUpperCase();
+  
+  displayPlayersIntroduction(gameDetailsContainer, responseData);
+  displayBoardLabel(gameDetailsContainer);
   displayBoard(gameDetailsContainer, responseData);
-
-  //current player prompt
-  let nextMoveTemplate = applicationMessages["messages"]["next_move_prompt"];
-  updatedMessageText = nextMoveTemplate.replace("[1]", currentPlayerSymbol);
-  insertText(gameDetailsContainer, updatedMessageText);
-
+  displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
+  
   //player input boxes - enabled or disabled based on player type and if player is current player
   let divPlayer1 = document.createElement("div");
   let inputText1 = "Player " + player1_symbol + ":";
