@@ -16,4 +16,4 @@ var displayBoard = function(parentElement, responseData) {
     table.appendChild(tableRow);
   }
   parentElement.appendChild(table);
-}
+};

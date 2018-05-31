@@ -1,5 +1,8 @@
-function getGameSetupData(){
+var getGameSetupData = function(){
   let matchNumber = "";
+
+  //update current player according to who should go first
+
   let firstPlayerSymbol = "";
   let secondPlayerSymbol = "";
 
@@ -20,4 +23,4 @@ function getGameSetupData(){
     "firstPlayerSymbol": firstPlayerSymbol,
     "secondPlayerSymbol": secondPlayerSymbol
   }
-}
+};

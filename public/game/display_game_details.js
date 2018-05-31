@@ -1,10 +1,10 @@
-function removeExistingContent(elementToRemove){
+var removeExistingContent = function(elementToRemove){
   let parent = elementToRemove.parentElement;
   elementToRemove.remove();
   return parent;
-}
+};
 
-function displayPlayersIntroduction(parentElement, responseData){
+var displayPlayersIntroduction = function(parentElement, responseData){
   let playersIntroTemplate = applicationMessages["messages"]["players_intro"];
   match_number = responseData["game"]["match_number"]
   index = match_number - 1;
@@ -19,19 +19,19 @@ function displayPlayersIntroduction(parentElement, responseData){
   updatedMessageText = updatedMessageText.replace("[4]", player2_type);
 
   insertText(parentElement, updatedMessageText);
-}
+};
 
-function displayBoardLabel(parentElement){
+var displayBoardLabel = function(parentElement){
   insertText(parentElement, applicationMessages["messages"]["board_intro"]);
-}
+};
 
-function displayNextMovePrompt(parentElement, currentPlayerSymbol){
+var displayNextMovePrompt = function(parentElement, currentPlayerSymbol){
   let nextMoveTemplate = applicationMessages["messages"]["next_move_prompt"];
   updatedMessageText = nextMoveTemplate.replace("[1]", currentPlayerSymbol);
   insertText(parentElement, updatedMessageText);
-}
+};
 
-function displayPlayerInputsAndSubmitButton(parentElement, player1Symbol, player2Symbol, currentPlayerSymbol){
+var displayPlayerInputsAndSubmitButton = function(parentElement, player1Symbol, player2Symbol, currentPlayerSymbol){
   let divPlayer1 = document.createElement("div");
   let inputText1 = "Player " + player1Symbol + ":";
   let id1 = "player1_input";
@@ -54,9 +54,9 @@ function displayPlayerInputsAndSubmitButton(parentElement, player1Symbol, player
     input1.disabled = true;
     displaySubmitButton(divPlayer2, "game_play_submit", "Go!");
   }
-}
+};
 
-function displayGameDetails(responseData){
+var displayGameDetails = function(responseData){
   console.log("responseData = " + JSON.stringify(responseData));
   let gameElements = document.getElementById("initialization_content");
   parent = removeExistingContent(gameElements);
@@ -75,11 +75,11 @@ function displayGameDetails(responseData){
   displayPlayerInputsAndSubmitButton(gameDetailsContainer, player1Symbol, player2Symbol, currentPlayerSymbol);
 
   parent.appendChild(gameDetailsContainer);
-}
+};
 
-function updateGameDetailsContent(responseData){
+var updateGameDetailsContent = function(responseData){
   //update board
   //update next move prompt for player symbol as current player
   //update input boxes - enable/disable
   //update Go button to display next to current player
-}
+};

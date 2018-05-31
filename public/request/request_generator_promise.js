@@ -1,4 +1,4 @@
-function get(route_string){
+var get = function(route_string){
   return new Promise(function(resolve, reject) {
     var request = new XMLHttpRequest();
     request.responseType = "json";
@@ -19,7 +19,7 @@ function get(route_string){
   });
 };
 
-function put(route_string, json_data_to_send) {
+var put = function(route_string, json_data_to_send) {
   return new Promise(function(resolve, reject) {
     var request = new XMLHttpRequest();
     request.responseType = "json";
@@ -41,7 +41,7 @@ function put(route_string, json_data_to_send) {
   });
 };
 
-function post(route_string, json_data_to_send) {
+var post = function(route_string, json_data_to_send) {
   return new Promise(function(resolve, reject) {
     var request = new XMLHttpRequest();
     request.responseType = "json";

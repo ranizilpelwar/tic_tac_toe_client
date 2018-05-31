@@ -1,4 +1,4 @@
-function createGame(elementNameOfInsertionPoint) {
+var createGame = function(elementNameOfInsertionPoint) {
   console.log("createGame" + Date.now());
   let browserData = getGameSetupData();
   console.log("browser data =" + browserData);
@@ -10,4 +10,4 @@ function createGame(elementNameOfInsertionPoint) {
     displayGameDetails(responseData);
     }, function(error){console.error("Create Game: Failed." + error);}
   );
-}
+};

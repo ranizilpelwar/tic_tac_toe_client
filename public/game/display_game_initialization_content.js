@@ -15,6 +15,14 @@ var displayGameInitializationContent = function(){
   insertText(gameContentParent, applicationMessages["messages"]["player_symbol_option"]);
   
   displayPlayerSymbolInputs(gameContentParent);
+
+  //prompt - who goes first?
+  firstPlayerPromptTemplate = applicationMessages["messages"]["first_player_of_game_prompt"];
+  let updatedMessage = firstPlayerPromptTemplate.replace("[1] or [2]", "");
+  insertText(gameContentParent, updatedMessage);
+
+  //input box - who goes first?
+  
   
   let button = displaySubmitButton(gameContentParent, "start_game_submit", "Let's get started!");
   button.onclick = function() {createGame("start_game")};
