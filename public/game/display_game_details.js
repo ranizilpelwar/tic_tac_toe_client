@@ -1,7 +1,14 @@
-function displayGameDetails(elementNameOfInsertionPoint, responseData){
+function removeExistingContent(){
   let gameElements = document.getElementById("initialization_content");
   let parent = gameElements.parentElement;
   gameElements.remove();
+  return parent;
+}
+
+
+
+function displayGameDetails(elementNameOfInsertionPoint, responseData){
+  parent = removeExistingContent();
   
   let gameDetailsContainer = document.createElement("div");
   gameDetailsContainer.setAttribute("id", "game_content");
