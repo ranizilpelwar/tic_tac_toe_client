@@ -49,35 +49,100 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, player1Symbol, 
 
   if (currentPlayerSymbol === player1Symbol) {
     input2.disabled = true;
-    displaySubmitButton(divPlayer1, "game_play_submit", "Go!");
+    let button = displaySubmitButton(divPlayer1, "game_play_submit", "Go!");
+    return button;
   } else {
     input1.disabled = true;
-    displaySubmitButton(divPlayer2, "game_play_submit", "Go!");
+    let button = displaySubmitButton(divPlayer2, "game_play_submit", "Go!");
+    return button;
   }
 };
 
-var displayGameDetails = function(responseData){
-  console.log("responseData = " + JSON.stringify(responseData));
+var playNextTurnRequest = function(gameDetails, currentPlayerInputForNextMove){
+  result = {};
+  nextTurn = {
+    "actions": {
+       "tile_on_board": currentPlayerInputForNextMove
+    }
+  };
+  for(var key in gameDetails){
+    if(gameDetails.hasOwnProperty(key)){
+      result[key]=gameDetails[key];
+    }
+  }
+  for(var key in nextTurn){
+    if(nextTurn.hasOwnProperty(key)){
+      result[key]=nextTurn[key];
+    }
+  }
+  return result;
+};
+
+var playNextTurn = function(gameDetails) {
+  console.log("playNextTurn");
+  console.log("playNextTurn gameDetails = " + JSON.stringify(gameDetails));
+  
+  let inputBoxes = document.getElementsByTagName("input");
+  
+  let inputs = Array.from(inputBoxes);
+  let enabledInput = inputs.filter(x => x.disabled === false);
+  userInput = enabledInput[0].value;
+  console.log("userInput = " + userInput);
+
+  let playNextTurnRequestDetails = playNextTurnRequest(gameDetails, userInput);
+  console.log("playNextTurn playNextTurnRequestDetails = " + JSON.stringify(playNextTurnRequestDetails));
+  
+  let currentPlayerSymbol = playNextTurnRequestDetails["game"]["current_player_symbol"];
+  let playerNumber = 0;
+  if(currentPlayerSymbol === playNextTurnRequestDetails["game"]["player1_symbol"]){
+    playerNumber = 1;
+  } else {
+    playerNumber = 2;
+  }
+
+  let matchNumber = playNextTurnRequestDetails["game"]["match_number"];
+  let index = matchNumber - 1;
+
+  let playerXType = "player" + playerNumber.toString() + "_type";
+
+  let playerType = applicationMessages["matches"][index][playerXType];
+  console.log("playerType = " + playerType);
+
+  if(playerType === "Human"){
+    put("/human_players_turn", JSON.stringify(playNextTurnRequestDetails))
+    .then(function(responseData){
+      updateGameContent(responseData);
+      }, function(error){console.error("Play Next Turn: Human, Failed." + error);}
+    );
+  } else {
+    //play computer's turn
+  }
+};
+
+
+var displayGameDetails = function(gameDetails){
+  console.log("displayGameDetails gameDetails = " + JSON.stringify(gameDetails));
   let gameElements = document.getElementById("initialization_content");
   parent = removeExistingContent(gameElements);
   
   let gameDetailsContainer = document.createElement("div");
   gameDetailsContainer.setAttribute("id", "game_content");
   
-  let player1Symbol = responseData["game"]["player1_symbol"].toUpperCase();
-  let player2Symbol = responseData["game"]["player2_symbol"].toUpperCase();
-  let currentPlayerSymbol = responseData["game"]["current_player_symbol"].toUpperCase();
+  let player1Symbol = gameDetails["game"]["player1_symbol"].toUpperCase();
+  let player2Symbol = gameDetails["game"]["player2_symbol"].toUpperCase();
+  let currentPlayerSymbol = gameDetails["game"]["current_player_symbol"].toUpperCase();
   
-  displayPlayersIntroduction(gameDetailsContainer, responseData);
+  displayPlayersIntroduction(gameDetailsContainer, gameDetails);
   displayBoardLabel(gameDetailsContainer);
-  displayBoard(gameDetailsContainer, responseData);
+  displayBoard(gameDetailsContainer, gameDetails);
   displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
-  displayPlayerInputsAndSubmitButton(gameDetailsContainer, player1Symbol, player2Symbol, currentPlayerSymbol);
-
+  let button = displayPlayerInputsAndSubmitButton(gameDetailsContainer, player1Symbol, player2Symbol, currentPlayerSymbol);
+  button.onclick = function(){playNextTurn(gameDetails)};
+    
   parent.appendChild(gameDetailsContainer);
 };
 
-var updateGameDetailsContent = function(responseData){
+var updateGameContent = function(responseData){
   //update board
   //indicate who made what move
   //update next move prompt for player symbol as current player
