@@ -7,7 +7,9 @@ var createGame = function(elementNameOfInsertionPoint) {
 
   post("/game", gameSetupRequestData)
   .then(function(responseData){
-    displayGameDetails(responseData);
+    let gameElements = document.getElementById("initialization_content");
+    parent = removeExistingContent(gameElements);
+    displayGameDetails(parent, responseData);
     }, function(error){console.error("Create Game: Failed." + error);}
   );
 };
