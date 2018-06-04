@@ -13,9 +13,10 @@ var displayGameInitializationForm = function(){
   insertText(gameContentParent, applicationMessages["messages"]["welcome"]);
   insertText(gameContentParent, applicationMessages["messages"]["match_selection_prompt"]);
   
-  let matchTypesContainer = document.createElement('div');
-  matchTypesContainer.setAttribute("id", "match_types");
-  gameContentParent.appendChild(matchTypesContainer);
+  let matchTypes = document.createElement('div');
+  matchTypes.setAttribute("id", "match_types");
+  displayMatchTypes(matchTypes, applicationMessages);
+  gameContentParent.appendChild(matchTypes);
 
   insertText(gameContentParent, applicationMessages["messages"]["player_setup_prompt"]);
   insertText(gameContentParent, applicationMessages["messages"]["player_symbol_option"]);
