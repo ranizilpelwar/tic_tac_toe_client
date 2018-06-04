@@ -1,17 +1,19 @@
 var getGameSetupData = function(){
   let matchNumber = "";
 
-  //update current player according to who should go first
-
-  let firstPlayerSymbol = "";
-  let secondPlayerSymbol = "";
-
-  let gameSetupData = document.getElementsByTagName("input");
+  let inputElements = document.getElementsByTagName("input");
   
-  firstPlayerSymbol = gameSetupData["player1_symbol"].value;
-  secondPlayerSymbol = gameSetupData["player2_symbol"].value;
+  let firstPlayerSymbol = inputElements["player1_symbol"].value;
+  let secondPlayerSymbol = inputElements["player2_symbol"].value;
+  let selectedFirstPlayerSymbol = inputElements["first_player_symbol_input"].value;
 
-  let matches = Array.from(gameSetupData);
+  if (selectedFirstPlayerSymbol === secondPlayerSymbol){
+    let temp = secondPlayerSymbol;
+    secondPlayerSymbol = firstPlayerSymbol;
+    firstPlayerSymbol = temp;
+  }
+
+  let matches = Array.from(inputElements);
   let selectedMatch = matches.filter(x => x.type === "radio" && x.checked === true);
   matchNumber = selectedMatch[0].value;
   console.log("matchNumber = " + matchNumber);
