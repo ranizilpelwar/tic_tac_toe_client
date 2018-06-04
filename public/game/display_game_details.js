@@ -48,18 +48,12 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, player1Symbol, 
   parentElement.appendChild(divPlayer2);
 
   let playerNumber = "";
+  let playerDiv;
   if (currentPlayerSymbol === player1Symbol) {
     input2.disabled = true;
-    playerNumber = "1";
-  } else {
-    input1.disabled = true;
-    playerNumber = "2";
-  }
-
-  let playerDiv;
-  if(playerNumber === "1"){
     playerDiv = divPlayer1;
   } else {
+    input1.disabled = true;
     playerDiv = divPlayer2;
   }
   let button = displaySubmitButton(playerDiv, "game_play_submit", "Go!");
