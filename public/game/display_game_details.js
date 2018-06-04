@@ -47,15 +47,23 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, player1Symbol, 
   input2 = displayInput(divPlayer2, inputText2, id2);
   parentElement.appendChild(divPlayer2);
 
+  let playerNumber = "";
   if (currentPlayerSymbol === player1Symbol) {
     input2.disabled = true;
-    let button = displaySubmitButton(divPlayer1, "game_play_submit", "Go!");
-    return button;
+    playerNumber = "1";
   } else {
     input1.disabled = true;
-    let button = displaySubmitButton(divPlayer2, "game_play_submit", "Go!");
-    return button;
+    playerNumber = "2";
   }
+
+  let playerDiv;
+  if(playerNumber === "1"){
+    playerDiv = divPlayer1;
+  } else {
+    playerDiv = divPlayer2;
+  }
+  let button = displaySubmitButton(playerDiv, "game_play_submit", "Go!");
+  return button;
 };
 
 var playNextTurnRequest = function(gameDetails, currentPlayerInputForNextMove){
