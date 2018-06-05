@@ -8,10 +8,6 @@ var displayPlayersIntroduction = function(parentElement, responseData, players){
   let playersIntroTemplate = applicationMessages["messages"]["players_intro"];
   match_number = responseData["game"]["match_number"]
   index = match_number - 1;
-  // let player1_symbol = responseData["game"]["player1_symbol"].toUpperCase();
-  // let player2_symbol = responseData["game"]["player2_symbol"].toUpperCase();
-  // let player1_type = applicationMessages["matches"][index]["player1_type"];
-  // let player2_type = applicationMessages["matches"][index]["player2_type"];
   
   let updatedMessageText = playersIntroTemplate.replace("[1]", players.player1Symbol);
   updatedMessageText = updatedMessageText.replace("[2]", players.player1Type);
@@ -175,9 +171,8 @@ var displayGameDetails = function(parentElement, gameDetails, players){
   let gameDetailsContainer = document.createElement("div");
   gameDetailsContainer.setAttribute("id", "game_content");
   
-  let player1Symbol = gameDetails["game"]["player1_symbol"].toUpperCase();
-  let player2Symbol = gameDetails["game"]["player2_symbol"].toUpperCase();
-  let currentPlayerSymbol = gameDetails["game"]["current_player_symbol"].toUpperCase();
+  let player1Symbol = players.player1Symbol;
+  let currentPlayerSymbol = players.currentPlayerSymbol;
 
   displayPlayersIntroduction(gameDetailsContainer, gameDetails, players);
   displayBoardLabel(gameDetailsContainer);
@@ -188,8 +183,6 @@ var displayGameDetails = function(parentElement, gameDetails, players){
   parent.appendChild(gameDetailsContainer);
 
   let playerNumber;
-  console.log("*** displayGameDetails currentPlayerSymbol = " + currentPlayerSymbol);
-  console.log("*** displayGameDetails player1_symbol = " + gameDetails["game"]["player1_symbol"]);
   if(currentPlayerSymbol === player1Symbol){
     playerNumber = 1;
   } else {
