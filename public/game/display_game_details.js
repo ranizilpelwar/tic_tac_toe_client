@@ -34,14 +34,23 @@ var emulateComputerAction = function() {
 };
 
 var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, players){
-  let player1Symbol = gameDetails["game"]["player1_symbol"].toUpperCase();
-  let player2Symbol = gameDetails["game"]["player2_symbol"].toUpperCase();
-  let currentPlayerSymbol = gameDetails["game"]["current_player_symbol"].toUpperCase();
+  let player1Symbol = players.player1Symbol;
+  let player2Symbol = players.player2Symbol;
+  let currentPlayerSymbol = players.currentPlayerSymbol;
+  let submitButton;
 
+  let playerNumber = (currentPlayerSymbol === player1Symbol) ? 1 : 2;
+  console.log("playerNumber = " + playerNumber);
   let divPlayer1 = document.createElement("div");
+  divPlayer1.setAttribute("id", "player" + player1Symbol + "_div");
   let inputText1 = "Player " + player1Symbol + ":";
-  let id1 = "player1_input";
+  let id1 = "player" + player1Symbol + "_input";
   input1 = displayInput(divPlayer1, inputText1, id1);
+  if (playerNumber === 1 && players.currentPlayerType === "Computer"){
+    input1.disabled = true;
+    input1.value = "Thinking...";
+    submitButton = displaySubmitButton(divPlayer1, "game_play_submit", "Go!");
+  }
 
   parentElement.appendChild(divPlayer1);
 
@@ -49,49 +58,86 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
   parentElement.appendChild(br);
 
   let divPlayer2 = document.createElement("div");
+  divPlayer2.setAttribute("id", "player" + player2Symbol + "_div");
   let inputText2 = "Player " + player2Symbol + ":";
-  let id2 = "player2_input";
+  let id2 = "player" + player2Symbol + "_input";
   input2 = displayInput(divPlayer2, inputText2, id2);
+  if (playerNumber === 2 && players.currentPlayerType === "Computer"){
+    input2.disabled = true;
+    input2.value = "Thinking...";
+    submitButton = displaySubmitButton(divPlayer2, "game_play_submit", "Go!");
+  }
   parentElement.appendChild(divPlayer2);
 
-  let playerNumber = "";
-  let playerDiv;
-  if (currentPlayerSymbol === player1Symbol) {
-    input2.disabled = true;
-    playerDiv = divPlayer1;
-  } else {
-    input1.disabled = true;
-    playerDiv = divPlayer2;
-  }
-  let button = displaySubmitButton(playerDiv, "game_play_submit", "Go!");
-  button.onclick = function(){
-    console.log("game_play_submit click for currentPlayerSymbol " + currentPlayerSymbol);
+  submitButton.onclick = function(){
     playNextTurn(gameDetails, players);
   };
 
-  let currentPlayerNumber;
-  if (currentPlayerSymbol === player1Symbol){
-    currentPlayerNumber = "1";
-  } else {
-    currentPlayerNumber = "2";
-  }
 
-  let matchNumber = gameDetails["game"]["match_number"];
-  let index = matchNumber - 1;
+  // let playerNumber = "";
+  // let playerDiv;
+  // if (currentPlayerSymbol === player1Symbol) {
+  //   input2.disabled = true;
+  //   playerDiv = divPlayer1;
+  // } else {
+  //   input1.disabled = true;
+  //   playerDiv = divPlayer2;
+  // }
+  // let button = displaySubmitButton(playerDiv, "game_play_submit", "Go!");
+  // button.onclick = function(){
+  //   console.log("game_play_submit click for currentPlayerSymbol " + currentPlayerSymbol);
+  //   playNextTurn(gameDetails, players);
+  // };
 
-  let playerXType = "player" + currentPlayerNumber.toString() + "_type";
+  // let currentPlayerNumber;
+  // if (currentPlayerSymbol === player1Symbol){
+  //   currentPlayerNumber = "1";
+  // } else {
+  //   currentPlayerNumber = "2";
+  // }
 
-  let currentPlayerType = applicationMessages["matches"][index][playerXType];
+  // let matchNumber = gameDetails["game"]["match_number"];
+  // let index = matchNumber - 1;
 
-  if (currentPlayerNumber === "1" && currentPlayerType === "Computer"){
-    input1.value = "Thinking...";
-    input1.disabled = true;
+  // let playerXType = "player" + currentPlayerNumber.toString() + "_type";
+
+  // let currentPlayerType = applicationMessages["matches"][index][playerXType];
+
+  // if (currentPlayerNumber === "1" && currentPlayerType === "Computer"){
+  //   input1.value = "Thinking...";
+  //   input1.disabled = true;
+  // } 
+  // else if (currentPlayerNumber === "2" && currentPlayerType === "Computer"){
+  //   input2.value = "Thinking...";
+  //   input2.disabled = true;
+  // }
+
+ /* let currentPlayerInputId = "player" + currentPlayerSymbol + "_input";
+  console.log("currentPlayerInputId = " + currentPlayerInputId);
+  let inputs = parentElement.getElementsByTagName("input");
+  console.log(inputs);
+  let array = Array.from(inputs);
+  console.log(array);
+  let currentPlayerInputBox = array.filter(x => x.id === currentPlayerInputId);
+  console.log(currentPlayerInputBox);
+  //let currentPlayerInputBox = Array.from(parentElement.getElementsByTagName("input")).filter(x => x.id === currentPlayerInputId);
+  console.log(players.currentPlayerType);
+  if (players.currentPlayerType === "Computer"){
+    currentPlayerInputBox.value = "Thinking...";
   } 
-  else if (currentPlayerNumber === "2" && currentPlayerType === "Computer"){
-    input2.value = "Thinking...";
-    input2.disabled = true;
+  else {
+    currentPlayerInputBox.disabled = false;
   }
 
+  let currentPlayerDivId = "player" + currentPlayerSymbol + "_div";
+  console.log("currentPlayerDivId = " + currentPlayerDivId);
+  let currentPlayerDiv = Array.from(parentElement.getElementsByTagName("div")).filter(x => x.id === currentPlayerDivId);
+  console.log("currentPlayerDiv id = " + currentPlayerDiv.id);*/
+  // let button = displaySubmitButton(currentPlayerDiv, "game_play_submit", "Go!");
+  // button.onclick = function(){
+  //   console.log("game_play_submit click for currentPlayerSymbol " + currentPlayerSymbol);
+  //   playNextTurn(gameDetails, players);
+  // };
 };
 
 var playNextTurnRequest = function(gameDetails, currentPlayerInputForNextMove){
