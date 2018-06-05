@@ -24,13 +24,15 @@ class Players {
   }
 
   refreshCurrent(currentPlayerSymbol){
+    currentPlayerSymbol = currentPlayerSymbol.toUpperCase();
+    console.log("players refreshCurrent currentPlayerSymbol = " + currentPlayerSymbol);
     if (currentPlayerSymbol === this.player1Symbol){
-      this.currentPlayerType = player1Type;
-      this.currentPlayerSymbol = currentPlayerSymbol.toUpperCase();
+      this.currentPlayerSymbol = currentPlayerSymbol;
+      this.currentPlayerType = this.player1Type;
     }
-    else if (currentPlayerSymbol === player2Symbol){
-      this.currentPlayerType = player2Type;
-      this.currentPlayerSymbol = currentPlayerSymbol.toUpperCase();
+    else if (currentPlayerSymbol === this.player2Symbol){
+      this.currentPlayerSymbol = currentPlayerSymbol;
+      this.currentPlayerType = this.player2Type;
     }
     else throw new PlayersException("currentPlayerSymbol doesn't match players");
   }

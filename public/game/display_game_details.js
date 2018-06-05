@@ -46,10 +46,12 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
   let inputText1 = "Player " + player1Symbol + ":";
   let id1 = "player" + player1Symbol + "_input";
   input1 = displayInput(divPlayer1, inputText1, id1);
+  if (playerNumber === 1){
+    submitButton = displaySubmitButton(divPlayer1, "game_play_submit", "Go!");
+  }
   if (playerNumber === 1 && players.currentPlayerType === "Computer"){
     input1.disabled = true;
     input1.value = "Thinking...";
-    submitButton = displaySubmitButton(divPlayer1, "game_play_submit", "Go!");
   }
 
   parentElement.appendChild(divPlayer1);
@@ -62,10 +64,12 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
   let inputText2 = "Player " + player2Symbol + ":";
   let id2 = "player" + player2Symbol + "_input";
   input2 = displayInput(divPlayer2, inputText2, id2);
+  if (playerNumber === 2){
+    submitButton = displaySubmitButton(divPlayer2, "game_play_submit", "Go!");
+  }
   if (playerNumber === 2 && players.currentPlayerType === "Computer"){
     input2.disabled = true;
     input2.value = "Thinking...";
-    submitButton = displaySubmitButton(divPlayer2, "game_play_submit", "Go!");
   }
   parentElement.appendChild(divPlayer2);
 
@@ -164,24 +168,24 @@ var playNextTurn = function(gameDetails, players) {
   console.log("playNextTurn");
   console.log("playNextTurn gameDetails = " + JSON.stringify(gameDetails));
   
-  let currentPlayerSymbol = gameDetails["game"]["current_player_symbol"];
-  let playerNumber = 0;
-  if(currentPlayerSymbol === gameDetails["game"]["player1_symbol"]){
-    playerNumber = 1;
-  } else {
-    playerNumber = 2;
-  }
+  // let currentPlayerSymbol = gameDetails["game"]["current_player_symbol"];
+  // let playerNumber = 0;
+  // if(currentPlayerSymbol === gameDetails["game"]["player1_symbol"]){
+  //   playerNumber = 1;
+  // } else {
+  //   playerNumber = 2;
+  // }
 
-  let matchNumber = gameDetails["game"]["match_number"];
-  let index = matchNumber - 1;
+  // let matchNumber = gameDetails["game"]["match_number"];
+  // let index = matchNumber - 1;
 
-  let playerXType = "player" + playerNumber.toString() + "_type";
+  // let playerXType = "player" + playerNumber.toString() + "_type";
 
-  let playerType = applicationMessages["matches"][index][playerXType];
-  console.log("playerType = " + playerType);
+  // let playerType = applicationMessages["matches"][index][playerXType];
+  // console.log("playerType = " + playerType);
 
-  if(playerType === "Human"){
-
+  if(players.currentPlayerType === "Human"){
+    console.log("playNextTurn currentPlayerType Human:");
     let inputBoxes = document.getElementsByTagName("input");
   
     let inputs = Array.from(inputBoxes);
@@ -197,14 +201,20 @@ var playNextTurn = function(gameDetails, players) {
       console.log("human_players_turn");
       let gameElements = document.getElementById("game_content");
       parent = removeExistingContent(gameElements);
+      players.refreshCurrent(responseData["game"]["current_player_symbol"]);
       displayGameDetails(parent, responseData, players);
       }, function(error){console.error("Play Next Turn: Human, Failed." + error);}
     );
   } else {
+    console.log("playNextTurn currentPlayerType Computer:");
     put("/computer_players_turn", makeRequestable(gameDetails))
     .then(function(responseData){
+      console.log("play_next_turn put computer_players_turn:");
+      console.log("playNextTurn responseData = " + JSON.stringify(responseData));
       let gameElements = document.getElementById("game_content");
       parent = removeExistingContent(gameElements);
+      players.refreshCurrent(responseData["game"]["current_player_symbol"]);
+      console.log("Players: " + players.toString());
       displayGameDetails(parent, responseData, players);
       }, function(error){console.error("Play Next Turn: Computer, Failed." + error);}
     );
@@ -228,22 +238,22 @@ var displayGameDetails = function(parentElement, gameDetails, players){
   
   parent.appendChild(gameDetailsContainer);
 
-  let playerNumber;
-  if(currentPlayerSymbol === player1Symbol){
-    playerNumber = 1;
-  } else {
-    playerNumber = 2;
-  }
-  console.log("*** displayGameDetails playerNumber = " + playerNumber);
-  let matchNumber = gameDetails["game"]["match_number"];
-  let index = matchNumber - 1;
+  // let playerNumber;
+  // if(currentPlayerSymbol === player1Symbol){
+  //   playerNumber = 1;
+  // } else {
+  //   playerNumber = 2;
+  // }
+  // console.log("*** displayGameDetails playerNumber = " + playerNumber);
+  // let matchNumber = gameDetails["game"]["match_number"];
+  // let index = matchNumber - 1;
 
-  let playerXType = "player" + playerNumber.toString() + "_type";
+  // let playerXType = "player" + playerNumber.toString() + "_type";
 
-  let playerType = applicationMessages["matches"][index][playerXType];
-  console.log("*** displayGameDetails playerType = " + playerType);
+  // let playerType = applicationMessages["matches"][index][playerXType];
+  // console.log("*** displayGameDetails playerType = " + playerType);
   
-  if(playerType === "Computer"){
+  if(players.currentPlayerType === "Computer"){
     console.log("displayGameDetails: current player is a computer")
     setTimeout(function(){
       emulateComputerAction();
