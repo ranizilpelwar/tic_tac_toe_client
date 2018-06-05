@@ -3,9 +3,8 @@ var createGame = function(elementNameOfInsertionPoint) {
   let gameSetupData = getGameSetupData();
   console.log("gameSetupData data =" + gameSetupData);
 
-  var players = new Players(gameSetupData);
+  let players = new Players(gameSetupData);
   console.log("Players:" + players.toString());
-
 
   let gameSetupRequestData = gameSetupRequest(gameSetupData);
   console.log("gameSetupRequestData = " + gameSetupRequestData);
@@ -14,7 +13,7 @@ var createGame = function(elementNameOfInsertionPoint) {
   .then(function(responseData){
     let gameElements = document.getElementById("initialization_content");
     parent = removeExistingContent(gameElements);
-    displayGameDetails(parent, responseData);
+    displayGameDetails(parent, responseData, players);
     }, function(error){console.error("Create Game: Failed." + error);}
   );
 };

@@ -4,19 +4,19 @@ var removeExistingContent = function(elementToRemove){
   return parent;
 };
 
-var displayPlayersIntroduction = function(parentElement, responseData){
+var displayPlayersIntroduction = function(parentElement, responseData, players){
   let playersIntroTemplate = applicationMessages["messages"]["players_intro"];
   match_number = responseData["game"]["match_number"]
   index = match_number - 1;
-  let player1_symbol = responseData["game"]["player1_symbol"].toUpperCase();
-  let player2_symbol = responseData["game"]["player2_symbol"].toUpperCase();
-  let player1_type = applicationMessages["matches"][index]["player1_type"];
-  let player2_type = applicationMessages["matches"][index]["player2_type"];
+  // let player1_symbol = responseData["game"]["player1_symbol"].toUpperCase();
+  // let player2_symbol = responseData["game"]["player2_symbol"].toUpperCase();
+  // let player1_type = applicationMessages["matches"][index]["player1_type"];
+  // let player2_type = applicationMessages["matches"][index]["player2_type"];
   
-  let updatedMessageText = playersIntroTemplate.replace("[1]", player1_symbol);
-  updatedMessageText = updatedMessageText.replace("[2]", player1_type);
-  updatedMessageText = updatedMessageText.replace("[3]", player2_symbol);
-  updatedMessageText = updatedMessageText.replace("[4]", player2_type);
+  let updatedMessageText = playersIntroTemplate.replace("[1]", players.player1Symbol);
+  updatedMessageText = updatedMessageText.replace("[2]", players.player1Type);
+  updatedMessageText = updatedMessageText.replace("[3]", players.player2Symbol);
+  updatedMessageText = updatedMessageText.replace("[4]", players.player2Type);
 
   insertText(parentElement, updatedMessageText);
 };
@@ -37,7 +37,7 @@ var emulateComputerAction = function() {
   submitButton.click();
 };
 
-var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails){
+var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, players){
   let player1Symbol = gameDetails["game"]["player1_symbol"].toUpperCase();
   let player2Symbol = gameDetails["game"]["player2_symbol"].toUpperCase();
   let currentPlayerSymbol = gameDetails["game"]["current_player_symbol"].toUpperCase();
@@ -70,7 +70,7 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails){
   let button = displaySubmitButton(playerDiv, "game_play_submit", "Go!");
   button.onclick = function(){
     console.log("game_play_submit click for currentPlayerSymbol " + currentPlayerSymbol);
-    playNextTurn(gameDetails)
+    playNextTurn(gameDetails, players);
   };
 
   let currentPlayerNumber;
@@ -118,7 +118,7 @@ var playNextTurnRequest = function(gameDetails, currentPlayerInputForNextMove){
   return result;
 };
 
-var playNextTurn = function(gameDetails) {
+var playNextTurn = function(gameDetails, players) {
   console.log("playNextTurn");
   console.log("playNextTurn gameDetails = " + JSON.stringify(gameDetails));
   
@@ -155,7 +155,7 @@ var playNextTurn = function(gameDetails) {
       console.log("human_players_turn");
       let gameElements = document.getElementById("game_content");
       parent = removeExistingContent(gameElements);
-      displayGameDetails(parent, responseData);
+      displayGameDetails(parent, responseData, players);
       }, function(error){console.error("Play Next Turn: Human, Failed." + error);}
     );
   } else {
@@ -163,13 +163,13 @@ var playNextTurn = function(gameDetails) {
     .then(function(responseData){
       let gameElements = document.getElementById("game_content");
       parent = removeExistingContent(gameElements);
-      displayGameDetails(parent, responseData);
+      displayGameDetails(parent, responseData, players);
       }, function(error){console.error("Play Next Turn: Computer, Failed." + error);}
     );
   }
 };
 
-var displayGameDetails = function(parentElement, gameDetails){
+var displayGameDetails = function(parentElement, gameDetails, players){
   console.log("displayGameDetails gameDetails = " + JSON.stringify(gameDetails));
   
   let gameDetailsContainer = document.createElement("div");
@@ -179,11 +179,11 @@ var displayGameDetails = function(parentElement, gameDetails){
   let player2Symbol = gameDetails["game"]["player2_symbol"].toUpperCase();
   let currentPlayerSymbol = gameDetails["game"]["current_player_symbol"].toUpperCase();
 
-  displayPlayersIntroduction(gameDetailsContainer, gameDetails);
+  displayPlayersIntroduction(gameDetailsContainer, gameDetails, players);
   displayBoardLabel(gameDetailsContainer);
   displayBoard(gameDetailsContainer, gameDetails);
   displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
-  displayPlayerInputsAndSubmitButton(gameDetailsContainer, gameDetails);
+  displayPlayerInputsAndSubmitButton(gameDetailsContainer, gameDetails, players);
   
   parent.appendChild(gameDetailsContainer);
 
