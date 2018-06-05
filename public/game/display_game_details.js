@@ -31,12 +31,10 @@ var displayNextMovePrompt = function(parentElement, currentPlayerSymbol){
   insertText(parentElement, updatedMessageText);
 };
 
-var emulateComputerAction = function(gameDetails, buttonToClick) {
-  //if current player is a Computer: 
-  //display "Thinking..." in input box
-  //and click Go automatically after 2 seconds
-  
-
+var emulateComputerAction = function() {
+  console.log("emulateComputerAction");
+  let submitButton = document.getElementById("game_play_submit");
+  submitButton.click();
 };
 
 var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails){
@@ -70,7 +68,10 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails){
     playerDiv = divPlayer2;
   }
   let button = displaySubmitButton(playerDiv, "game_play_submit", "Go!");
-  button.onclick = function(){playNextTurn(gameDetails)};
+  button.onclick = function(){
+    console.log("game_play_submit click for currentPlayerSymbol " + currentPlayerSymbol);
+    playNextTurn(gameDetails)
+  };
 
   let currentPlayerNumber;
   if (currentPlayerSymbol === player1Symbol){
@@ -151,6 +152,7 @@ var playNextTurn = function(gameDetails) {
 
     put("/human_players_turn", makeRequestable(playNextTurnRequestDetails))
     .then(function(responseData){
+      console.log("human_players_turn");
       let gameElements = document.getElementById("game_content");
       parent = removeExistingContent(gameElements);
       displayGameDetails(parent, responseData);
@@ -176,7 +178,7 @@ var displayGameDetails = function(parentElement, gameDetails){
   let player1Symbol = gameDetails["game"]["player1_symbol"].toUpperCase();
   let player2Symbol = gameDetails["game"]["player2_symbol"].toUpperCase();
   let currentPlayerSymbol = gameDetails["game"]["current_player_symbol"].toUpperCase();
-  
+
   displayPlayersIntroduction(gameDetailsContainer, gameDetails);
   displayBoardLabel(gameDetailsContainer);
   displayBoard(gameDetailsContainer, gameDetails);
@@ -184,5 +186,29 @@ var displayGameDetails = function(parentElement, gameDetails){
   displayPlayerInputsAndSubmitButton(gameDetailsContainer, gameDetails);
   
   parent.appendChild(gameDetailsContainer);
+
+  let playerNumber;
+  console.log("*** displayGameDetails currentPlayerSymbol = " + currentPlayerSymbol);
+  console.log("*** displayGameDetails player1_symbol = " + gameDetails["game"]["player1_symbol"]);
+  if(currentPlayerSymbol === player1Symbol){
+    playerNumber = 1;
+  } else {
+    playerNumber = 2;
+  }
+  console.log("*** displayGameDetails playerNumber = " + playerNumber);
+  let matchNumber = gameDetails["game"]["match_number"];
+  let index = matchNumber - 1;
+
+  let playerXType = "player" + playerNumber.toString() + "_type";
+
+  let playerType = applicationMessages["matches"][index][playerXType];
+  console.log("*** displayGameDetails playerType = " + playerType);
+  
+  if(playerType === "Computer"){
+    console.log("displayGameDetails: current player is a computer")
+    setTimeout(function(){
+      emulateComputerAction();
+    }, 1000);
+  }
 };
 
