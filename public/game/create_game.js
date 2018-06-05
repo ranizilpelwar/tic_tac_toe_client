@@ -1,9 +1,14 @@
 var createGame = function(elementNameOfInsertionPoint) {
   console.log("createGame" + Date.now());
-  let browserData = getGameSetupData();
-  console.log("browser data =" + browserData);
-  let gameSetupRequestData = gameSetupRequest(browserData);
-  console.log("gamesetupdata = " + gameSetupRequestData);
+  let gameSetupData = getGameSetupData();
+  console.log("gameSetupData data =" + gameSetupData);
+
+  var players = new Players(gameSetupData);
+  console.log("Players:" + players.toString());
+
+
+  let gameSetupRequestData = gameSetupRequest(gameSetupData);
+  console.log("gameSetupRequestData = " + gameSetupRequestData);
 
   post("/game", gameSetupRequestData)
   .then(function(responseData){

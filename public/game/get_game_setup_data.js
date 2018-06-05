@@ -7,12 +7,6 @@ var getGameSetupData = function(){
   let secondPlayerSymbol = inputElements["player2_symbol"].value;
   let selectedFirstPlayerSymbol = inputElements["first_player_symbol_input"].value;
 
-  if (selectedFirstPlayerSymbol === secondPlayerSymbol){
-    let temp = secondPlayerSymbol;
-    secondPlayerSymbol = firstPlayerSymbol;
-    firstPlayerSymbol = temp;
-  }
-
   let matches = Array.from(inputElements);
   let selectedMatch = matches.filter(x => x.type === "radio" && x.checked === true);
   matchNumber = selectedMatch[0].value;
@@ -23,6 +17,7 @@ var getGameSetupData = function(){
   return {
     "matchNumber": matchNumber,
     "firstPlayerSymbol": firstPlayerSymbol,
-    "secondPlayerSymbol": secondPlayerSymbol
+    "secondPlayerSymbol": secondPlayerSymbol,
+    "selectedFirstPlayerSymbol": selectedFirstPlayerSymbol
   }
 };
