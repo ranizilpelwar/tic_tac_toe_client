@@ -5,19 +5,19 @@ class Players {
     let playerType2 = applicationMessages["matches"][matchNumber -1]["player2_type"];
 
     if (gameSetupData["selectedFirstPlayerSymbol"] === gameSetupData["firstPlayerSymbol"]){
-      this.player1Symbol = gameSetupData["firstPlayerSymbol"];
+      this.player1Symbol = gameSetupData["firstPlayerSymbol"].toUpperCase();
       this.player1Type = playerType1;
       this.currentPlayerSymbol = this.player1Symbol;
       this.currentPlayerType = this.player1Type;
-      this.player2Symbol = gameSetupData["secondPlayerSymbol"];
+      this.player2Symbol = gameSetupData["secondPlayerSymbol"].toUpperCase();
       this.player2Type = playerType2;
     }
     else if (gameSetupData["selectedFirstPlayerSymbol"] === gameSetupData["secondPlayerSymbol"]){
-      this.player1Symbol = gameSetupData["secondPlayerSymbol"];
+      this.player1Symbol = gameSetupData["secondPlayerSymbol"].toUpperCase();
       this.player1Type = playerType2;
       this.currentPlayerSymbol = this.player1Symbol;
       this.currentPlayerType = this.player1Type;
-      this.player2Symbol = gameSetupData["firstPlayerSymbol"];
+      this.player2Symbol = gameSetupData["firstPlayerSymbol"].toUpperCase();
       this.player2Type = playerType1;
     }
     else throw new PlayersException("selectedFirstPlayerSymbol doesn't match players");
@@ -26,11 +26,11 @@ class Players {
   refreshCurrent(currentPlayerSymbol){
     if (currentPlayerSymbol === this.player1Symbol){
       this.currentPlayerType = player1Type;
-      this.currentPlayerSymbol = currentPlayerSymbol;
+      this.currentPlayerSymbol = currentPlayerSymbol.toUpperCase();
     }
     else if (currentPlayerSymbol === player2Symbol){
       this.currentPlayerType = player2Type;
-      this.currentPlayerSymbol = currentPlayerSymbol;
+      this.currentPlayerSymbol = currentPlayerSymbol.toUpperCase();
     }
     else throw new PlayersException("currentPlayerSymbol doesn't match players");
   }
