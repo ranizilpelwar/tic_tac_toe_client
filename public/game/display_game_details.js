@@ -145,6 +145,7 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
 };
 
 var playNextTurnRequest = function(gameDetails, currentPlayerInputForNextMove){
+  console.log("playNextTurnRequest currentPlayerInputForNextMove = " + currentPlayerInputForNextMove);
   result = {};
   nextTurn = {
     "actions": {
@@ -186,14 +187,13 @@ var playNextTurn = function(gameDetails, players) {
 
   if(players.currentPlayerType === "Human"){
     console.log("playNextTurn currentPlayerType Human:");
-    let inputBoxes = document.getElementsByTagName("input");
+    // let inputBoxes = document.getElementsByTagName("input");
   
-    let inputs = Array.from(inputBoxes);
-    let enabledInput = inputs.filter(x => x.disabled === false);
-    userInput = enabledInput[0].value;
-    console.log("userInput = " + userInput);
-
-    let playNextTurnRequestDetails = playNextTurnRequest(gameDetails, userInput);
+    // let inputs = Array.from(inputBoxes);
+    // let enabledInput = inputs.filter(x => x.disabled === false);
+    // userInput = enabledInput[0].value;
+    let userInputElement = document.getElementById("player" + players.currentPlayerSymbol + "_input");
+    let playNextTurnRequestDetails = playNextTurnRequest(gameDetails, userInputElement.value);
     console.log("playNextTurn playNextTurnRequestDetails = " + JSON.stringify(playNextTurnRequestDetails));
 
     put("/human_players_turn", makeRequestable(playNextTurnRequestDetails))
