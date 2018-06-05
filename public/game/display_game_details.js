@@ -31,11 +31,24 @@ var displayNextMovePrompt = function(parentElement, currentPlayerSymbol){
   insertText(parentElement, updatedMessageText);
 };
 
-var displayPlayerInputsAndSubmitButton = function(parentElement, player1Symbol, player2Symbol, currentPlayerSymbol){
+var emulateComputerAction = function(gameDetails, buttonToClick) {
+  //if current player is a Computer: 
+  //display "Thinking..." in input box
+  //and click Go automatically after 2 seconds
+  
+
+};
+
+var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails){
+  let player1Symbol = gameDetails["game"]["player1_symbol"].toUpperCase();
+  let player2Symbol = gameDetails["game"]["player2_symbol"].toUpperCase();
+  let currentPlayerSymbol = gameDetails["game"]["current_player_symbol"].toUpperCase();
+
   let divPlayer1 = document.createElement("div");
   let inputText1 = "Player " + player1Symbol + ":";
   let id1 = "player1_input";
   input1 = displayInput(divPlayer1, inputText1, id1);
+
   parentElement.appendChild(divPlayer1);
 
   let br = document.createElement("BR");
@@ -57,7 +70,31 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, player1Symbol, 
     playerDiv = divPlayer2;
   }
   let button = displaySubmitButton(playerDiv, "game_play_submit", "Go!");
-  return button;
+  button.onclick = function(){playNextTurn(gameDetails)};
+
+  let currentPlayerNumber;
+  if (currentPlayerSymbol === player1Symbol){
+    currentPlayerNumber = "1";
+  } else {
+    currentPlayerNumber = "2";
+  }
+
+  let matchNumber = gameDetails["game"]["match_number"];
+  let index = matchNumber - 1;
+
+  let playerXType = "player" + currentPlayerNumber.toString() + "_type";
+
+  let currentPlayerType = applicationMessages["matches"][index][playerXType];
+
+  if (currentPlayerNumber === "1" && currentPlayerType === "Computer"){
+    input1.value = "Thinking...";
+    input1.disabled = true;
+  } 
+  else if (currentPlayerNumber === "2" && currentPlayerType === "Computer"){
+    input2.value = "Thinking...";
+    input2.disabled = true;
+  }
+
 };
 
 var playNextTurnRequest = function(gameDetails, currentPlayerInputForNextMove){
@@ -84,25 +121,15 @@ var playNextTurn = function(gameDetails) {
   console.log("playNextTurn");
   console.log("playNextTurn gameDetails = " + JSON.stringify(gameDetails));
   
-  let inputBoxes = document.getElementsByTagName("input");
-  
-  let inputs = Array.from(inputBoxes);
-  let enabledInput = inputs.filter(x => x.disabled === false);
-  userInput = enabledInput[0].value;
-  console.log("userInput = " + userInput);
-
-  let playNextTurnRequestDetails = playNextTurnRequest(gameDetails, userInput);
-  console.log("playNextTurn playNextTurnRequestDetails = " + JSON.stringify(playNextTurnRequestDetails));
-  
-  let currentPlayerSymbol = playNextTurnRequestDetails["game"]["current_player_symbol"];
+  let currentPlayerSymbol = gameDetails["game"]["current_player_symbol"];
   let playerNumber = 0;
-  if(currentPlayerSymbol === playNextTurnRequestDetails["game"]["player1_symbol"]){
+  if(currentPlayerSymbol === gameDetails["game"]["player1_symbol"]){
     playerNumber = 1;
   } else {
     playerNumber = 2;
   }
 
-  let matchNumber = playNextTurnRequestDetails["game"]["match_number"];
+  let matchNumber = gameDetails["game"]["match_number"];
   let index = matchNumber - 1;
 
   let playerXType = "player" + playerNumber.toString() + "_type";
@@ -111,6 +138,17 @@ var playNextTurn = function(gameDetails) {
   console.log("playerType = " + playerType);
 
   if(playerType === "Human"){
+
+    let inputBoxes = document.getElementsByTagName("input");
+  
+    let inputs = Array.from(inputBoxes);
+    let enabledInput = inputs.filter(x => x.disabled === false);
+    userInput = enabledInput[0].value;
+    console.log("userInput = " + userInput);
+
+    let playNextTurnRequestDetails = playNextTurnRequest(gameDetails, userInput);
+    console.log("playNextTurn playNextTurnRequestDetails = " + JSON.stringify(playNextTurnRequestDetails));
+
     put("/human_players_turn", makeRequestable(playNextTurnRequestDetails))
     .then(function(responseData){
       let gameElements = document.getElementById("game_content");
@@ -119,7 +157,7 @@ var playNextTurn = function(gameDetails) {
       }, function(error){console.error("Play Next Turn: Human, Failed." + error);}
     );
   } else {
-    put("/computer_players_turn", makeRequestable(playNextTurnRequestDetails))
+    put("/computer_players_turn", makeRequestable(gameDetails))
     .then(function(responseData){
       let gameElements = document.getElementById("game_content");
       parent = removeExistingContent(gameElements);
@@ -128,7 +166,6 @@ var playNextTurn = function(gameDetails) {
     );
   }
 };
-
 
 var displayGameDetails = function(parentElement, gameDetails){
   console.log("displayGameDetails gameDetails = " + JSON.stringify(gameDetails));
@@ -144,19 +181,8 @@ var displayGameDetails = function(parentElement, gameDetails){
   displayBoardLabel(gameDetailsContainer);
   displayBoard(gameDetailsContainer, gameDetails);
   displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
-  let button = displayPlayerInputsAndSubmitButton(gameDetailsContainer, player1Symbol, player2Symbol, currentPlayerSymbol);
-  button.onclick = function(){playNextTurn(gameDetails)};
-    
+  displayPlayerInputsAndSubmitButton(gameDetailsContainer, gameDetails);
+  
   parent.appendChild(gameDetailsContainer);
 };
 
-var updateGameContent = function(gameDetails){
-  console.log("updateGameContent responseData = " + JSON.stringify(gameDetails));
-  let gameDetailsContainer = document.getElementById("game_content");
-  displayBoard(gameDetailsContainer, gameDetails);
-  //indicate who made what move
-  let currentPlayerSymbol = gameDetails["game"]["current_player_symbol"].toUpperCase();
-  displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
-  let button = displayPlayerInputsAndSubmitButton(gameDetailsContainer, player1Symbol, player2Symbol, currentPlayerSymbol);
-  button.onclick = function(){playNextTurn(gameDetails)};
-};
