@@ -1,11 +1,12 @@
 var displayMatchTypes = function(parentElement, responseData) {
   let matches = responseData["matches"];
-
+  let radioButton; 
   let table = document.createElement("table");
   for (var index = 0; index < matches.length; index++){
       let tr = document.createElement("tr");   
       let td = document.createElement("td");
-      let radioButton = document.createElement("input");
+      radioButton = document.createElement("input");
+      setTimeout(function(){radioButton.focus();});
       radioButton.setAttribute("type", "radio");
       radioButton.setAttribute("name", "match_number");
       radioButton.setAttribute("value", index+1);
@@ -16,5 +17,12 @@ var displayMatchTypes = function(parentElement, responseData) {
       tr.appendChild(td);
       table.appendChild(tr);
   }
+
+  radioButton.addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode === 13) {
+        radioButton.click();
+      }
+  });
   parentElement.appendChild(table);
 };
