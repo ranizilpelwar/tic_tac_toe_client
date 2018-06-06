@@ -8,7 +8,7 @@ var displayBoard = function(parentElement, responseData) {
     for (var column = 1; column <= 3; column++){
       let tableData = document.createElement("td");
       tableData.setAttribute("id", "board");
-      let textNode = document.createTextNode(responseData.game.board[boardIndex]);
+      let textNode = document.createTextNode(responseData.game.board[boardIndex].toUpperCase());
       tableData.appendChild(textNode);
       tableRow.appendChild(tableData);
       boardIndex = boardIndex + 1;
