@@ -27,10 +27,12 @@ var displayNextMovePrompt = function(parentElement, currentPlayerSymbol){
   insertText(parentElement, updatedMessageText);
 };
 
-var emulateComputerAction = function() {
+var emulateComputerAction = function(players) {
   console.log("emulateComputerAction");
-  let submitButton = document.getElementById("game_play_submit");
-  submitButton.click();
+  if (players.currentPlayerType === "Computer"){
+    let submitButton = document.getElementById("game_play_submit");
+    submitButton.click();
+  }
 };
 
 var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, players){
@@ -39,109 +41,76 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
   let currentPlayerSymbol = players.currentPlayerSymbol;
   let submitButton;
 
-  let playerNumber = (currentPlayerSymbol === player1Symbol) ? 1 : 2;
-  console.log("playerNumber = " + playerNumber);
   let divPlayer1 = document.createElement("div");
   divPlayer1.setAttribute("id", "player" + player1Symbol + "_div");
   let inputText1 = "Player " + player1Symbol + ":";
   let id1 = "player" + player1Symbol + "_input";
   input1 = displayInput(divPlayer1, inputText1, id1);
-  if (playerNumber === 1){
-    submitButton = displaySubmitButton(divPlayer1, "game_play_submit", "Go!");
-  }
-  if (playerNumber === 1 && players.currentPlayerType === "Computer"){
-    input1.disabled = true;
-    input1.value = "Thinking...";
-  }
-
-  parentElement.appendChild(divPlayer1);
-
-  let br = document.createElement("BR");
-  parentElement.appendChild(br);
-
+  
   let divPlayer2 = document.createElement("div");
   divPlayer2.setAttribute("id", "player" + player2Symbol + "_div");
   let inputText2 = "Player " + player2Symbol + ":";
   let id2 = "player" + player2Symbol + "_input";
   input2 = displayInput(divPlayer2, inputText2, id2);
+  
+  let playerNumber = (currentPlayerSymbol === player1Symbol) ? 1 : 2;
+  console.log("playerNumber = " + playerNumber);
+  if (playerNumber === 1){
+    input2.disabled = true;
+    submitButton = displaySubmitButton(divPlayer1, "game_play_submit", "Go!");
+  }
+
+  if (playerNumber === 1 && players.currentPlayerType === "Human"){
+    setTimeout(function(){input1.focus();});
+    input1.addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode === 13) {
+        submitButton.click();
+      }
+    });
+  }
+
+  if (playerNumber === 1 && players.currentPlayerType === "Computer"){
+    input1.disabled = true;
+    input1.value = "Thinking...";
+  }
+
   if (playerNumber === 2){
+    input1.disabled = true;
     submitButton = displaySubmitButton(divPlayer2, "game_play_submit", "Go!");
   }
+
+  if (playerNumber === 2 && players.currentPlayerType === "Human"){
+    setTimeout(function(){input2.focus();});
+    input2.addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode === 13) {
+        submitButton.click();
+      }
+    });
+  }
+
   if (playerNumber === 2 && players.currentPlayerType === "Computer"){
     input2.disabled = true;
     input2.value = "Thinking...";
   }
-  parentElement.appendChild(divPlayer2);
 
   submitButton.onclick = function(){
     playNextTurn(gameDetails, players);
   };
 
+  submitButton.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      submitButton.click();
+    }
+  });
+  parentElement.appendChild(divPlayer1);
 
-  // let playerNumber = "";
-  // let playerDiv;
-  // if (currentPlayerSymbol === player1Symbol) {
-  //   input2.disabled = true;
-  //   playerDiv = divPlayer1;
-  // } else {
-  //   input1.disabled = true;
-  //   playerDiv = divPlayer2;
-  // }
-  // let button = displaySubmitButton(playerDiv, "game_play_submit", "Go!");
-  // button.onclick = function(){
-  //   console.log("game_play_submit click for currentPlayerSymbol " + currentPlayerSymbol);
-  //   playNextTurn(gameDetails, players);
-  // };
-
-  // let currentPlayerNumber;
-  // if (currentPlayerSymbol === player1Symbol){
-  //   currentPlayerNumber = "1";
-  // } else {
-  //   currentPlayerNumber = "2";
-  // }
-
-  // let matchNumber = gameDetails["game"]["match_number"];
-  // let index = matchNumber - 1;
-
-  // let playerXType = "player" + currentPlayerNumber.toString() + "_type";
-
-  // let currentPlayerType = applicationMessages["matches"][index][playerXType];
-
-  // if (currentPlayerNumber === "1" && currentPlayerType === "Computer"){
-  //   input1.value = "Thinking...";
-  //   input1.disabled = true;
-  // } 
-  // else if (currentPlayerNumber === "2" && currentPlayerType === "Computer"){
-  //   input2.value = "Thinking...";
-  //   input2.disabled = true;
-  // }
-
- /* let currentPlayerInputId = "player" + currentPlayerSymbol + "_input";
-  console.log("currentPlayerInputId = " + currentPlayerInputId);
-  let inputs = parentElement.getElementsByTagName("input");
-  console.log(inputs);
-  let array = Array.from(inputs);
-  console.log(array);
-  let currentPlayerInputBox = array.filter(x => x.id === currentPlayerInputId);
-  console.log(currentPlayerInputBox);
-  //let currentPlayerInputBox = Array.from(parentElement.getElementsByTagName("input")).filter(x => x.id === currentPlayerInputId);
-  console.log(players.currentPlayerType);
-  if (players.currentPlayerType === "Computer"){
-    currentPlayerInputBox.value = "Thinking...";
-  } 
-  else {
-    currentPlayerInputBox.disabled = false;
-  }
-
-  let currentPlayerDivId = "player" + currentPlayerSymbol + "_div";
-  console.log("currentPlayerDivId = " + currentPlayerDivId);
-  let currentPlayerDiv = Array.from(parentElement.getElementsByTagName("div")).filter(x => x.id === currentPlayerDivId);
-  console.log("currentPlayerDiv id = " + currentPlayerDiv.id);*/
-  // let button = displaySubmitButton(currentPlayerDiv, "game_play_submit", "Go!");
-  // button.onclick = function(){
-  //   console.log("game_play_submit click for currentPlayerSymbol " + currentPlayerSymbol);
-  //   playNextTurn(gameDetails, players);
-  // };
+  let br = document.createElement("BR");
+  parentElement.appendChild(br);
+  
+  parentElement.appendChild(divPlayer2);
 };
 
 var playNextTurnRequest = function(gameDetails, currentPlayerInputForNextMove){
@@ -169,29 +138,8 @@ var playNextTurn = function(gameDetails, players) {
   console.log("playNextTurn");
   console.log("playNextTurn gameDetails = " + JSON.stringify(gameDetails));
   
-  // let currentPlayerSymbol = gameDetails["game"]["current_player_symbol"];
-  // let playerNumber = 0;
-  // if(currentPlayerSymbol === gameDetails["game"]["player1_symbol"]){
-  //   playerNumber = 1;
-  // } else {
-  //   playerNumber = 2;
-  // }
-
-  // let matchNumber = gameDetails["game"]["match_number"];
-  // let index = matchNumber - 1;
-
-  // let playerXType = "player" + playerNumber.toString() + "_type";
-
-  // let playerType = applicationMessages["matches"][index][playerXType];
-  // console.log("playerType = " + playerType);
-
   if(players.currentPlayerType === "Human"){
     console.log("playNextTurn currentPlayerType Human:");
-    // let inputBoxes = document.getElementsByTagName("input");
-  
-    // let inputs = Array.from(inputBoxes);
-    // let enabledInput = inputs.filter(x => x.disabled === false);
-    // userInput = enabledInput[0].value;
     let userInputElement = document.getElementById("player" + players.currentPlayerSymbol + "_input");
     let playNextTurnRequestDetails = playNextTurnRequest(gameDetails, userInputElement.value);
     console.log("playNextTurn playNextTurnRequestDetails = " + JSON.stringify(playNextTurnRequestDetails));
@@ -238,25 +186,10 @@ var displayGameDetails = function(parentElement, gameDetails, players){
   
   parent.appendChild(gameDetailsContainer);
 
-  // let playerNumber;
-  // if(currentPlayerSymbol === player1Symbol){
-  //   playerNumber = 1;
-  // } else {
-  //   playerNumber = 2;
-  // }
-  // console.log("*** displayGameDetails playerNumber = " + playerNumber);
-  // let matchNumber = gameDetails["game"]["match_number"];
-  // let index = matchNumber - 1;
-
-  // let playerXType = "player" + playerNumber.toString() + "_type";
-
-  // let playerType = applicationMessages["matches"][index][playerXType];
-  // console.log("*** displayGameDetails playerType = " + playerType);
-  
   if(players.currentPlayerType === "Computer"){
     console.log("displayGameDetails: current player is a computer")
     setTimeout(function(){
-      emulateComputerAction();
+      emulateComputerAction(players);
     }, 1000);
   }
 };
