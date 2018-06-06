@@ -64,7 +64,7 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
     setTimeout(function(){input1.focus();});
     input1.addEventListener("keyup", function(event) {
       event.preventDefault();
-      if (event.keyCode === 13) {
+      if (event.keyCode === 13 && input1.value !== "") {
         submitButton.click();
       }
     });
@@ -84,7 +84,7 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
     setTimeout(function(){input2.focus();});
     input2.addEventListener("keyup", function(event) {
       event.preventDefault();
-      if (event.keyCode === 13) {
+      if (event.keyCode === 13 && input2.value !== "") {
         submitButton.click();
       }
     });
