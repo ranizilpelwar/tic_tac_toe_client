@@ -14,3 +14,7 @@ table {
   border: 1px solid black;
   padding: 20px;
 }
+
+#language_config_text {
+  font-style: italic;
+}
