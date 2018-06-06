@@ -170,6 +170,14 @@ var playNextTurn = function(gameDetails, players) {
   }
 };
 
+var triggerComputerActionIfCurrentPlayer = function(players){
+  if(players.currentPlayerType === "Computer"){
+    setTimeout(function(){
+      emulateComputerAction(players);
+    }, 1000);
+  }
+};
+
 var displayGameDetails = function(parentElement, gameDetails, players){
 
   console.log("displayGameDetails gameDetails = " + JSON.stringify(gameDetails));
@@ -183,16 +191,14 @@ var displayGameDetails = function(parentElement, gameDetails, players){
   displayPlayersIntroduction(gameDetailsContainer, gameDetails, players);
   displayBoardLabel(gameDetailsContainer);
   displayBoard(gameDetailsContainer, gameDetails);
+  
+
   displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
   displayPlayerInputsAndSubmitButton(gameDetailsContainer, gameDetails, players);
-  
-  parent.appendChild(gameDetailsContainer);
+  triggerComputerActionIfCurrentPlayer(players);
 
-  if(players.currentPlayerType === "Computer"){
-    console.log("displayGameDetails: current player is a computer")
-    setTimeout(function(){
-      emulateComputerAction(players);
-    }, 1000);
-  }
+
+
+  parent.appendChild(gameDetailsContainer);
 };
 
