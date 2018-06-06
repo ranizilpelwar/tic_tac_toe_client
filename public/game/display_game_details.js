@@ -236,9 +236,22 @@ var displayGameResults = function(parentElement, gameDetails, players){
   displayBoard(gameDetailsContainer, gameDetails);
   
   displayWinner(gameDetailsContainer, gameDetails, players);
-  
-  //display end game status
-  //display start new game button
+  insertText(gameDetailsContainer, "Do you want to play again?");
+  let submitButton = displaySubmitButton(gameDetailsContainer, "start_game_submit", "Start New Game");
+
+  submitButton.onclick = function(){
+    removeExistingContent(gameDetailsContainer);
+    displayGameInitializationContent();
+  };
+
+  submitButton.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      submitButton.click();
+    }
+  });
+
+  setTimeout(function(){submitButton.focus();});
 
   parent.appendChild(gameDetailsContainer);
 };
