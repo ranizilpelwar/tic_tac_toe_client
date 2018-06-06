@@ -163,6 +163,7 @@ var playNextTurn = function(gameDetails, players) {
       parent = removeExistingContent(gameElements);
       players.refreshCurrent(responseData["game"]["current_player_symbol"]);
       console.log("Players: " + players.toString());
+      promptOnRedirect();
       displayGameDetails(parent, responseData, players);
       }, function(error){console.error("Play Next Turn: Computer, Failed." + error);}
     );
@@ -170,6 +171,7 @@ var playNextTurn = function(gameDetails, players) {
 };
 
 var displayGameDetails = function(parentElement, gameDetails, players){
+
   console.log("displayGameDetails gameDetails = " + JSON.stringify(gameDetails));
   
   let gameDetailsContainer = document.createElement("div");
@@ -192,5 +194,22 @@ var displayGameDetails = function(parentElement, gameDetails, players){
       emulateComputerAction(players);
     }, 1000);
   }
+
+  window.onload = function () {
+        if (window.history && history.pushState) {
+                if (history.state == null) {
+                    history.pushState({'status': 'ongoing'}, null, null);
+                window.onpopstate = function(event) {
+                    const endProgress = confirm("This will end the game, are you sure you want to go back?");
+                    if (endProgress) {
+                        window.onpopstate = null;
+                        history.back();
+                    } else {
+                        history.pushState(null, null, null);
+                    }
+                };
+            }
+        }
+    };
 };
 
