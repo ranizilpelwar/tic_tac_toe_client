@@ -194,22 +194,5 @@ var displayGameDetails = function(parentElement, gameDetails, players){
       emulateComputerAction(players);
     }, 1000);
   }
-
-  window.onload = function () {
-        if (window.history && history.pushState) {
-                if (history.state == null) {
-                    history.pushState({'status': 'ongoing'}, null, null);
-                window.onpopstate = function(event) {
-                    const endProgress = confirm("This will end the game, are you sure you want to go back?");
-                    if (endProgress) {
-                        window.onpopstate = null;
-                        history.back();
-                    } else {
-                        history.pushState(null, null, null);
-                    }
-                };
-            }
-        }
-    };
 };
 
