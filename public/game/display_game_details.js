@@ -150,8 +150,14 @@ var playNextTurn = function(gameDetails, players) {
       let gameElements = document.getElementById("game_content");
       parent = removeExistingContent(gameElements);
       players.refreshCurrent(responseData["game"]["current_player_symbol"]);
-      displayGameDetails(parent, responseData, players);
-      }, function(error){console.error("Play Next Turn: Human, Failed." + error);}
+      promptOnRedirect();
+      if(responseData["statuses"]["game_over"] === true){
+        displayGameResults(parent, responseData, players);
+      }
+      else {
+        displayGameDetails(parent, responseData, players);
+      }
+    }, function(error){console.error("Play Next Turn: Human, Failed." + error);}
     );
   } else {
     console.log("playNextTurn currentPlayerType Computer:");
@@ -164,8 +170,13 @@ var playNextTurn = function(gameDetails, players) {
       players.refreshCurrent(responseData["game"]["current_player_symbol"]);
       console.log("Players: " + players.toString());
       promptOnRedirect();
-      displayGameDetails(parent, responseData, players);
-      }, function(error){console.error("Play Next Turn: Computer, Failed." + error);}
+      if(responseData["statuses"]["game_over"] === true){
+        displayGameResults(parent, responseData, players);
+      }
+      else {
+        displayGameDetails(parent, responseData, players);
+      }
+    }, function(error){console.error("Play Next Turn: Computer, Failed." + error);}
     );
   }
 };
@@ -179,7 +190,6 @@ var triggerComputerActionIfCurrentPlayer = function(players){
 };
 
 var displayGameDetails = function(parentElement, gameDetails, players){
-
   console.log("displayGameDetails gameDetails = " + JSON.stringify(gameDetails));
   
   let gameDetailsContainer = document.createElement("div");
@@ -197,7 +207,38 @@ var displayGameDetails = function(parentElement, gameDetails, players){
   displayPlayerInputsAndSubmitButton(gameDetailsContainer, gameDetails, players);
   triggerComputerActionIfCurrentPlayer(players);
 
+  parent.appendChild(gameDetailsContainer);
+};
 
+var displayWinner = function(parentElement, gameDetails, players){
+  insertText(parentElement, applicationMessages["messages"]["game_over"]);
+  if (gameDetails["statuses"]["tie_game"] === true){
+    insertText(parentElement, applicationMessages["messages"]["tie_game"]);
+  }
+  else {
+    let winnerTemplate = applicationMessages["messages"]["player_won"]
+    let updatedMessageText = winnerTemplate.replace("[1]", gameDetails["statuses"]["winner"].toUpperCase());
+    insertText(parentElement, updatedMessageText);
+  }
+};
+
+var displayGameResults = function(parentElement, gameDetails, players){
+  console.log("displayGameResults gameDetails = " + JSON.stringify(gameDetails));
+  
+  let gameDetailsContainer = document.createElement("div");
+  gameDetailsContainer.setAttribute("id", "game_content");
+  
+  let player1Symbol = players.player1Symbol;
+  let currentPlayerSymbol = players.currentPlayerSymbol;
+
+  displayPlayersIntroduction(gameDetailsContainer, gameDetails, players);
+  displayBoardLabel(gameDetailsContainer);
+  displayBoard(gameDetailsContainer, gameDetails);
+  
+  displayWinner(gameDetailsContainer, gameDetails, players);
+  
+  //display end game status
+  //display start new game button
 
   parent.appendChild(gameDetailsContainer);
 };
