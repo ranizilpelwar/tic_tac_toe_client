@@ -5,6 +5,9 @@ var displayGameInitializationContent = function(){
   gameContentParent.setAttribute("id", "initialization_content");
 
   insertText(gameContentParent, applicationMessages["messages"]["welcome"]);
+
+  displayLanguageConfigOption(gameContentParent);
+
   insertText(gameContentParent, applicationMessages["messages"]["match_selection_prompt"]);
   
   let matchTypes = document.createElement('div');
