@@ -47,7 +47,7 @@ var displayLanguageOptionsSelectionContent = function(parentElement){
   let br = document.createElement("br");
   languageContentParent.appendChild(br);
 
-  let button = displaySubmitButton(languageContentParent, "language_selection_submit", "Configure Language");
+  let button = displaySubmitButton(languageContentParent, "language_selection_submit", applicationMessages["messages"]["configure_language"]);
   button.onclick = function() {configureLanguage();};
 
   parentElement.appendChild(languageContentParent);
