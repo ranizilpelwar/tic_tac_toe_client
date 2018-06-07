@@ -29,7 +29,7 @@ var displayNextMovePrompt = function(parentElement, currentPlayerSymbol){
 
 var emulateComputerAction = function(players) {
   console.log("emulateComputerAction");
-  if (players.currentPlayerType === "Computer"){
+  if (players.currentPlayerType === applicationMessages["messages"]["computer"]){
     let submitButton = document.getElementById("game_play_submit");
     submitButton.click();
   }
@@ -41,27 +41,32 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
   let currentPlayerSymbol = players.currentPlayerSymbol;
   let submitButton;
   let game_play_submit_text = applicationMessages["messages"]["go"];
-  
+  let player_text = applicationMessages["messages"]["player"];
+  let thinking_process_for_computers_turn_text = applicationMessages["messages"]["thinking_process_for_computers_turn"];
+
   let divPlayer1 = document.createElement("div");
   divPlayer1.setAttribute("id", "player" + player1Symbol + "_div");
-  let inputText1 = "Player " + player1Symbol + ":";
+  let inputText1 = player_text + " " + player1Symbol + ":";
   let id1 = "player" + player1Symbol + "_input";
   input1 = displayInput(divPlayer1, inputText1, id1);
   
   let divPlayer2 = document.createElement("div");
   divPlayer2.setAttribute("id", "player" + player2Symbol + "_div");
-  let inputText2 = "Player " + player2Symbol + ":";
+  let inputText2 = player_text + " " + player2Symbol + ":";
   let id2 = "player" + player2Symbol + "_input";
   input2 = displayInput(divPlayer2, inputText2, id2);
   
   let playerNumber = (currentPlayerSymbol === player1Symbol) ? 1 : 2;
   console.log("playerNumber = " + playerNumber);
+  console.log("players.currentPlayerType = " + players.currentPlayerType);
+  console.log("applicationMessages = " + JSON.stringify(applicationMessages));
+  
   if (playerNumber === 1){
     input2.disabled = true;
     submitButton = displaySubmitButton(divPlayer1, "game_play_submit", game_play_submit_text);
   }
 
-  if (playerNumber === 1 && players.currentPlayerType === "Human"){
+  if (playerNumber === 1 && players.currentPlayerType === applicationMessages["messages"]["human"]){
     setTimeout(function(){input1.focus();});
     input1.addEventListener("keyup", function(event) {
       event.preventDefault();
@@ -71,9 +76,9 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
     });
   }
 
-  if (playerNumber === 1 && players.currentPlayerType === "Computer"){
+  if (playerNumber === 1 && players.currentPlayerType === applicationMessages["messages"]["computer"]){
     input1.disabled = true;
-    input1.value = applicationMessages["messages"]["thinking_process_for_computers_turn"];
+    input1.value = thinking_process_for_computers_turn_text;
   }
 
   if (playerNumber === 2){
@@ -81,7 +86,7 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
     submitButton = displaySubmitButton(divPlayer2, "game_play_submit", game_play_submit_text);
   }
 
-  if (playerNumber === 2 && players.currentPlayerType === "Human"){
+  if (playerNumber === 2 && players.currentPlayerType === applicationMessages["messages"]["human"]){
     setTimeout(function(){input2.focus();});
     input2.addEventListener("keyup", function(event) {
       event.preventDefault();
@@ -91,9 +96,9 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
     });
   }
 
-  if (playerNumber === 2 && players.currentPlayerType === "Computer"){
+  if (playerNumber === 2 && players.currentPlayerType === applicationMessages["messages"]["computer"]){
     input2.disabled = true;
-    input2.value = "Thinking...";
+    input2.value = thinking_process_for_computers_turn_text;
   }
 
   submitButton.onclick = function(){
@@ -183,7 +188,7 @@ var playNextTurn = function(gameDetails, players) {
 };
 
 var triggerComputerActionIfCurrentPlayer = function(players){
-  if(players.currentPlayerType === "Computer"){
+  if(players.currentPlayerType === applicationMessages["messages"]["computer"]){
     setTimeout(function(){
       emulateComputerAction(players);
     }, 1000);
