@@ -40,7 +40,8 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
   let player2Symbol = players.player2Symbol;
   let currentPlayerSymbol = players.currentPlayerSymbol;
   let submitButton;
-
+  let game_play_submit_text = applicationMessages["messages"]["go"];
+  
   let divPlayer1 = document.createElement("div");
   divPlayer1.setAttribute("id", "player" + player1Symbol + "_div");
   let inputText1 = "Player " + player1Symbol + ":";
@@ -57,7 +58,7 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
   console.log("playerNumber = " + playerNumber);
   if (playerNumber === 1){
     input2.disabled = true;
-    submitButton = displaySubmitButton(divPlayer1, "game_play_submit", "Go!");
+    submitButton = displaySubmitButton(divPlayer1, "game_play_submit", game_play_submit_text);
   }
 
   if (playerNumber === 1 && players.currentPlayerType === "Human"){
@@ -72,12 +73,12 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
 
   if (playerNumber === 1 && players.currentPlayerType === "Computer"){
     input1.disabled = true;
-    input1.value = "Thinking...";
+    input1.value = applicationMessages["messages"]["thinking_process_for_computers_turn"];
   }
 
   if (playerNumber === 2){
     input1.disabled = true;
-    submitButton = displaySubmitButton(divPlayer2, "game_play_submit", "Go!");
+    submitButton = displaySubmitButton(divPlayer2, "game_play_submit", game_play_submit_text);
   }
 
   if (playerNumber === 2 && players.currentPlayerType === "Human"){
