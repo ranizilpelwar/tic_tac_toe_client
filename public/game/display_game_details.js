@@ -59,13 +59,15 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
   let playerNumber = (currentPlayerSymbol === player1Symbol) ? 1 : 2;
   console.log("playerNumber = " + playerNumber);
   console.log("players.currentPlayerType = " + players.currentPlayerType);
-  console.log("applicationMessages = " + JSON.stringify(applicationMessages));
+  console.log("applicationMessages human = " + applicationMessages["messages"]["human"]);
   
   if (playerNumber === 1){
     input2.disabled = true;
     submitButton = displaySubmitButton(divPlayer1, "game_play_submit", game_play_submit_text);
   }
 
+  let condition = playerNumber === 1 && players.currentPlayerType === applicationMessages["messages"]["human"];
+  console.log("condition = " + condition);
   if (playerNumber === 1 && players.currentPlayerType === applicationMessages["messages"]["human"]){
     setTimeout(function(){input1.focus();});
     input1.addEventListener("keyup", function(event) {
@@ -144,7 +146,7 @@ var playNextTurn = function(gameDetails, players) {
   console.log("playNextTurn");
   console.log("playNextTurn gameDetails = " + JSON.stringify(gameDetails));
   
-  if(players.currentPlayerType === "Human"){
+  if(players.currentPlayerType === applicationMessages["messages"]["human"]){
     console.log("playNextTurn currentPlayerType Human:");
     let userInputElement = document.getElementById("player" + players.currentPlayerSymbol + "_input");
     let playNextTurnRequestDetails = playNextTurnRequest(gameDetails, userInputElement.value);
