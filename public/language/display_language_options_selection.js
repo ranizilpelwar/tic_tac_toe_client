@@ -1,16 +1,16 @@
 var displayLanguageOptions = function(parentElement, responseData){
-  let matches = responseData["matches"];
+  let languages = responseData["languages"];
   let radioButton; 
   let table = document.createElement("table");
-  for (var index = 0; index < matches.length; index++){
+  for (var index = 0; index < languages.length; index++){
       let tr = document.createElement("tr");   
       let td = document.createElement("td");
       radioButton = document.createElement("input");
       setTimeout(function(){radioButton.focus();});
       radioButton.setAttribute("type", "radio");
-      radioButton.setAttribute("name", "match_number");
+      radioButton.setAttribute("name", "language_option");
       radioButton.setAttribute("value", index+1);
-      let text = matches[index]["player1_type"] + " vs " + matches[index]["player2_type"];
+      let text = languages[index]["description"];
       let textNode = document.createTextNode(text);
       td.appendChild(radioButton);
       td.appendChild(textNode);
