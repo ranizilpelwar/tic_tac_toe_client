@@ -6,7 +6,7 @@ var displayLanguageConfigOption = function(parentElement){
   languageTextElement.setAttribute("id", "language_config_text");
   let languageButton = displaySubmitButton(languageTextElement, "language_config_submit", "Configure Language");
   languageButton.onclick = function() { 
-    let div = document.getElementById("start_game");
+    let div = document.getElementById("initialization_content");
     let parent = removeExistingContent(div);
     displayLanguageOptionsSelectionContent(parent);
   };

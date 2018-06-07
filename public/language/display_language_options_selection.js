@@ -48,7 +48,7 @@ var displayLanguageOptionsSelectionContent = function(parentElement){
   languageContentParent.appendChild(br);
 
   let button = displaySubmitButton(languageContentParent, "language_selection_submit", "Configure Language");
-  button.onclick = function() {createGame("start_game")};
+  button.onclick = function() {configureLanguage();};
 
   parentElement.appendChild(languageContentParent);
 };
