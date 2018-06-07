@@ -48,7 +48,14 @@ var displayLanguageOptionsSelectionContent = function(parentElement){
   languageContentParent.appendChild(br);
 
   let button = displaySubmitButton(languageContentParent, "language_selection_submit", applicationMessages["messages"]["configure_language"]);
-  button.onclick = function() {configureLanguage();};
+  button.onclick = function() {
+      let inputElements = document.getElementsByTagName("input");
+      let languages = Array.from(inputElements);
+      let selectedLanguage = languages.filter(x => x.type === "radio" && x.checked === true);
+      if (selectedLanguage.length === 1) {
+        configureLanguage();
+      }
+  };
 
   parentElement.appendChild(languageContentParent);
 };
