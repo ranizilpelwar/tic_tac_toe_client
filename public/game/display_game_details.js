@@ -27,11 +27,11 @@ var displayNextMovePrompt = function(parentElement, currentPlayerSymbol){
   insertText(parentElement, updatedMessageText);
 };
 
-var emulateComputerAction = function(players) {
+var emulateComputerAction = function(gameDetails, players) {
   console.log("emulateComputerAction");
   if (players.currentPlayerType === applicationMessages["messages"]["computer"]){
-    let submitButton = document.getElementById("game_play_submit");
-    submitButton.click();
+    console.log("emulateComputerAction: current game details = " + JSON.stringify(gameDetails));
+    playNextTurn(gameDetails, players);
   }
 };
 
@@ -104,9 +104,11 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
     input2.value = thinking_process_for_computers_turn_text;
   }
 
-  submitButton.onclick = function(){
-    playNextTurn(gameDetails, players);
-  };
+  if (players.currentPlayerType === applicationMessages["messages"]["human"]){
+    submitButton.onclick = function(){
+      playNextTurn(gameDetails, players);
+    };
+  }
 
   submitButton.addEventListener("keyup", function(event) {
     event.preventDefault();
@@ -198,10 +200,10 @@ var playNextTurn = function(gameDetails, players) {
   }
 };
 
-var triggerComputerActionIfCurrentPlayer = function(players){
+var triggerComputerActionIfCurrentPlayer = function(gameDetails, players){
   if(players.currentPlayerType === applicationMessages["messages"]["computer"]){
     setTimeout(function(){
-      emulateComputerAction(players);
+      emulateComputerAction(gameDetails, players);
     }, 5000);
   }
 };
@@ -284,7 +286,7 @@ var displayGameDetails = function(parentElement, gameDetails, players){
   displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
   displayPlayerInputsAndSubmitButton(gameDetailsContainer, gameDetails, players);
   displayUndoButton(gameDetailsContainer, gameDetails, players);
-  triggerComputerActionIfCurrentPlayer(players);
+  triggerComputerActionIfCurrentPlayer(gameDetails, players);
 
   parent.appendChild(gameDetailsContainer);
 };
