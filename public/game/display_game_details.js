@@ -204,6 +204,35 @@ var triggerComputerActionIfCurrentPlayer = function(players){
   }
 };
 
+var displayUndoButton = function(gameDetailsContainer, gameDetails, players){
+  //evaluate if the other player is a human && has a last move to undo
+  let currentPlayer = players.currentPlayerSymbol;
+  let playerNumberOfOtherPlayer;
+  if (players.currentPlayerSymbol === players.player1Symbol){
+    playerNumberOfOtherPlayer = 2;
+  }
+  else {
+    playerNumberOfOtherPlayer = 1;
+  }
+  if (playerNumberOfOtherPlayer === 1 && players.player1Type === applicationMessages["messages"]["human"] && parseInt(gameDetails["game"]["last_move_for_player1"]) !== -1){
+    let playerId = "player" + players.player1Symbol + "_div";
+    console.log("playerId = " + playerId);
+    let divCollection = gameDetailsContainer.getElementsByTagName("div");
+    let divs = Array.from(divCollection);
+    let playerDivToUpdate = divs.filter(x => x.id === playerId)[0];
+    displaySubmitButton(playerDivToUpdate, "undo_move_submit", "Undo Move");
+  }
+  if (playerNumberOfOtherPlayer === 2 && players.player2Type === applicationMessages["messages"]["human"] && parseInt(gameDetails["game"]["last_move_for_player2"]) !== -1){
+    let playerId = "player" + players.player2Symbol + "_div";
+    let divCollection = gameDetailsContainer.getElementsByTagName("div");
+    let divs = Array.from(divCollection);
+    let playerDivToUpdate = divs.filter(x => x.id === playerId)[0];
+    displaySubmitButton(playerDivToUpdate, "undo_move_submit", "Undo Move");
+  }
+  //if so, add undo button to other player's div
+  //wire up undo button to execute undo request which redraws game details with updated responseData
+};
+
 var displayGameDetails = function(parentElement, gameDetails, players){
   console.log("displayGameDetails gameDetails = " + JSON.stringify(gameDetails));
   
@@ -220,6 +249,7 @@ var displayGameDetails = function(parentElement, gameDetails, players){
 
   displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
   displayPlayerInputsAndSubmitButton(gameDetailsContainer, gameDetails, players);
+  displayUndoButton(gameDetailsContainer, gameDetails, players);
   triggerComputerActionIfCurrentPlayer(players);
 
   parent.appendChild(gameDetailsContainer);
