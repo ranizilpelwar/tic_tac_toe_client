@@ -142,31 +142,38 @@ var playNextTurnRequest = function(gameDetails, currentPlayerInputForNextMove){
   return result;
 };
 
+
+var playHumanTurn = function(gameDetails, players, selectedTileOnBoard){
+  let playNextTurnRequestDetails = playNextTurnRequest(gameDetails, selectedTileOnBoard);
+  put("/human_players_turn", makeRequestable(playNextTurnRequestDetails))
+  .then(function(responseData){
+    console.log("human_players_turn");
+    let gameElements = document.getElementById("game_content");
+    parent = removeExistingContent(gameElements);
+    players.refreshCurrent(responseData["game"]["current_player_symbol"]);
+    promptOnRedirect();
+    if(responseData["statuses"]["game_over"] === true){
+      displayGameResults(parent, responseData, players);
+    }
+    else {
+      displayGameDetails(parent, responseData, players);
+    }
+  }, function(error){console.error("Play Next Turn: Human, Failed." + error);}
+  );
+};
+
 var playNextTurn = function(gameDetails, players) {
   console.log("playNextTurn");
   console.log("playNextTurn gameDetails = " + JSON.stringify(gameDetails));
   
   if(players.currentPlayerType === applicationMessages["messages"]["human"]){
     console.log("playNextTurn currentPlayerType Human:");
-    let userInputElement = document.getElementById("player" + players.currentPlayerSymbol + "_input");
-    let playNextTurnRequestDetails = playNextTurnRequest(gameDetails, userInputElement.value);
-    console.log("playNextTurn playNextTurnRequestDetails = " + JSON.stringify(playNextTurnRequestDetails));
-
-    put("/human_players_turn", makeRequestable(playNextTurnRequestDetails))
-    .then(function(responseData){
-      console.log("human_players_turn");
-      let gameElements = document.getElementById("game_content");
-      parent = removeExistingContent(gameElements);
-      players.refreshCurrent(responseData["game"]["current_player_symbol"]);
-      promptOnRedirect();
-      if(responseData["statuses"]["game_over"] === true){
-        displayGameResults(parent, responseData, players);
-      }
-      else {
-        displayGameDetails(parent, responseData, players);
-      }
-    }, function(error){console.error("Play Next Turn: Human, Failed." + error);}
-    );
+    let id = "player" + players.currentPlayerSymbol + "_input";
+    console.log("playNextTurn id = " + id);
+    let userInputElement = document.getElementById(id);
+    let value = userInputElement.value;
+    console.log("playNextTurn value = " + value);
+    playHumanTurn(gameDetails, players, value);
   } else {
     console.log("playNextTurn currentPlayerType Computer:");
     put("/computer_players_turn", makeRequestable(gameDetails))
@@ -208,7 +215,7 @@ var displayGameDetails = function(parentElement, gameDetails, players){
 
   displayPlayersIntroduction(gameDetailsContainer, gameDetails, players);
   displayBoardLabel(gameDetailsContainer);
-  displayBoard(gameDetailsContainer, gameDetails);
+  displayBoard(gameDetailsContainer, gameDetails, players);
   
 
   displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
