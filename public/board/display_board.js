@@ -11,7 +11,9 @@ var displayBoard = function(parentElement, responseData, players) {
       tableData.setAttribute("id", tileNumber);
       tableData.setAttribute("class", "board");
       tableData.onclick = function(){
-        playHumanTurn(responseData, players, tableData.id);
+        if (players.currentPlayerType === applicationMessages["messages"]["human"]){
+          playHumanTurn(responseData, players, tableData.id);
+        }
       };
       let textNode = document.createTextNode(responseData.game.board[boardIndex].toUpperCase());
       tableData.appendChild(textNode);
