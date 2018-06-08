@@ -223,7 +223,7 @@ var displayUndoButton = function(gameDetailsContainer, gameDetails, players){
     let divCollection = gameDetailsContainer.getElementsByTagName("div");
     let divs = Array.from(divCollection);
     let playerDivToUpdate = divs.filter(x => x.id === playerId)[0];
-    let undoButton = displaySubmitButton(playerDivToUpdate, "undo_move_submit", "Undo Move");
+    let undoButton = displaySubmitButton(playerDivToUpdate, "undo_move_submit", applicationMessages["messages"]["undo_move"]);
     undoButton.onclick = function(){
     //undo move request
     console.log("undo move game details before = " + JSON.stringify(gameDetails));
@@ -244,7 +244,7 @@ var displayUndoButton = function(gameDetailsContainer, gameDetails, players){
     let divCollection = gameDetailsContainer.getElementsByTagName("div");
     let divs = Array.from(divCollection);
     let playerDivToUpdate = divs.filter(x => x.id === playerId)[0];
-    let undoButton = displaySubmitButton(playerDivToUpdate, "undo_move_submit", "Undo Move");
+    let undoButton = displaySubmitButton(playerDivToUpdate, "undo_move_submit", applicationMessages["messages"]["undo_move"]);
     undoButton.onclick = function(){
     //undo move request
     console.log("undo move game details before = " + JSON.stringify(gameDetails));
