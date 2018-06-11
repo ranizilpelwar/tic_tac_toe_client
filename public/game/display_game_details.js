@@ -27,19 +27,11 @@ var displayNextMovePrompt = function(parentElement, currentPlayerSymbol){
   insertText(parentElement, updatedMessageText);
 };
 
-var emulateComputerAction = function(gameDetails, players) {
-  console.log("emulateComputerAction");
-  if (players.currentPlayerType === applicationMessages["messages"]["computer"]){
-    console.log("emulateComputerAction: current game details = " + JSON.stringify(gameDetails));
-    playNextTurn(gameDetails, players);
-  }
-};
-
 var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, players){
   let player1Symbol = players.player1Symbol;
   let player2Symbol = players.player2Symbol;
-  let currentPlayerSymbol = players.currentPlayerSymbol;
-  let submitButton;
+  let currentPlayerNumber = players.currentPlayerNumber;
+  let currentPlayerType = players.currentPlayerType;
   let game_play_submit_text = applicationMessages["messages"]["go"];
   let player_text = applicationMessages["messages"]["player"];
   let thinking_process_for_computers_turn_text = applicationMessages["messages"]["thinking_process_for_computers_turn"];
@@ -55,67 +47,47 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
   let inputText2 = player_text + " " + player2Symbol + ":";
   let id2 = "player" + player2Symbol + "_input";
   input2 = displayInput(divPlayer2, inputText2, id2);
-  
-  let playerNumber = (currentPlayerSymbol === player1Symbol) ? 1 : 2;
-  console.log("playerNumber = " + playerNumber);
-  console.log("players.currentPlayerType = " + players.currentPlayerType);
-  console.log("players.currentPlayerSymbol = " + players.currentPlayerSymbol);
-  console.log("applicationMessages human = " + applicationMessages["messages"]["human"]);
-  
-  if (playerNumber === 1){
+
+  let submitButton;
+  let currentInput;
+
+  if (currentPlayerNumber === 1) {
     input2.disabled = true;
     submitButton = displaySubmitButton(divPlayer1, "game_play_submit", game_play_submit_text);
+    currentInput = input1;
   }
-
-  let condition = playerNumber === 1 && players.currentPlayerType === applicationMessages["messages"]["human"];
-  console.log("condition = " + condition);
-  if (playerNumber === 1 && players.currentPlayerType === applicationMessages["messages"]["human"]){
-    setTimeout(function(){input1.focus();});
-    input1.addEventListener("keyup", function(event) {
-      event.preventDefault();
-      if (event.keyCode === 13 && input1.value !== "") {
-        submitButton.click();
-      }
-    });
-  }
-
-  if (playerNumber === 1 && players.currentPlayerType === applicationMessages["messages"]["computer"]){
-    input1.disabled = true;
-    input1.value = thinking_process_for_computers_turn_text;
-  }
-
-  if (playerNumber === 2){
+  else if (currentPlayerNumber === 2) {
     input1.disabled = true;
     submitButton = displaySubmitButton(divPlayer2, "game_play_submit", game_play_submit_text);
+    currentInput = input2;
+  }
+  else {
+    throw new PlayersException("unknown player number: " + currentPlayerNumber);
   }
 
-  if (playerNumber === 2 && players.currentPlayerType === applicationMessages["messages"]["human"]){
-    setTimeout(function(){input2.focus();});
-    input2.addEventListener("keyup", function(event) {
-      event.preventDefault();
-      if (event.keyCode === 13 && input2.value !== "") {
-        submitButton.click();
-      }
-    });
-  }
-
-  if (playerNumber === 2 && players.currentPlayerType === applicationMessages["messages"]["computer"]){
-    input2.disabled = true;
-    input2.value = thinking_process_for_computers_turn_text;
-  }
-
-  if (players.currentPlayerType === applicationMessages["messages"]["human"]){
+  if (currentPlayerType === applicationMessages["messages"]["human"]) {
+    setTimeout(function(){currentInput.focus();});
     submitButton.onclick = function(){
       playNextTurn(gameDetails, players);
     };
+    currentInput.addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode === 13 && currentInput.value !== "") {
+        submitButton.click();
+      }
+    });
+  }
+  else if (currentPlayerType === applicationMessages["messages"]["computer"]) {
+    currentInput.disabled = true;
+    currentInput.value = thinking_process_for_computers_turn_text;
+    setTimeout(function(){
+      playNextTurn(gameDetails, players);
+    }, 3000);
+  }
+  else {
+    throw new PlayersException("unknown player type: " + currentPlayerType);
   }
 
-  submitButton.addEventListener("keyup", function(event) {
-    event.preventDefault();
-    if (event.keyCode === 13) {
-      submitButton.click();
-    }
-  });
   parentElement.appendChild(divPlayer1);
 
   let br = document.createElement("BR");
@@ -202,14 +174,6 @@ var playNextTurn = function(gameDetails, players) {
   }
 };
 
-var triggerComputerActionIfCurrentPlayer = function(gameDetails, players){
-  if(players.currentPlayerType === applicationMessages["messages"]["computer"]){
-    setTimeout(function(){
-      emulateComputerAction(gameDetails, players);
-    }, 5000);
-  }
-};
-
 var displayUndoButton = function(gameDetailsContainer, gameDetails, players){
   let currentPlayer = players.currentPlayerSymbol;
   let playerNumber = players.currentPlayerNumber;
@@ -272,7 +236,5 @@ var displayGameDetails = function(parentElement, gameDetails, players){
   displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
   displayPlayerInputsAndSubmitButton(gameDetailsContainer, gameDetails, players);
   displayUndoButton(gameDetailsContainer, gameDetails, players);
-  triggerComputerActionIfCurrentPlayer(gameDetails, players);
-
   parent.appendChild(gameDetailsContainer);
 };
