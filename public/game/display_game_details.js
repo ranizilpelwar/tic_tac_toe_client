@@ -284,7 +284,7 @@ var displayGameDetails = function(parentElement, gameDetails, players){
 
   displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
   displayPlayerInputsAndSubmitButton(gameDetailsContainer, gameDetails, players);
-  displayUndoButton(gameDetailsContainer, gameDetails, players);
+  //displayUndoButton(gameDetailsContainer, gameDetails, players);
   triggerComputerActionIfCurrentPlayer(gameDetails, players);
 
   parent.appendChild(gameDetailsContainer);
