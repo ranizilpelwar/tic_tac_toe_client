@@ -175,48 +175,34 @@ var playNextTurn = function(gameDetails, players) {
 };
 
 var displayUndoButton = function(gameDetailsContainer, gameDetails, players){
-  let currentPlayer = players.currentPlayerSymbol;
-  let playerNumber = players.currentPlayerNumber;
+  let divIdToUpdate;
+  let haveMoveToUndo = false;
 
-  if (playerNumber === 1 && players.player1Type === applicationMessages["messages"]["human"] && parseInt(gameDetails["game"]["last_move_for_player1"]) !== -1){
-    let playerId = "player" + players.player1Symbol + "_div";
-    console.log("playerId = " + playerId);
+  if (players.currentPlayerNumber == 1 && parseInt(gameDetails["game"]["last_move_for_player1"]) !== -1) {
+    haveMoveToUndo = true;
+    divIdToUpdate = "player" + players.player1Symbol + "_div";
+  }
+  else if (players.currentPlayerNumber == 2 && parseInt(gameDetails["game"]["last_move_for_player2"]) !== -1) {
+    haveMoveToUndo = true;
+    divIdToUpdate = "player" + players.player2Symbol + "_div";
+  }
+
+  if (haveMoveToUndo) {
     let divCollection = gameDetailsContainer.getElementsByTagName("div");
     let divs = Array.from(divCollection);
-    let playerDivToUpdate = divs.filter(x => x.id === playerId)[0];
+    let playerDivToUpdate = divs.filter(x => x.id === divIdToUpdate)[0];
     let undoButton = displaySubmitButton(playerDivToUpdate, "undo_move_submit", applicationMessages["messages"]["undo_move"]);
     undoButton.onclick = function() {
-      console.log("undo move game details before = " + JSON.stringify(gameDetails));
       put("/undo_move", makeRequestable(gameDetails))
-      .then(function(updatedGameDetails){
-        console.log("undo move game details after = " + JSON.stringify(updatedGameDetails));
-        let gameElements = document.getElementById("game_content");
-        parent = removeExistingContent(gameElements);
-        promptOnRedirect();
-        displayGameDetails(parent, updatedGameDetails, players);
-      }, function(error){console.error("Undo Move: Failed." + error);});
-  };
+        .then(function(updatedGameDetails) {
+            let gameElements = document.getElementById("game_content");
+            parent = removeExistingContent(gameElements);
+            promptOnRedirect();
+            displayGameDetails(parent, updatedGameDetails, players);
+          }, function(error){console.error("Undo Move: Failed." + error);}
+        );
+    }
   }
-  if (playerNumber === 2 && players.player2Type === applicationMessages["messages"]["human"] && parseInt(gameDetails["game"]["last_move_for_player2"]) !== -1){
-    let playerId = "player" + players.player2Symbol + "_div";
-    let divCollection = gameDetailsContainer.getElementsByTagName("div");
-    let divs = Array.from(divCollection);
-    let playerDivToUpdate = divs.filter(x => x.id === playerId)[0];
-    let undoButton = displaySubmitButton(playerDivToUpdate, "undo_move_submit", applicationMessages["messages"]["undo_move"]);
-    undoButton.onclick = function(){
-      console.log("undo move game details before = " + JSON.stringify(gameDetails));
-      
-      put("/undo_move", makeRequestable(gameDetails))
-      .then(function(updatedGameDetails){
-        let gameElements = document.getElementById("game_content");
-        console.log("undo move game details after = " + JSON.stringify(updatedGameDetails));
-        let gameElements = document.getElementById("game_content");
-        parent = removeExistingContent(gameElements);
-        promptOnRedirect();
-        displayGameDetails(parent, updatedGameDetails, players);
-      }, function(error){console.error("Undo Move: Failed." + error);});
-    };
-    }  
 };
 
 var displayGameDetails = function(parentElement, gameDetails, players){
@@ -235,6 +221,10 @@ var displayGameDetails = function(parentElement, gameDetails, players){
 
   displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
   displayPlayerInputsAndSubmitButton(gameDetailsContainer, gameDetails, players);
-  displayUndoButton(gameDetailsContainer, gameDetails, players);
+  
+  if (players.currentPlayerType == applicationMessages["messages"]["human"]){
+    displayUndoButton(gameDetailsContainer, gameDetails, players);
+  }
+  
   parent.appendChild(gameDetailsContainer);
 };
