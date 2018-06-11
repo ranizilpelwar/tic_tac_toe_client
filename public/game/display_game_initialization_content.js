@@ -5,6 +5,9 @@ var displayGameInitializationContent = function(){
   gameContentParent.setAttribute("id", "initialization_content");
 
   insertText(gameContentParent, applicationMessages["messages"]["welcome"]);
+
+  displayLanguageConfigOption(gameContentParent);
+
   insertText(gameContentParent, applicationMessages["messages"]["match_selection_prompt"]);
   
   let matchTypes = document.createElement('div');
@@ -20,7 +23,7 @@ var displayGameInitializationContent = function(){
   let br = document.createElement("br");
   gameContentParent.appendChild(br);
 
-  let button = displaySubmitButton(gameContentParent, "start_game_submit", "Let's get started!");
+  let button = displaySubmitButton(gameContentParent, "start_game_submit", applicationMessages["messages"]["start_game"]);
   button.onclick = function() {createGame("start_game")};
 
   let insertionPoint = document.getElementById(elementNameOfInsertionPoint);

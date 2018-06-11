@@ -24,8 +24,8 @@ var displayGameResults = function(parentElement, gameDetails, players){
   displayBoard(gameDetailsContainer, gameDetails);
   
   displayWinner(gameDetailsContainer, gameDetails, players);
-  insertText(gameDetailsContainer, "Do you want to play again?");
-  let submitButton = displaySubmitButton(gameDetailsContainer, "start_game_submit", "Start New Game");
+  insertText(gameDetailsContainer, applicationMessages["messages"]["replay_game_prompt"]);
+  let submitButton = displaySubmitButton(gameDetailsContainer, "start_game_submit", applicationMessages["messages"]["start_new_game"]);
 
   submitButton.onclick = function(){
     removeExistingContent(gameDetailsContainer);

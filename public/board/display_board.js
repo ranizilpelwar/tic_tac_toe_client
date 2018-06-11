@@ -1,13 +1,20 @@
-var displayBoard = function(parentElement, responseData) {
+var displayBoard = function(parentElement, responseData, players) {
   let table = document.createElement("table");
-  table.setAttribute("id", "board");
+  table.setAttribute("class", "board");
   let boardIndex = 0;
   for (var row = 1; row <= 3; row++){
     let tableRow = document.createElement("tr");
     tableRow.setAttribute("id", "board");
     for (var column = 1; column <= 3; column++){
       let tableData = document.createElement("td");
-      tableData.setAttribute("id", "board");
+      let tileNumber = boardIndex + 1;
+      tableData.setAttribute("id", tileNumber);
+      tableData.setAttribute("class", "board");
+      tableData.onclick = function(){
+        if (players.currentPlayerType === applicationMessages["messages"]["human"]){
+          playHumanTurn(responseData, players, tableData.id);
+        }
+      };
       let textNode = document.createTextNode(responseData.game.board[boardIndex].toUpperCase());
       tableData.appendChild(textNode);
       tableRow.appendChild(tableData);
