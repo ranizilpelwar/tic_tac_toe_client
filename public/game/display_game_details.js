@@ -181,22 +181,24 @@ var playNextTurn = function(gameDetails, players) {
   } else {
     console.log("playNextTurn currentPlayerType Computer:");
     put("/computer_players_turn", makeRequestable(gameDetails))
-    .then(function(responseData){
-      console.log("play_next_turn put computer_players_turn:");
-      console.log("playNextTurn responseData = " + JSON.stringify(responseData));
-      let gameElements = document.getElementById("game_content");
-      parent = removeExistingContent(gameElements);
-      players.refreshCurrent(responseData["game"]["current_player_symbol"]);
-      console.log("Players: " + players.toString());
-      promptOnRedirect();
-      if(responseData["statuses"]["game_over"] === true){
-        displayGameResults(parent, responseData, players);
-      }
-      else {
-        displayGameDetails(parent, responseData, players);
-      }
-    }, function(error){console.error("Play Next Turn: Computer, Failed." + error);}
-    );
+      .then(
+        function(responseData) {
+          console.log("play_next_turn put computer_players_turn:");
+          console.log("playNextTurn responseData = " + JSON.stringify(responseData));
+          let gameElements = document.getElementById("game_content");
+          parent = removeExistingContent(gameElements);
+          players.refreshCurrent(responseData["game"]["current_player_symbol"]);
+          console.log("Players: " + players.toString());
+          promptOnRedirect();
+          if(responseData["statuses"]["game_over"] === true){
+            displayGameResults(parent, responseData, players);
+          }
+          else {
+            displayGameDetails(parent, responseData, players);
+          }
+        }, 
+        error => console.error("Play Next Turn: Computer, Failed." + error)
+      );
   }
 };
 
@@ -210,38 +212,37 @@ var triggerComputerActionIfCurrentPlayer = function(gameDetails, players){
 
 var displayUndoButton = function(gameDetailsContainer, gameDetails, players){
   //evaluate if the other player is a human && has a last move to undo
+    //if so, add undo button to other player's div
   let currentPlayer = players.currentPlayerSymbol;
-  let playerNumberOfOtherPlayer;
+  let playerNumber;
   if (players.currentPlayerSymbol === players.player1Symbol){
-    playerNumberOfOtherPlayer = 2;
+    playerNumber = 2;
   }
   else {
-    playerNumberOfOtherPlayer = 1;
+    playerNumber = 1;
   }
-  //if so, add undo button to other player's div
-  if (playerNumberOfOtherPlayer === 1 && players.player1Type === applicationMessages["messages"]["human"] && parseInt(gameDetails["game"]["last_move_for_player1"]) !== -1){
+
+  if (playerNumber === 1 && players.player1Type === applicationMessages["messages"]["human"] && parseInt(gameDetails["game"]["last_move_for_player1"]) !== -1){
     let playerId = "player" + players.player1Symbol + "_div";
     console.log("playerId = " + playerId);
     let divCollection = gameDetailsContainer.getElementsByTagName("div");
     let divs = Array.from(divCollection);
     let playerDivToUpdate = divs.filter(x => x.id === playerId)[0];
     let undoButton = displaySubmitButton(playerDivToUpdate, "undo_move_submit", applicationMessages["messages"]["undo_move"]);
-    undoButton.onclick = function(){
-    //undo move request
-    console.log("undo move game details before = " + JSON.stringify(gameDetails));
-    put("/undo_move", makeRequestable(gameDetails))
-    .then(function(updatedGameDetails){
-      console.log("undo move game details after = " + JSON.stringify(updatedGameDetails));
-      players.refreshCurrent(updatedGameDetails["game"]["current_player_symbol"]);
-      let gameElements = document.getElementById("game_content");
-      parent = removeExistingContent(gameElements);
-      displayGameDetails(parent, updatedGameDetails, players);
-    }, function(error){console.error("Undo Move: Failed." + error);});
-    //with game details / response data, draw new game details
-    //current player in players stays the same
+    undoButton.onclick = function() {
+      console.log("undo move game details before = " + JSON.stringify(gameDetails));
+      put("/undo_move", makeRequestable(gameDetails))
+      .then(function(updatedGameDetails){
+        console.log("undo move game details after = " + JSON.stringify(updatedGameDetails));
+        players.refreshCurrent(updatedGameDetails["game"]["current_player_symbol"]);
+        let gameElements = document.getElementById("game_content");
+        parent = removeExistingContent(gameElements);
+        promptOnRedirect();
+        displayGameDetails(parent, updatedGameDetails, players);
+      }, function(error){console.error("Undo Move: Failed." + error);});
   };
   }
-  if (playerNumberOfOtherPlayer === 2 && players.player2Type === applicationMessages["messages"]["human"] && parseInt(gameDetails["game"]["last_move_for_player2"]) !== -1){
+  if (playerNumber === 2 && players.player2Type === applicationMessages["messages"]["human"] && parseInt(gameDetails["game"]["last_move_for_player2"]) !== -1){
     let playerId = "player" + players.player2Symbol + "_div";
     let divCollection = gameDetailsContainer.getElementsByTagName("div");
     let divs = Array.from(divCollection);
@@ -249,24 +250,22 @@ var displayUndoButton = function(gameDetailsContainer, gameDetails, players){
     let undoButton = displaySubmitButton(playerDivToUpdate, "undo_move_submit", applicationMessages["messages"]["undo_move"]);
     undoButton.onclick = function(){
     //undo move request
-    console.log("undo move game details before = " + JSON.stringify(gameDetails));
-    
-    put("/undo_move", makeRequestable(gameDetails))
-    .then(function(updatedGameDetails){
-      //let gameElements = document.getElementById("game_content");
-      console.log("undo move game details after = " + JSON.stringify(updatedGameDetails));
-      players.refreshCurrent(updatedGameDetails["game"]["current_player_symbol"]);
-      let gameElements = document.getElementById("game_content");
-      parent = removeExistingContent(gameElements);
-      promptOnRedirect();
-      displayGameDetails(parent, updatedGameDetails, players);
-    }, function(error){console.error("Undo Move: Failed." + error);});
-    //with game details / response data, draw new game details
-    //current player in players stays the same
-  };
-  }
-  //wire up undo button to execute undo request which redraws game details with updated responseData
-  
+      console.log("undo move game details before = " + JSON.stringify(gameDetails));
+      
+      put("/undo_move", makeRequestable(gameDetails))
+      .then(function(updatedGameDetails){
+        //let gameElements = document.getElementById("game_content");
+        console.log("undo move game details after = " + JSON.stringify(updatedGameDetails));
+        players.refreshCurrent(updatedGameDetails["game"]["current_player_symbol"]);
+        let gameElements = document.getElementById("game_content");
+        parent = removeExistingContent(gameElements);
+        promptOnRedirect();
+        displayGameDetails(parent, updatedGameDetails, players);
+      }, function(error){console.error("Undo Move: Failed." + error);});
+      //with game details / response data, draw new game details
+      //current player in players stays the same
+    };
+    }  
 };
 
 var displayGameDetails = function(parentElement, gameDetails, players){
