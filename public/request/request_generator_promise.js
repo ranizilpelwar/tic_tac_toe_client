@@ -9,7 +9,7 @@ var get = function(route_string){
         resolve(request.response);
       }
       else {
-        reject(Error(request.statusText));
+        reject(Error(request.statusText + request.response["errors"]["error_message"]));
       }
     };
     request.onerror = function() {
@@ -31,7 +31,7 @@ var put = function(route_string, json_data_to_send) {
         resolve(request.response);
       }
       else {
-        reject(Error(request.statusText));
+        reject(Error(request.statusText + request.response["errors"]["error_message"]));
       }
     };
     request.onerror = function() {
@@ -53,7 +53,7 @@ var post = function(route_string, json_data_to_send) {
         resolve(request.response);
       }
       else {
-        reject(Error(request.statusText));
+        reject(Error(request.statusText + request.response["errors"]["error_message"]));
       }
     };
     request.onerror = function() {
