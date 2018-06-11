@@ -210,15 +210,12 @@ var displayGameDetails = function(parentElement, gameDetails, players){
   
   let gameDetailsContainer = document.createElement("div");
   gameDetailsContainer.setAttribute("id", "game_content");
-  
   let player1Symbol = players.player1Symbol;
   let currentPlayerSymbol = players.currentPlayerSymbol;
 
   displayPlayersIntroduction(gameDetailsContainer, gameDetails, players);
   displayBoardLabel(gameDetailsContainer);
   displayBoard(gameDetailsContainer, gameDetails, players);
-  
-
   displayNextMovePrompt(gameDetailsContainer, currentPlayerSymbol);
   displayPlayerInputsAndSubmitButton(gameDetailsContainer, gameDetails, players);
   
