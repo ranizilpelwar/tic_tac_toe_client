@@ -29,6 +29,8 @@ var displayLanguageOptions = function(parentElement, responseData){
 
 
 var displayLanguageOptionsSelectionContent = function(parentElement){
+  WindowListener.promptOnRedirect();
+  
   elementNameOfInsertionPoint = "start_game";
 
   let languageContentParent = document.createElement("div");

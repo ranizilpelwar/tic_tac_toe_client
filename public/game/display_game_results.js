@@ -12,6 +12,7 @@ var displayWinner = function(parentElement, gameDetails, players){
 
 var displayGameResults = function(parentElement, gameDetails, players){
   console.log("displayGameResults gameDetails = " + JSON.stringify(gameDetails));
+  WindowListener.promptOnRedirect();
   
   let gameDetailsContainer = document.createElement("div");
   gameDetailsContainer.setAttribute("id", "game_content");

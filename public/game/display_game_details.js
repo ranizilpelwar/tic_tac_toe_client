@@ -123,7 +123,6 @@ var playHumanTurn = function(gameDetails, players, selectedTileOnBoard){
     let gameElements = document.getElementById("game_content");
     parent = RemoveElements.at(gameElements);
     players.refreshCurrent(responseData["game"]["current_player_symbol"]);
-    promptOnRedirect();
     if(responseData["statuses"]["game_over"] === true){
       displayGameResults(parent, responseData, players);
     }
@@ -144,7 +143,6 @@ var playComputerTurn = function(gameDetails, players){
         parent = RemoveElements.at(gameElements);
         players.refreshCurrent(responseData["game"]["current_player_symbol"]);
         console.log("Players: " + players.toString());
-        promptOnRedirect();
         if(responseData["statuses"]["game_over"] === true){
           displayGameResults(parent, responseData, players);
         }
@@ -179,7 +177,6 @@ var displayUndoButton = function(gameDetailsContainer, gameDetails, players){
         .then(function(updatedGameDetails) {
             let gameElements = document.getElementById("game_content");
             parent = RemoveElements.at(gameElements);
-            promptOnRedirect();
             displayGameDetails(parent, updatedGameDetails, players);
           }, function(error){console.error("Undo Move: Failed." + error);}
         );
@@ -188,6 +185,7 @@ var displayUndoButton = function(gameDetailsContainer, gameDetails, players){
 };
 
 var displayGameDetails = function(parentElement, gameDetails, players){
+  WindowListener.promptOnRedirect();
   console.log("displayGameDetails gameDetails = " + JSON.stringify(gameDetails));
   
   let gameDetailsContainer = document.createElement("div");

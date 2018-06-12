@@ -13,7 +13,6 @@ var createGame = function(elementNameOfInsertionPoint) {
   .then(function(responseData){
     let gameElements = document.getElementById("initialization_content");
     parent = RemoveElements.at(gameElements);
-    promptOnRedirect();
     let game = new Game(responseData);
     game.toString();
     displayGameDetails(parent, responseData, players);
