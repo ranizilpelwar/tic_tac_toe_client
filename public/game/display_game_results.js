@@ -28,7 +28,7 @@ var displayGameResults = function(parentElement, gameDetails, players){
   let submitButton = displaySubmitButton(gameDetailsContainer, "start_game_submit", applicationMessages["messages"]["start_new_game"]);
 
   submitButton.onclick = function(){
-    removeExistingContent(gameDetailsContainer);
+    RemoveElements.at(gameDetailsContainer);
     displayGameInitializationContent();
   };
 

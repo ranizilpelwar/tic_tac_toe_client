@@ -1,9 +1,3 @@
-var removeExistingContent = function(elementToRemove){
-  let parent = elementToRemove.parentElement;
-  elementToRemove.remove();
-  return parent;
-};
-
 var displayPlayersIntroduction = function(parentElement, responseData, players){
   let playersIntroTemplate = applicationMessages["messages"]["players_intro"];
   match_number = responseData["game"]["match_number"]
@@ -127,7 +121,7 @@ var playHumanTurn = function(gameDetails, players, selectedTileOnBoard){
   .then(function(responseData){
     console.log("human_players_turn");
     let gameElements = document.getElementById("game_content");
-    parent = removeExistingContent(gameElements);
+    parent = RemoveElements.at(gameElements);
     players.refreshCurrent(responseData["game"]["current_player_symbol"]);
     promptOnRedirect();
     if(responseData["statuses"]["game_over"] === true){
@@ -147,7 +141,7 @@ var playComputerTurn = function(gameDetails, players){
         console.log("play_next_turn put computer_players_turn:");
         console.log("playNextTurn responseData = " + JSON.stringify(responseData));
         let gameElements = document.getElementById("game_content");
-        parent = removeExistingContent(gameElements);
+        parent = RemoveElements.at(gameElements);
         players.refreshCurrent(responseData["game"]["current_player_symbol"]);
         console.log("Players: " + players.toString());
         promptOnRedirect();
@@ -184,7 +178,7 @@ var displayUndoButton = function(gameDetailsContainer, gameDetails, players){
       put("/undo_move", makeRequestable(gameDetails))
         .then(function(updatedGameDetails) {
             let gameElements = document.getElementById("game_content");
-            parent = removeExistingContent(gameElements);
+            parent = RemoveElements.at(gameElements);
             promptOnRedirect();
             displayGameDetails(parent, updatedGameDetails, players);
           }, function(error){console.error("Undo Move: Failed." + error);}

@@ -12,8 +12,10 @@ var createGame = function(elementNameOfInsertionPoint) {
   post("/game", gameSetupRequestData)
   .then(function(responseData){
     let gameElements = document.getElementById("initialization_content");
-    parent = removeExistingContent(gameElements);
+    parent = RemoveElements.at(gameElements);
     promptOnRedirect();
+    let game = new Game(responseData);
+    game.toString();
     displayGameDetails(parent, responseData, players);
     }, function(error){console.error("Create Game: Failed." + error);}
   );

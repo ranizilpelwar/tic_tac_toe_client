@@ -7,7 +7,7 @@ var displayLanguageConfigOption = function(parentElement){
   let languageButton = displaySubmitButton(languageTextElement, "language_config_submit", applicationMessages["messages"]["configure_language"]);
   languageButton.onclick = function() { 
     let div = document.getElementById("initialization_content");
-    let parent = removeExistingContent(div);
+    let parent = RemoveElements.at(div);
     displayLanguageOptionsSelectionContent(parent);
   };
   parentElement.appendChild(languageConfigDiv);

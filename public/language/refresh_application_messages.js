@@ -4,7 +4,7 @@ var refreshApplicationMessages = function(newLanguageTag) {
   .then(function(updatedMessages){
     applicationMessages = updatedMessages;
     languageOptionsConfigElements = document.getElementById("language_selection_content");
-    removeExistingContent(languageOptionsConfigElements);
+    RemoveElements.at(languageOptionsConfigElements);
     displayGameInitializationContent();
   }, function(error){console.error("refreshApplicationMessages: Failed." + error);});
 };
