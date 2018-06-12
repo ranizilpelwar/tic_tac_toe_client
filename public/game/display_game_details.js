@@ -62,14 +62,13 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
   if (currentPlayerType === applicationMessages["messages"]["human"]) {
     setTimeout(function(){currentInputField.focus();});
     submitButton.onclick = function() {
-      let userInput = currentInputField.value;
-      if (userInput !== "") {
-        playHumanTurn(gameDetails, players, userInput);
+      if (currentInputField.value !== "") {
+        playHumanTurn(gameDetails, players, currentInputField.value);
       }
     };
     currentInputField.addEventListener("keyup", function(event) {
       event.preventDefault();
-      if (event.keyCode === 13 && userInput !== "") {
+      if (event.keyCode === 13 && currentInputField.value !== "") {
         submitButton.click();
       }
     });
