@@ -75,7 +75,7 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
     };
     currentInputField.addEventListener("keyup", function(event) {
       event.preventDefault();
-      if (event.keyCode === 13 && currentInputField.value !== "") {
+      if (event.keyCode === 13 && userInput !== "") {
         submitButton.click();
       }
     });
@@ -84,7 +84,7 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
     currentInputField.disabled = true;
     currentInputField.value = thinking_process_for_computers_turn_text;
     setTimeout(function(){
-      playNextTurn(gameDetails, players);
+      playComputerTurn(gameDetails, players);
     }, 3000);
   }
   else {
@@ -140,41 +140,26 @@ var playHumanTurn = function(gameDetails, players, selectedTileOnBoard){
   );
 };
 
-var playNextTurn = function(gameDetails, players) {
-  console.log("playNextTurn");
-  console.log("playNextTurn gameDetails = " + JSON.stringify(gameDetails));
-  
-  if(players.currentPlayerType === applicationMessages["messages"]["human"]){
-    console.log("playNextTurn currentPlayerType Human:");
-    let id = "player" + players.currentPlayerSymbol + "_input";
-    console.log("playNextTurn id = " + id);
-    let userInputElement = document.getElementById(id);
-    let value = userInputElement.value;
-    console.log("playNextTurn value = " + value);
-    playHumanTurn(gameDetails, players, value);
-    players.refreshCurrent(responseData["game"]["current_player_symbol"]);
-  } else {
-    console.log("playNextTurn currentPlayerType Computer:");
-    put("/computer_players_turn", makeRequestable(gameDetails))
-      .then(
-        function(responseData) {
-          console.log("play_next_turn put computer_players_turn:");
-          console.log("playNextTurn responseData = " + JSON.stringify(responseData));
-          let gameElements = document.getElementById("game_content");
-          parent = removeExistingContent(gameElements);
-          players.refreshCurrent(responseData["game"]["current_player_symbol"]);
-          console.log("Players: " + players.toString());
-          promptOnRedirect();
-          if(responseData["statuses"]["game_over"] === true){
-            displayGameResults(parent, responseData, players);
-          }
-          else {
-            displayGameDetails(parent, responseData, players);
-          }
-        }, 
-        error => console.error("Play Next Turn: Computer, Failed." + error)
-      );
-  }
+var playComputerTurn = function(gameDetails, players){
+  put("/computer_players_turn", makeRequestable(gameDetails))
+    .then(
+      function(responseData) {
+        console.log("play_next_turn put computer_players_turn:");
+        console.log("playNextTurn responseData = " + JSON.stringify(responseData));
+        let gameElements = document.getElementById("game_content");
+        parent = removeExistingContent(gameElements);
+        players.refreshCurrent(responseData["game"]["current_player_symbol"]);
+        console.log("Players: " + players.toString());
+        promptOnRedirect();
+        if(responseData["statuses"]["game_over"] === true){
+          displayGameResults(parent, responseData, players);
+        }
+        else {
+          displayGameDetails(parent, responseData, players);
+        }
+      }, 
+      error => console.error("Play Next Turn: Computer, Failed." + error)
+    );
 };
 
 var displayUndoButton = function(gameDetailsContainer, gameDetails, players){
