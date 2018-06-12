@@ -12,8 +12,8 @@ var displayBoard = function(parentElement, responseData, players) {
       tableData.setAttribute("class", "board");
       let textNode = document.createTextNode(responseData.game.board[boardIndex].toUpperCase());
       tableData.onclick = function(){
-        let tileIsInt = Number.isInteger(parseInt(textNode.data));
-        if (players.currentPlayerType === applicationMessages["messages"]["human"] && tileIsInt) {
+        let tileIsNotYetSelected = Number.isInteger(parseInt(textNode.data));
+        if (players.currentPlayerType === applicationMessages["messages"]["human"] && tileIsNotYetSelected) {
           playHumanTurn(responseData, players, textNode.data);
         }
       };
