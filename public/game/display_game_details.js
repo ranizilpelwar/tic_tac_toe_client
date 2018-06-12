@@ -117,7 +117,7 @@ var playNextTurnRequest = function(gameDetails, currentPlayerInputForNextMove){
 
 var playHumanTurn = function(gameDetails, players, selectedTileOnBoard){
   let playNextTurnRequestDetails = playNextTurnRequest(gameDetails, selectedTileOnBoard);
-  put("/human_players_turn", makeRequestable(playNextTurnRequestDetails))
+  put("/human_players_turn", DataConverter.makeRequestable(playNextTurnRequestDetails))
   .then(function(responseData){
     console.log("human_players_turn");
     let gameElements = document.getElementById("game_content");
@@ -135,7 +135,7 @@ var playHumanTurn = function(gameDetails, players, selectedTileOnBoard){
 };
 
 var playComputerTurn = function(gameDetails, players){
-  put("/computer_players_turn", makeRequestable(gameDetails))
+  put("/computer_players_turn", DataConverter.makeRequestable(gameDetails))
     .then(
       function(responseData) {
         console.log("play_next_turn put computer_players_turn:");
@@ -175,7 +175,7 @@ var displayUndoButton = function(gameDetailsContainer, gameDetails, players){
     let playerDivToUpdate = divs.filter(x => x.id === divIdToUpdate)[0];
     let undoButton = displaySubmitButton(playerDivToUpdate, "undo_move_submit", applicationMessages["messages"]["undo_move"]);
     undoButton.onclick = function() {
-      put("/undo_move", makeRequestable(gameDetails))
+      put("/undo_move", DataConverter.makeRequestable(gameDetails))
         .then(function(updatedGameDetails) {
             let gameElements = document.getElementById("game_content");
             parent = RemoveElements.at(gameElements);

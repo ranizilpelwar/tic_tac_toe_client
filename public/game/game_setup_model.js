@@ -16,5 +16,5 @@ var gameSetupRequest = function(playerAndMatchData){
     "second_player_symbol": secondPlayerSymbol
   };
 
-  return makeRequestable(setupData);
+  return DataConverter.makeRequestable(setupData);
 };

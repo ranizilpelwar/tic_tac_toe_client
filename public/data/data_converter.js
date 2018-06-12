@@ -1,3 +1,5 @@
-var makeRequestable = function(object) {
-  return JSON.stringify(object);
-};
+class DataConverter {
+  static makeRequestable(object) {
+    return JSON.stringify(object);
+  }
+}
