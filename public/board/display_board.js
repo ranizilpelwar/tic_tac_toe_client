@@ -1,4 +1,4 @@
-var displayBoard = function(parentElement, responseData, players) {
+var displayBoard = function(parentElement, gameDetails, players) {
   let table = document.createElement("table");
   table.setAttribute("class", "board");
   let boardIndex = 0;
@@ -10,12 +10,13 @@ var displayBoard = function(parentElement, responseData, players) {
       let tileNumber = boardIndex + 1;
       tableData.setAttribute("id", tileNumber);
       tableData.setAttribute("class", "board");
+      let textNode = document.createTextNode(gameDetails.game.board[boardIndex].toUpperCase());
       tableData.onclick = function(){
-        if (players.currentPlayerType === applicationMessages["messages"]["human"]){
-          playHumanTurn(responseData, players, tableData.id);
+        let tileIsNotYetSelected = Number.isInteger(parseInt(textNode.data));
+        if (players.currentPlayerType === applicationMessages["messages"]["human"] && tileIsNotYetSelected) {
+          playHumanTurn(gameDetails, players, textNode.data);
         }
       };
-      let textNode = document.createTextNode(responseData.game.board[boardIndex].toUpperCase());
       tableData.appendChild(textNode);
       tableRow.appendChild(tableData);
       boardIndex = boardIndex + 1;
