@@ -49,37 +49,40 @@ var displayPlayerInputsAndSubmitButton = function(parentElement, gameDetails, pl
   input2 = displayInput(divPlayer2, inputText2, id2);
 
   let submitButton;
-  let currentInput;
+  let currentInputField;
 
   if (currentPlayerNumber === 1) {
     input2.disabled = true;
     submitButton = displaySubmitButton(divPlayer1, "game_play_submit", game_play_submit_text);
-    currentInput = input1;
+    currentInputField = input1;
   }
   else if (currentPlayerNumber === 2) {
     input1.disabled = true;
     submitButton = displaySubmitButton(divPlayer2, "game_play_submit", game_play_submit_text);
-    currentInput = input2;
+    currentInputField = input2;
   }
   else {
     throw new PlayersException("unknown player number: " + currentPlayerNumber);
   }
 
   if (currentPlayerType === applicationMessages["messages"]["human"]) {
-    setTimeout(function(){currentInput.focus();});
-    submitButton.onclick = function(){
-      playNextTurn(gameDetails, players);
+    setTimeout(function(){currentInputField.focus();});
+    submitButton.onclick = function() {
+      let userInput = currentInputField.value;
+      if (userInput !== "") {
+        playHumanTurn(gameDetails, players, userInput);
+      }
     };
-    currentInput.addEventListener("keyup", function(event) {
+    currentInputField.addEventListener("keyup", function(event) {
       event.preventDefault();
-      if (event.keyCode === 13 && currentInput.value !== "") {
+      if (event.keyCode === 13 && currentInputField.value !== "") {
         submitButton.click();
       }
     });
   }
   else if (currentPlayerType === applicationMessages["messages"]["computer"]) {
-    currentInput.disabled = true;
-    currentInput.value = thinking_process_for_computers_turn_text;
+    currentInputField.disabled = true;
+    currentInputField.value = thinking_process_for_computers_turn_text;
     setTimeout(function(){
       playNextTurn(gameDetails, players);
     }, 3000);
