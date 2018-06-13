@@ -15,7 +15,8 @@ class BoardPresenter {
         tableData.onclick = function(){
           let tileIsNotYetSelected = Number.isInteger(parseInt(textNode.data));
           if (players.currentPlayerType === applicationMessages["messages"]["human"] && tileIsNotYetSelected) {
-            playHumanTurn(gameDetails, players, textNode.data);
+            let game = new Game(gameDetails);
+            game.playHumanTurn(players, textNode.data);
           }
         };
         tableData.appendChild(textNode);

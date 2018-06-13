@@ -44,7 +44,8 @@ class PlayerTileSelectionPresenter {
       setTimeout(function(){currentInputField.focus();});
       submitButton.onclick = function() {
         if (currentInputField.value !== "") {
-          playHumanTurn(gameDetails, players, currentInputField.value);
+          let game = new Game(gameDetails);
+          game.playHumanTurn(players, currentInputField.value);
         }
       };
       currentInputField.addEventListener("keyup", function(event) {
