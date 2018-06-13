@@ -14,8 +14,12 @@ class GameStartFormPresenter {
     let text = new TextPresenter;
     text.render(form, applicationMessages["messages"]["welcome"]);
 
+    let exceptionArea = document.createElement("div");
+    exceptionArea.setAttribute("id", "exception_content");
+    form.appendChild(exceptionArea);
+
     let languageConfig = new LanguageConfigurationPresenter;
-    languageConfig.render(gameContentParent);
+    languageConfig.render(form);
     
     text.render(form, applicationMessages["messages"]["match_selection_prompt"]);
     let matchTypesDiv = document.createElement('div');
