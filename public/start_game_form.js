@@ -2,8 +2,8 @@ document.title = 'Form Tic Tac Toe';
 
 var applicationMessages;
 
-let requestGenerator = new RequestGenerator;
-requestGenerator.get("/message_content")
+let requestCoordinator = new RequestCoordinator;
+requestCoordinator.get("/message_content")
 .then(function(responseData){
   applicationMessages = responseData;
   let gameStart = new GameStartFormPresenter;

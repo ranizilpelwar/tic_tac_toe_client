@@ -26,31 +26,9 @@ class GamePlayPresenter {
   }
 }
 
-var playHumanTurn = function(gameDetails, players, selectedTileOnBoard){
-  let request = new PlayNextTurnRequest;
-  let playNextTurnRequestDetails = request.getRequest(gameDetails, selectedTileOnBoard);
-  let requestGenerator = new RequestGenerator;
-  requestGenerator.put("/human_players_turn", DataConverter.makeRequestable(playNextTurnRequestDetails))
-  .then(function(responseData){
-    console.log("human_players_turn");
-    let gameElements = document.getElementById("game_content");
-    parent = RemoveElements.at(gameElements);
-    players.refreshCurrent(responseData["game"]["current_player_symbol"]);
-    if(responseData["statuses"]["game_over"] === true){
-      let gameResults = new GameResultsPresenter;
-      gameResults.render(parent, responseData, players);
-    }
-    else {
-      let gamePlay = new GamePlayPresenter;
-      gamePlay.render(parent, responseData, players);
-    }
-  }, function(error){console.error("Play Next Turn: Human, Failed." + error);}
-  );
-};
-
 var playComputerTurn = function(gameDetails, players){
-  let requestGenerator = new RequestGenerator;
-  requestGenerator.put("/computer_players_turn", DataConverter.makeRequestable(gameDetails))
+  let requestCoordinator = new RequestCoordinator;
+  requestCoordinator.put("/computer_players_turn", DataConverter.makeRequestable(gameDetails))
     .then(
       function(responseData) {
         console.log("play_next_turn put computer_players_turn:");

@@ -1,7 +1,7 @@
 var refreshApplicationMessages = function(newLanguageTag) {
   request = languageSetupRequest(newLanguageTag);
-  let requestGenerator = new RequestGenerator;
-  requestGenerator.put("/message_content", request)
+  let requestCoordinator = new RequestCoordinator;
+  requestCoordinator.put("/message_content", request)
   .then(function(updatedMessages){
     applicationMessages = updatedMessages;
     languageOptionsConfigElements = document.getElementById("language_selection_content");

@@ -19,8 +19,8 @@ class UndoButtonPresenter {
       let submit = new SubmitButtonPresenter;
       let undoButton = submit.render(playerDivToUpdate, "undo_move_submit", applicationMessages["messages"]["undo_move"]);
       undoButton.onclick = function() {
-        let requestGenerator = new RequestGenerator;
-        requestGenerator.put("/undo_move", DataConverter.makeRequestable(gameDetails))
+        let requestCoordinator = new RequestCoordinator;
+        requestCoordinator.put("/undo_move", DataConverter.makeRequestable(gameDetails))
           .then(function(updatedGameDetails) {
               let gameElements = document.getElementById("game_content");
               parent = RemoveElements.at(gameElements);
