@@ -1,9 +1,10 @@
-var uri_generator = function(route_string) {
-  var site = "http://localhost:4567";
-  return {
-    uri: function() {
-      var uri = site + route_string;
+class URIGenerator {
+  constructor() {
+    let site = "http://localhost:4567";
+    this.getSite = site;
+    this.uri = function(route_string) {
+      let uri = this.getSite + route_string;
       return uri;
     }
   }
-};
+}

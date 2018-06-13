@@ -1,45 +1,38 @@
-var request_generator = function(route_string, callback){
-  var xmlHttp = new XMLHttpRequest();
-  var url = uri_generator(route_string).uri();
-
-  var async_request = function(){
-    xmlHttp.responseType = "json";
-    
-    xmlHttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        callback(this.response);
-      }
-    };
-  };
-  return {
-    get: function() {
-      xmlHttp.open("GET", url, true);
-      async_request();
-      xmlHttp.send();
-    },
-    post: function(data_to_send){
-      xmlHttp.open("POST", url, true);
-      xmlHttp.setRequestHeader("Content-Type", "application/json");
-      async_request();
-      xmlHttp.send(data_to_send);
-    },
-    put: function(data_to_send){
-      xmlHttp.open("PUT", url, true);
-      xmlHttp.setRequestHeader("Content-Type", "application/json");
-      async_request();
-      xmlHttp.send(data_to_send);
+class RequestGenerator {
+  game(gameObject, playersObject) {
+    let gameDetails = {"game": {
+                          "language_tag": gameObject.languageTag,
+                          "match_number": gameObject.matchNumber,
+                          "player1_symbol": playersObject.player1Symbol,
+                          "player2_symbol": playersObject.player2Symbol,
+                          "current_player_symbol": playersObject.currentPlayerSymbol,
+                          "board": gameObject.board,
+                          "record_moves": gameObject.recordMoves,
+                          "last_move_for_player1": gameObject.lastMoveForPlayer1,
+                          "last_move_for_player2": gameObject.lastMoveForPlayer2
+                        }
     }
+    return DataConverter.makeRequestable(gameDetails)
   }
-};
 
-var get_request = function(route_string, callback){
-  request_generator(route_string, callback).get();
-};
-
-var post_request = function(route_string, callback, data_to_send){
-  request_generator(route_string, callback).post(data_to_send);
-};
-
-var put_request = function(route_string, callback, data_to_send){
-  request_generator(route_string, callback).put(data_to_send);
-};
+  humanPlayerNextMove(gameObject, playersObject, currentPlayerInputForNextMove) {
+    let gameRequest = this.game(gameObject, playersObject);
+    let gameDetails = JSON.parse(gameRequest);
+    let combinedRequest = {};
+    let nextTurn = {"actions": {
+                      "tile_on_board": currentPlayerInputForNextMove
+                    }
+    };
+    for(var key in gameDetails) {
+      if(gameDetails.hasOwnProperty(key)) {
+        combinedRequest[key] = gameDetails[key];
+      }
+    }
+    for(var key in nextTurn) {
+      if(nextTurn.hasOwnProperty(key)) {
+        combinedRequest[key] = nextTurn[key];
+      }
+    }
+    return DataConverter.makeRequestable(combinedRequest);
+  }
+}
