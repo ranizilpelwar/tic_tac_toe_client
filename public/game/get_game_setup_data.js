@@ -4,8 +4,22 @@ var getGameSetupData = function(){
   let inputElements = document.getElementsByTagName("input");
   
   let firstPlayerSymbol = inputElements["player1_symbol"].value;
+  if (firstPlayerSymbol === "" || firstPlayerSymbol === " ") {
+    let exceptionTextTemplate = applicationMessages["messages"]["invalid_selection_error_for"];
+    let exceptionText = exceptionTextTemplate.replace("[1]", applicationMessages["messages"]["player"] + " 1");
+    throw new PlayersException(exceptionText);
+  }
   let secondPlayerSymbol = inputElements["player2_symbol"].value;
+  if (secondPlayerSymbol === "" || secondPlayerSymbol === " ") {
+    let exceptionTextTemplate = applicationMessages["messages"]["invalid_selection_error_for"];
+    let exceptionText = exceptionTextTemplate.replace("[1]", applicationMessages["messages"]["player"] + " 2");
+    throw new PlayersException(exceptionText);
+  }
   let selectedFirstPlayerSymbol = inputElements["first_player_symbol_input"].value;
+  if (selectedFirstPlayerSymbol === "" || selectedFirstPlayerSymbol === " ") {
+    throw new PlayersException("Please select either " + firstPlayerSymbol + " or " + secondPlayerSymbol + " to go first.");
+  }
+
   if (selectedFirstPlayerSymbol === "1") {
     selectedFirstPlayerSymbol = firstPlayerSymbol;
   } else if (selectedFirstPlayerSymbol === "2"){
