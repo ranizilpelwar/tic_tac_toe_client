@@ -15,7 +15,7 @@ class GameStartFormPresenter {
     text.render(form, applicationMessages["messages"]["welcome"]);
 
     let exceptionArea = document.createElement("div");
-    exceptionArea.setAttribute("id", "exception_content");
+    exceptionArea.setAttribute("id", "exception_div");
     form.appendChild(exceptionArea);
 
     let languageConfig = new LanguageConfigurationPresenter;

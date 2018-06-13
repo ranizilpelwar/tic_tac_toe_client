@@ -6,6 +6,10 @@ class GameStartPresenter {
     
     let text = new TextPresenter;
     text.render(gameContentParent, applicationMessages["messages"]["welcome"]);
+
+    let exceptionArea = document.createElement("div");
+    exceptionArea.setAttribute("id", "exception_div");
+    gameContentParent.appendChild(exceptionArea);
     
     let languageConfig = new LanguageConfigurationPresenter;
     languageConfig.render(gameContentParent);
@@ -28,7 +32,16 @@ class GameStartPresenter {
     
     let submit = new SubmitButtonPresenter;
     let button = submit.render(gameContentParent, "start_game_submit", applicationMessages["messages"]["start_game"]);
-    button.onclick = function() {createGame("start_game")};
+    button.onclick = function() {
+      try {
+        let gameCoordinator = new GameCoordinator;
+        gameCoordinator.createGame("start_game");
+      }
+      catch(error) {
+        let exceptionsPresenter = new ExceptionsPresenter;
+        exceptionsPresenter.render(exceptionArea, error.name, error.message);
+      }
+    };
     
     let insertionPoint = document.getElementById(elementNameOfInsertionPoint);
     insertionPoint.appendChild(gameContentParent);
