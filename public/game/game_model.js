@@ -52,7 +52,7 @@ class Game {
     .then(
       function(responseData){
         let gameElements = document.getElementById("game_content");
-        parent = RemoveElements.at(gameElements);
+        let parent = RemoveElements.at(gameElements);
         players.refreshCurrent(responseData["game"]["current_player_symbol"]);
         if(responseData["statuses"]["game_over"] === true){
           let gameResults = new GameResultsPresenter;
@@ -64,5 +64,28 @@ class Game {
         }
       }, function(error){console.error("Play Next Turn: Human, Failed." + error);}
     );
+  }
+
+  playComputerTurn(players) {
+    let requestGenerator = new RequestGenerator;
+    let dataToSend = requestGenerator.game(this, players);
+    let requestCoordinator = new RequestCoordinator;
+    requestCoordinator.put("/computer_players_turn", dataToSend)
+      .then(
+        function(responseData) {
+          let gameElements = document.getElementById("game_content");
+          let parent = RemoveElements.at(gameElements);
+          players.refreshCurrent(responseData["game"]["current_player_symbol"]);
+          if(responseData["statuses"]["game_over"] === true){
+            let gameResults = new GameResultsPresenter;
+            gameResults.render(parent, responseData, players);
+          }
+          else {
+            let gamePlay = new GamePlayPresenter;
+            gamePlay.render(parent, responseData, players);
+          }
+        }, 
+        error => console.error("Play Next Turn: Computer, Failed." + error)
+      )
   }
 }

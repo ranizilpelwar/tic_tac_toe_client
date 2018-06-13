@@ -25,27 +25,3 @@ class GamePlayPresenter {
     parent.appendChild(gameDetailsContainer);
   }
 }
-
-var playComputerTurn = function(gameDetails, players){
-  let requestCoordinator = new RequestCoordinator;
-  requestCoordinator.put("/computer_players_turn", DataConverter.makeRequestable(gameDetails))
-    .then(
-      function(responseData) {
-        console.log("play_next_turn put computer_players_turn:");
-        console.log("playNextTurn responseData = " + JSON.stringify(responseData));
-        let gameElements = document.getElementById("game_content");
-        parent = RemoveElements.at(gameElements);
-        players.refreshCurrent(responseData["game"]["current_player_symbol"]);
-        console.log("Players: " + players.toString());
-        if(responseData["statuses"]["game_over"] === true){
-          let gameResults = new GameResultsPresenter;
-          gameResults.render(parent, responseData, players);
-        }
-        else {
-          let gamePlay = new GamePlayPresenter;
-          gamePlay.render(parent, responseData, players);
-        }
-      }, 
-      error => console.error("Play Next Turn: Computer, Failed." + error)
-    );
-};

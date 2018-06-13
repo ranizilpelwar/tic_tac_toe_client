@@ -59,7 +59,8 @@ class PlayerTileSelectionPresenter {
       currentInputField.disabled = true;
       currentInputField.value = thinking_process_for_computers_turn_text;
       setTimeout(function(){
-        playComputerTurn(gameDetails, players);
+        let game = new Game(gameDetails);
+        game.playComputerTurn(players);
       }, 3000);
     }
     else {
