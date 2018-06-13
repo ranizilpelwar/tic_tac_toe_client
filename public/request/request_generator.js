@@ -9,7 +9,7 @@ class RequestGenerator {
                           "board": gameObject.board,
                           "record_moves": gameObject.recordMoves,
                           "last_move_for_player1": gameObject.lastMoveForPlayer1,
-                          "last_move_for_player2": gameObject.lastMoveForPlayer1
+                          "last_move_for_player2": gameObject.lastMoveForPlayer2
                         }
     }
     return DataConverter.makeRequestable(gameDetails)
