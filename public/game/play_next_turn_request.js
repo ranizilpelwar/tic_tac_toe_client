@@ -1,7 +1,7 @@
 class PlayNextTurnRequest {
   getRequest(gameDetails, currentPlayerInputForNextMove) {
-    request = {};
-      nextTurn = {
+    let request = {};
+      let nextTurn = {
         "actions": {
            "tile_on_board": currentPlayerInputForNextMove
         }
