@@ -22,3 +22,7 @@ table {
 #language_config_text {
   font-style: italic;
 }
+
+#exception_content {
+  color: red;
+}
