@@ -6,6 +6,5 @@ var configureLanguage = function(){
   let index = languageValue - 1;
   let languagesArray = applicationMessages["languages"];
   let languageTag = languagesArray[index]["language_tag"];
-  console.log("selected_language = " + languageTag);
   refreshApplicationMessages(languageTag);
 };

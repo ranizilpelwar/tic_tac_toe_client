@@ -1,10 +1,12 @@
 var refreshApplicationMessages = function(newLanguageTag) {
   request = languageSetupRequest(newLanguageTag);
-  put("/message_content", request)
+  let requestGenerator = new RequestGenerator;
+  requestGenerator.put("/message_content", request)
   .then(function(updatedMessages){
     applicationMessages = updatedMessages;
     languageOptionsConfigElements = document.getElementById("language_selection_content");
     RemoveElements.at(languageOptionsConfigElements);
-    displayGameInitializationContent();
+    let gameStart = new GameStartPresenter;
+    gameStart.render();
   }, function(error){console.error("refreshApplicationMessages: Failed." + error);});
 };
