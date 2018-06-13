@@ -1,27 +1,29 @@
 class Players {
   constructor(gameSetupData) {
     let matchNumber = gameSetupData["matchNumber"];
+    let symbol1 = gameSetupData["firstPlayerSymbol"].toUpperCase();
+    let symbol2 = gameSetupData["secondPlayerSymbol"].toUpperCase();
     let playerType1 = applicationMessages["matches"][matchNumber -1]["player1_type"];
     let playerType2 = applicationMessages["matches"][matchNumber -1]["player2_type"];
     this.currentPlayerNumber = 1;
 
     if (gameSetupData["selectedFirstPlayerSymbol"] === gameSetupData["firstPlayerSymbol"]) {
-      this.player1Symbol = gameSetupData["firstPlayerSymbol"].toUpperCase();
+      this.player1Symbol = symbol1;
       this.player1Type = playerType1;
       this.currentPlayerSymbol = this.player1Symbol;
       this.currentPlayerType = this.player1Type;
-      this.player2Symbol = gameSetupData["secondPlayerSymbol"].toUpperCase();
+      this.player2Symbol = symbol2;
       this.player2Type = playerType2;
     }
     else if (gameSetupData["selectedFirstPlayerSymbol"] === gameSetupData["secondPlayerSymbol"]) {
-      this.player1Symbol = gameSetupData["secondPlayerSymbol"].toUpperCase();
+      this.player1Symbol = symbol2;
       this.player1Type = playerType2;
       this.currentPlayerSymbol = this.player1Symbol;
       this.currentPlayerType = this.player1Type;
-      this.player2Symbol = gameSetupData["firstPlayerSymbol"].toUpperCase();
+      this.player2Symbol = symbol1;
       this.player2Type = playerType1;
     }
-    else throw new PlayersException("selectedFirstPlayerSymbol doesn't match players");
+    else throw new PlayersException("Please select either " + symbol1 + " or " + symbol2 + " to go first.");
   }
 
   refreshCurrent(currentPlayerSymbol) {
