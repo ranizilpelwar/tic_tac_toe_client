@@ -26,31 +26,9 @@ class GamePlayPresenter {
   }
 }
 
-
-var playNextTurnRequest = function(gameDetails, currentPlayerInputForNextMove){
-  console.log("playNextTurnRequest currentPlayerInputForNextMove = " + currentPlayerInputForNextMove);
-  result = {};
-  nextTurn = {
-    "actions": {
-       "tile_on_board": currentPlayerInputForNextMove
-    }
-  };
-  for(var key in gameDetails){
-    if(gameDetails.hasOwnProperty(key)){
-      result[key]=gameDetails[key];
-    }
-  }
-  for(var key in nextTurn){
-    if(nextTurn.hasOwnProperty(key)){
-      result[key]=nextTurn[key];
-    }
-  }
-  return result;
-};
-
-
 var playHumanTurn = function(gameDetails, players, selectedTileOnBoard){
-  let playNextTurnRequestDetails = playNextTurnRequest(gameDetails, selectedTileOnBoard);
+  let request = new PlayNextTurnRequest;
+  let playNextTurnRequestDetails = request.getRequest(gameDetails, selectedTileOnBoard);
   let requestGenerator = new RequestGenerator;
   requestGenerator.put("/human_players_turn", DataConverter.makeRequestable(playNextTurnRequestDetails))
   .then(function(responseData){
