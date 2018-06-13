@@ -50,19 +50,21 @@ class Game {
     let requestCoordinator = new RequestCoordinator;
     requestCoordinator.put("/human_players_turn", dataToSend)
     .then(
-      function(responseData){
+      function(updatedGameDetails){
+        let updatedGame = new Game(updatedGameDetails);
         let gameElements = document.getElementById("game_content");
         let parent = RemoveElements.at(gameElements);
-        players.refreshCurrent(responseData["game"]["current_player_symbol"]);
-        if(responseData["statuses"]["game_over"] === true){
+        players.refreshCurrent(updatedGameDetails["game"]["current_player_symbol"]);
+        if(updatedGame.isGameOver){
           let gameResults = new GameResultsPresenter;
-          gameResults.render(parent, responseData, players);
+          gameResults.render(parent, updatedGameDetails, players);
         }
         else {
           let gamePlay = new GamePlayPresenter;
-          gamePlay.render(parent, responseData, players);
+          gamePlay.render(parent, updatedGameDetails, players);
         }
-      }, function(error){console.error("Play Next Turn: Human, Failed." + error);}
+      }, 
+      error => console.error("Play Next Turn: Human, Failed." + error)
     );
   }
 
@@ -72,17 +74,18 @@ class Game {
     let requestCoordinator = new RequestCoordinator;
     requestCoordinator.put("/computer_players_turn", dataToSend)
       .then(
-        function(responseData) {
+        function(updatedGameDetails) {
+          let updatedGame = new Game(updatedGameDetails);
           let gameElements = document.getElementById("game_content");
           let parent = RemoveElements.at(gameElements);
-          players.refreshCurrent(responseData["game"]["current_player_symbol"]);
-          if(responseData["statuses"]["game_over"] === true){
+          players.refreshCurrent(updatedGameDetails["game"]["current_player_symbol"]);
+          if(updatedGame.isGameOver){
             let gameResults = new GameResultsPresenter;
-            gameResults.render(parent, responseData, players);
+            gameResults.render(parent, updatedGameDetails, players);
           }
           else {
             let gamePlay = new GamePlayPresenter;
-            gamePlay.render(parent, responseData, players);
+            gamePlay.render(parent, updatedGameDetails, players);
           }
         }, 
         error => console.error("Play Next Turn: Computer, Failed." + error)
