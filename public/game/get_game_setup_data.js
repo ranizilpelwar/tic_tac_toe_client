@@ -13,6 +13,7 @@ var getGameSetupData = function(){
   }
   let matches = Array.from(inputElements);
   let selectedMatch = matches.filter(x => x.type === "radio" && x.checked === true);
+  if (selectedMatch.length === 0) throw new GameException("Please select one of the provided matches.");
   matchNumber = selectedMatch[0].value;
   console.log("matchNumber = " + matchNumber);
   console.log("firstPlayerSymbol = " + firstPlayerSymbol);

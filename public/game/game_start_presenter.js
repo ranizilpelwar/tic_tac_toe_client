@@ -40,6 +40,7 @@ class GameStartPresenter {
       catch(error) {
         let exceptionsPresenter = new ExceptionsPresenter;
         exceptionsPresenter.render(exceptionArea, error.name, error.message);
+        throw error;
       }
     };
     

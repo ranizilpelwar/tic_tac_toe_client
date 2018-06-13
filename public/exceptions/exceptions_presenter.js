@@ -7,7 +7,6 @@ class ExceptionsPresenter {
     let div = document.createElement("div");
     div.setAttribute("id", "exception_content");
     let text = document.createTextNode(exceptionText);
-    console.log("Exception: " + exceptionType + ", Exception Details: " + exceptionText);
     div.appendChild(text);
     parentElement.appendChild(div);
   }
