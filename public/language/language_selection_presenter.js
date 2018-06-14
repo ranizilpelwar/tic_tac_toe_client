@@ -10,7 +10,7 @@ class LanguageSelectionPresenter {
     let titleTextElement = text.render(languageContentParent, applicationMessages["messages"]["title_of_language_options_screen"]);
     titleTextElement.setAttribute("id", "title");
 
-    text.render(languageContentParent, applicationMessages["messages"]["language_selection_prompt"]);
+    let promptText = text.render(languageContentParent, applicationMessages["messages"]["language_selection_prompt"]);
     
     let languageOptions = document.createElement('div');
     languageOptions.setAttribute("id", "language_options");
@@ -29,6 +29,9 @@ class LanguageSelectionPresenter {
         let selectedLanguage = languages.filter(x => x.type === "radio" && x.checked === true);
         if (selectedLanguage.length === 1) {
           configureLanguage();
+        }
+        else {
+          promptText.style.color = "red";
         }
     };
 
