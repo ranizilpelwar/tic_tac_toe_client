@@ -25,10 +25,14 @@ class LanguageSelectionPresenter {
     let button = submit.render(languageContentParent, "language_selection_submit", applicationMessages["messages"]["configure_language"]);
     button.onclick = function() {
         let inputElements = document.getElementsByTagName("input");
-        let languages = Array.from(inputElements);
-        let selectedLanguage = languages.filter(x => x.type === "radio" && x.checked === true);
-        if (selectedLanguage.length === 1) {
-          configureLanguage();
+        let inputElementsArray = Array.from(inputElements);
+        let selectedLanguageRadioButtons = inputElementsArray.filter(x => x.type === "radio" && x.checked === true);
+        if (selectedLanguageRadioButtons.length === 1) {
+          let radioButtonValue = selectedLanguageRadioButtons[0].value;
+          let index = radioButtonValue - 1;
+          let languagesArray = applicationMessages["languages"];
+          let languageTag = languagesArray[index]["language_tag"];
+          refreshApplicationMessages(languageTag);
         }
         else {
           promptText.style.color = "red";
