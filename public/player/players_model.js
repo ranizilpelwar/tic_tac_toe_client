@@ -27,7 +27,7 @@ class Players {
       let exceptionsPresenter = new ExceptionsPresenter;
       let exceptionArea = document.getElementById("exception_div");
       let textArray = [];
-      let errorText = textArray.push("Please select either " + symbol1 + " or " + symbol2 + " to go first.");
+      let errorText = textArray.push(applicationMessages["messages"]["invalid_selection_error"]);
       let error = new PlayersException(errorText);
       textArray.push(applicationMessages["messages"]["first_player_of_game_prompt"]);
       exceptionsPresenter.render(exceptionArea, error, textArray);
