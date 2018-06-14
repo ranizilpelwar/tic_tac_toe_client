@@ -23,7 +23,16 @@ class Players {
       this.player2Symbol = symbol1;
       this.player2Type = playerType1;
     }
-    else throw new PlayersException("Please select either " + symbol1 + " or " + symbol2 + " to go first.");
+    else {
+      let exceptionsPresenter = new ExceptionsPresenter;
+      let exceptionArea = document.getElementById("exception_div");
+      let textArray = [];
+      let errorText = textArray.push("Please select either " + symbol1 + " or " + symbol2 + " to go first.");
+      let error = new PlayersException(errorText);
+      textArray.push(applicationMessages["messages"]["first_player_of_game_prompt"]);
+      exceptionsPresenter.render(exceptionArea, error, textArray);
+      throw error;
+    }
   }
 
   refreshCurrent(currentPlayerSymbol) {
