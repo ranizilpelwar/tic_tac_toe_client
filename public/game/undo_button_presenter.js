@@ -26,7 +26,14 @@ class UndoButtonPresenter {
               parent = RemoveElements.at(gameElements);
               let gamePlay = new GamePlayPresenter;
               gamePlay.render(parent, updatedGameDetails, players);
-            }, function(error){console.error("Undo Move: Failed." + error);}
+            }, 
+            function(error) {
+              let exceptionsPresenter = new ExceptionsPresenter;
+              let exceptionArea = document.getElementById("exception_div");
+              let userFriendlyMessageArray = [];
+              userFriendlyMessageArray.push("Undo Move Failed.");
+              exceptionsPresenter.render(exceptionArea, error, userFriendlyMessageArray);
+            } 
           );
       }
     }

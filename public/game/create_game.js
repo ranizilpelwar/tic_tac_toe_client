@@ -16,6 +16,13 @@ var createGame = function(elementNameOfInsertionPoint) {
     parent = RemoveElements.at(gameElements);
     let gamePlay = new GamePlayPresenter;
     gamePlay.render(parent, responseData, players);
-    }, function(error){console.error("Create Game: Failed." + error);}
+    },
+    function(error) {
+        let exceptionsPresenter = new ExceptionsPresenter;
+        let exceptionArea = document.getElementById("exception_div");
+        let userFriendlyMessageArray = [];
+        userFriendlyMessageArray.push("Create Game Failed.");
+        exceptionsPresenter.render(exceptionArea, error, userFriendlyMessageArray);
+    } 
   );
 };

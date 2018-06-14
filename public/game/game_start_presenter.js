@@ -33,15 +33,8 @@ class GameStartPresenter {
     let submit = new SubmitButtonPresenter;
     let button = submit.render(gameContentParent, "start_game_submit", applicationMessages["messages"]["start_game"]);
     button.onclick = function() {
-      try {
-        let gameCoordinator = new GameCoordinator;
-        gameCoordinator.createGame("start_game");
-      }
-      catch(error) {
-        let exceptionsPresenter = new ExceptionsPresenter;
-        exceptionsPresenter.render(exceptionArea, error.name, error.message);
-        throw error;
-      }
+    let gameCoordinator = new GameCoordinator;
+    gameCoordinator.createGame("start_game");
     };
     
     let insertionPoint = document.getElementById(elementNameOfInsertionPoint);

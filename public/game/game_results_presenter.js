@@ -9,6 +9,10 @@ class GameResultsPresenter {
     let playersIntro = new PlayersIntroductionPresenter;
     playersIntro.render(gameDetailsContainer, gameDetails, players);
 
+    let exceptionArea = document.createElement("div");
+    exceptionArea.setAttribute("id", "exception_div");
+    gameDetailsContainer.appendChild(exceptionArea);
+
     let boardLabel = new BoardLabelPresenter;
     boardLabel.render(gameDetailsContainer);
     let board = new BoardPresenter;
