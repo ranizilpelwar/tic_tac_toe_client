@@ -73,6 +73,20 @@ describe("A Players class", function() {
     });
   });
 
+  it("throws an exception when selectedFirstPlayerSymbol doesn't match provided player symbols", function() {
+    expect(
+        function() {
+          let gameSetupData = {
+            "matchNumber": 2,
+            "firstPlayerSymbol": "X",
+            "secondPlayerSymbol": "Y",
+            "selectedFirstPlayerSymbol": "Z"
+          };
+          let players = new Players(gameSetupData);
+          players.refreshCurrent("Z");
+        }).toThrow(new PlayersException("selectedFirstPlayerSymbol doesn't match players"));
+  });
+
   describe("method called refreshCurrent", function() {
     beforeEach(function() {
       this.gameSetupData = {
@@ -130,7 +144,7 @@ describe("A Players class", function() {
         }).toThrow(new PlayersException("currentPlayerSymbol doesn't match players"));
     });
   });
-  
+
   describe("method called getPlayerNumber", function(){
     beforeEach(function() {
       this.gameSetupData = {
