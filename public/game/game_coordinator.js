@@ -2,7 +2,8 @@ class GameCoordinator {
   createGame(elementNameOfInsertionPoint) {
     let gameSetupData = getGameSetupData();
     let players = new Players(gameSetupData);
-    let gameSetupRequestData = gameSetupRequest(gameSetupData);
+    let requestGenerator = new RequestGenerator;
+    let gameSetupRequestData = requestGenerator.gameSetup(gameSetupData);
 
     let requestCoordinator = new RequestCoordinator;
     requestCoordinator.post("/game", gameSetupRequestData)
