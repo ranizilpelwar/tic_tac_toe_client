@@ -64,7 +64,13 @@ class Game {
           gamePlay.render(parent, updatedGameDetails, players);
         }
       }, 
-      error => console.error("Play Next Turn: Human, Failed." + error)
+      function(error) {
+        let exceptionsPresenter = new ExceptionsPresenter;
+        let exceptionArea = document.getElementById("exception_div");
+        let userFriendlyMessageArray = [];
+        userFriendlyMessageArray.push(applicationMessages["messages"]["invalid_selection_error"]);
+        exceptionsPresenter.render(exceptionArea, error, userFriendlyMessageArray);
+      } 
     );
   }
 
@@ -88,7 +94,13 @@ class Game {
             gamePlay.render(parent, updatedGameDetails, players);
           }
         }, 
-        error => console.error("Play Next Turn: Computer, Failed." + error)
-      )
+        function(error) {
+          let exceptionsPresenter = new ExceptionsPresenter;
+          let exceptionArea = document.getElementById("exception_div");
+          let userFriendlyMessageArray = [];
+          userFriendlyMessageArray.push(applicationMessages["messages"]["invalid_selection_error"]);
+          exceptionsPresenter.render(exceptionArea, error, userFriendlyMessageArrays);
+        } 
+      );
   }
 }
