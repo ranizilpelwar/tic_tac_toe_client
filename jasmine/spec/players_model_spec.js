@@ -72,4 +72,62 @@ describe("A Players class", function() {
       expect(this.players.player2Type).toEqual("Human");
     });
   });
+
+  describe("method called refreshCurrent", function() {
+    beforeEach(function() {
+      this.gameSetupData = {
+        "matchNumber": 2,
+        "firstPlayerSymbol": "X",
+        "secondPlayerSymbol": "Y",
+        "selectedFirstPlayerSymbol": "Y"
+      };
+
+      this.players = new Players(this.gameSetupData);
+    });
+
+    describe("when the current player is player1", function() {
+      beforeEach(function() {
+        this.players.refreshCurrent("X");
+      });
+
+      it("updates the symbol of the current player to player1's symbol", function() {
+        expect(this.players.currentPlayerSymbol).toEqual("X");
+      });
+      it("updates the type of the current player to player1's type", function() {
+        expect(this.players.currentPlayerType).toEqual("Human");
+      });
+      it("updates the player number of the current player to 1", function() {
+        expect(this.players.currentPlayerNumber).toEqual(2);
+      });
+    });
+
+    describe("when the current player is player2", function() {
+      beforeEach(function() {
+        this.players.refreshCurrent("Y");
+      });
+      it("updates the symbol of the current player to player2's symbol", function() {
+        expect(this.players.currentPlayerSymbol).toEqual("Y");
+      });
+      it("updates the type of the current player to player2's type", function() {
+        expect(this.players.currentPlayerType).toEqual("Computer");
+      });
+      it("updates the player number of the current player to 2", function() {
+        expect(this.players.currentPlayerNumber).toEqual(1);
+      });
+    });
+    
+    it ("throws a PlayerException", function() {
+      expect(
+        function() {
+          let gameSetupData = {
+            "matchNumber": 2,
+            "firstPlayerSymbol": "X",
+            "secondPlayerSymbol": "Y",
+            "selectedFirstPlayerSymbol": "Y"
+          };
+          let players = new Players(gameSetupData);
+          players.refreshCurrent("Z");
+        }).toThrow(new PlayersException("currentPlayerSymbol doesn't match players"));
+    });
+  });
 });

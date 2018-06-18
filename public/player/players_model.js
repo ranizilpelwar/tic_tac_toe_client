@@ -30,7 +30,6 @@ class Players {
 
   refreshCurrent(currentPlayerSymbol) {
     currentPlayerSymbol = currentPlayerSymbol.toUpperCase();
-    console.log("players refreshCurrent currentPlayerSymbol = " + currentPlayerSymbol);
     if (currentPlayerSymbol === this.player1Symbol) {
       this.currentPlayerSymbol = currentPlayerSymbol;
       this.currentPlayerType = this.player1Type;
