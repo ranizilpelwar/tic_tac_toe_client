@@ -12,18 +12,51 @@
   <script src="lib/jasmine-3.1.0/boot.js"></script>
 
   <!-- include source files here... -->
+  <script src="../public/window/prompt_on_redirect.js"></script>
+  <script src="../public/exceptions/players_exception.js"></script>
+  <script src="../public/game/game_exception.js"></script>
+  <script src="../public/player/players_model.js"></script>
+  <script src="../public/game/game_model.js"></script>
+  <script src="../public/game/game_setup_model.js"></script>
+  <script src="../public/language/language_setup_model.js"></script>
+  <script src="../public/game/get_game_setup_data.js"></script>
   <script src="../public/data/data_converter.js"></script>
   <script src="../public/request/uri_generator.js"></script>
-  <script src="../public/game/game_model.js"></script>
   <script src="../public/request/request_generator.js"></script>
-  <script src="../public/player/players_model.js"></script>
-  <script src="../public/exceptions/players_exception.js"></script>
+  <script src="../public/request/request_coordinator.js"></script>
+  <script src="../public/request/request_coordinator_promise.js"></script>
+  <script src="../public/common/remove_elements.js"></script>
+  <script src="../public/board/board_label_presenter.js"></script>
+  <script src="../public/board/board_presenter.js"></script>
+  <script src="../public/common/input_field_presenter.js"></script>
+  <script src="../public/common/submit_button_presenter.js"></script>
+  <script src="../public/common/text_presenter.js"></script>
+  <script src="../public/exceptions/exceptions_presenter.js"></script>
+  <script src="../public/game/game_coordinator.js"></script>
+  <script src="../public/game/end_game_state_presenter.js"></script>
+  <script src="../public/game/next_move_prompt_presenter.js"></script>
+  <script src="../public/game/undo_button_presenter.js"></script>
+  <script src="../public/game/game_play_presenter.js"></script>
+  <script src="../public/game/game_results_presenter.js"></script>
+  <script src="../public/language/language_configuration_presenter.js"></script>
+  <script src="../public/language/language_options_list_presenter.js"></script>
+  <script src="../public/language/language_selection_presenter.js"></script>
+  <script src="../public/match_types/match_types_presenter.js"></script>
+  <script src="../public/player/player_symbol_input_fields_presenter.js"></script>
+  <script src="../public/player/player_tile_selection_presenter.js"></script>
+  <script src="../public/player/players_introduction_presenter.js"></script>
+  <script src="../public/game/game_start_presenter.js"></script>
+  <script src="../public/game/create_game.js"></script>
+  <script src="../public/start_game.js"></script>
+  <script src="../public/language/refresh_application_messages.js"></script>
   
   <!-- include spec files here... -->
   <script src="spec/sample_data.js"></script>
   <script src="spec/uri_generator_spec.js"></script>
   <script src="spec/request_generator_spec.js"></script>
   <script src="spec/players_model_spec.js"></script>
+  <script src="spec/player_tile_selection_presenter_spec.js"></script>
+  <script src="spec/undo_button_presenter_spec.js"></script>
 </head>
 
 <body>
