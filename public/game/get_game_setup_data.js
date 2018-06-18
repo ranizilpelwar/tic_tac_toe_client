@@ -34,6 +34,12 @@ var getGameSetupData = function(){
     exceptionText.push(applicationMessages["messages"]["uniqueness_error"]);
   }
 
+  if(selectedFirstPlayerSymbol !== "" && selectedFirstPlayerSymbol !== " " && 
+    selectedFirstPlayerSymbol !== firstPlayerSymbol && selectedFirstPlayerSymbol !== secondPlayerSymbol){
+    errors = true;
+    exceptionText.push(applicationMessages["messages"]["invalid_selection_error"] + " " + applicationMessages["messages"]["first_player_of_game_prompt"]);
+  }
+
   if (errors) {
     let exceptionsPresenter = new ExceptionsPresenter;
     let exceptionArea = document.getElementById("exception_div");

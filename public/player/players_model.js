@@ -24,14 +24,7 @@ class Players {
       this.player2Type = playerType1;
     }
     else {
-      let exceptionsPresenter = new ExceptionsPresenter;
-      let exceptionArea = document.getElementById("exception_div");
-      let textArray = [];
-      let errorText = textArray.push(applicationMessages["messages"]["invalid_selection_error"]);
-      let error = new PlayersException(errorText);
-      textArray.push(applicationMessages["messages"]["first_player_of_game_prompt"]);
-      exceptionsPresenter.render(exceptionArea, error, textArray);
-      throw error;
+      throw new PlayersException("selectedFirstPlayerSymbol doesn't match players");
     }
   }
 
