@@ -12,7 +12,7 @@ class RequestGenerator {
                           "last_move_for_player2": gameObject.lastMoveForPlayer2
                         }
     }
-    return DataConverter.makeRequestable(gameDetails)
+    return DataConverter.makeRequestable(gameDetails);
   }
 
   humanPlayerNextMove(gameObject, playersObject, currentPlayerInputForNextMove) {
