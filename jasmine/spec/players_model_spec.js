@@ -130,4 +130,20 @@ describe("A Players class", function() {
         }).toThrow(new PlayersException("currentPlayerSymbol doesn't match players"));
     });
   });
+  
+  describe("method called getPlayerNumber", function(){
+    beforeEach(function() {
+      this.gameSetupData = {
+        "matchNumber": 2,
+        "firstPlayerSymbol": "X",
+        "secondPlayerSymbol": "Y",
+        "selectedFirstPlayerSymbol": "Y"
+      };
+
+      this.players = new Players(this.gameSetupData);
+    });
+    it("returns the number of the current player", function(){
+      expect(this.players.getPlayerNumber()).toEqual(1);
+    });
+  });
 });
