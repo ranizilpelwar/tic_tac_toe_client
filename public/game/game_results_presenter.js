@@ -18,8 +18,8 @@ class GameResultsPresenter {
     let board = new BoardPresenter;
     board.render(gameDetailsContainer, gameDetails, players);
     
-    let winner = new EndGameStatePresenter;
-    winner.render(gameDetailsContainer, gameDetails, players);
+    let gameResults = new EndGameStatePresenter;
+    gameResults.render(gameDetailsContainer, gameDetails);
     
     let text = new TextPresenter;
     text.render(gameDetailsContainer, applicationMessages["messages"]["replay_game_prompt"]);
