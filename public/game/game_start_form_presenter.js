@@ -8,7 +8,10 @@ class GameStartFormPresenter {
     form.setAttribute("id", "start_game_form");
     form.setAttribute("method", "post");
     form.setAttribute("action", "javascript:;");
-    form.onsubmit = function() {createGame("start_game");};
+    form.onsubmit = function() {
+      let gameCoordinator = new GameCoordinator;
+      gameCoordinator.createGame("start_game");
+    };
     gameContentParent.appendChild(form);
     
     let text = new TextPresenter;
