@@ -23,10 +23,14 @@ class GamePlayPresenter {
     playerInputArea.render(gameDetailsContainer, gameDetails, players);
     
     if (players.currentPlayerType == applicationMessages["messages"]["human"]){
-      let undo = new UndoButtonPresenter;
-      undo.render(gameDetailsContainer, gameDetails, players);
+      this.displayUndo(gameDetailsContainer, gameDetails, players);
     }
     
-    parent.appendChild(gameDetailsContainer);
+    parentElement.appendChild(gameDetailsContainer);
+  }
+
+  displayUndo(gameDetailsContainer, gameDetails, players) {
+    let undo = new UndoButtonPresenter;
+    undo.render(gameDetailsContainer, gameDetails, players);
   }
 }

@@ -1,0 +1,77 @@
+describe("A Game Play Presenter", function() {
+  describe("method called render", function() {
+    it("calls the displayUndo function when the current player is a human", function() {
+      let presenter = new GamePlayPresenter;
+      let gameDetails = {
+        "game": {
+          "language_tag": "en",
+          "record_moves": false,
+          "match_number": 2,
+          "board": ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+          "last_move_for_player1": 4,
+          "last_move_for_player2": 5
+        }, 
+        "errors": {
+          "error_message": ""
+        }
+      };
+
+      let game = new Game(gameDetails);
+
+      spyOn(presenter, "displayUndo");
+      
+      let gameSetupData = {
+        "matchNumber": 2,
+        "firstPlayerSymbol": "X",
+        "secondPlayerSymbol": "Y",
+        "selectedFirstPlayerSymbol": "X"
+      };
+      let players = new Players(gameSetupData);
+
+      let parentDiv = document.createElement("div");
+      let div = document.createElement("div");
+      div.setAttribute("id", "playerX_div");
+      parentDiv.appendChild(div);
+      presenter.render(parentDiv, gameDetails, players);
+
+      expect(presenter.displayUndo).toHaveBeenCalled();
+    });
+
+    it("doesnt call displayUndo when the current player is a Computer", function() {
+      let presenter = new GamePlayPresenter;
+      let gameDetails = {
+        "game": {
+          "language_tag": "en",
+          "record_moves": false,
+          "match_number": 2,
+          "board": ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+          "last_move_for_player1": -1,
+          "last_move_for_player2": -1
+        }, 
+        "errors": {
+          "error_message": ""
+        }
+      };
+
+      let game = new Game(gameDetails);
+
+      spyOn(presenter, "displayUndo");
+      
+      let gameSetupData = {
+        "matchNumber": 2,
+        "firstPlayerSymbol": "X",
+        "secondPlayerSymbol": "Y",
+        "selectedFirstPlayerSymbol": "Y"
+      };
+      let players = new Players(gameSetupData);
+      
+      let parentDiv = document.createElement("div");
+      let div = document.createElement("div");
+      div.setAttribute("id", "playerX_div");
+      parentDiv.appendChild(div);
+      presenter.render(parentDiv, gameDetails, players);
+
+      expect(presenter.displayUndo).not.toHaveBeenCalled();
+    });
+  });
+});
