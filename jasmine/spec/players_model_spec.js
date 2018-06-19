@@ -130,7 +130,7 @@ describe("A Players class", function() {
       });
     });
     
-    it ("throws a PlayerException", function() {
+    it ("throws a PlayerException when the selected symbol doesn't match player 1 or 2", function() {
       expect(
         function() {
           let gameSetupData = {

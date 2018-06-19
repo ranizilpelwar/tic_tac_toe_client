@@ -140,7 +140,7 @@ describe("An End Game State Presenter", function() {
         expect(presenter.displayWinnerText).toHaveBeenCalled();
     });
 
-    it("doesnt call the displayWinnerText function it is a tie game", function() {
+    it("doesnt call the displayWinnerText function when it is a tie game", function() {
       let presenter = new EndGameStatePresenter;
         let gameDetails = {
           "game": {
