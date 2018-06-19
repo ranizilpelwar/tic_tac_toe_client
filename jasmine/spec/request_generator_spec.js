@@ -47,7 +47,7 @@ describe("A Request Generator", function() {
   });
 
   describe("method called humanPlayerNextMove", function() {
-    it("should return a combined object containing the expected format in JSON", function() {
+    it("should return a combined game object containing the next move action in expected format in JSON", function() {
       let gameDetails = {
         "game": {
           "language_tag": "en",
@@ -93,6 +93,27 @@ describe("A Request Generator", function() {
       let expectedResult = JSON.stringify(humanPlayerNextMoveResult);
 
       expect(request.humanPlayerNextMove(game, players, "1")).toEqual(expectedResult);
+    });
+  });
+
+  describe("method called gameSetup", function() {
+    it("should return a setup object containing the initial player and match information in expected format in JSON", function() {
+      let playerAndMatchData = {
+          "firstPlayerSymbol": "X",
+          "secondPlayerSymbol": "Y",
+          "selectedFirstPlayerSymbol": "X",
+          "matchNumber": 2
+      };
+
+      let gameSetupOutput = {
+        "match_number": 2,
+        "first_player_symbol": "X",
+        "second_player_symbol": "Y"
+      };
+
+      let expectedResult = JSON.stringify(gameSetupOutput);
+      let request = new RequestGenerator;
+      expect(request.gameSetup(playerAndMatchData)).toEqual(expectedResult);
     });
   });
 });
