@@ -1,16 +1,11 @@
 class RequestCoordinator {
-
-  constructor(providedHTTPClient = undefined) {
-    if (providedHTTPClient === undefined) {
-      this.httpClient = new XMLHttpRequest();
-    }
-    else {
-      this.httpClient = providedHTTPClient;
-    }
+  getXHR() {
+    let httpClient = new XMLHttpRequest();
+    return httpClient;
   }
 
   get(route_string) {
-    let request = this.httpClient;
+    let request = this.getXHR();
     return new Promise (
         function(resolve, reject) {
           request.responseType = "json";
@@ -33,7 +28,7 @@ class RequestCoordinator {
   }
 
   put(route_string, json_data_to_send) {
-    let request = this.httpClient;
+    let request = this.getXHR();
     return new Promise (
       function(resolve, reject) {
         request.responseType = "json";
@@ -57,7 +52,7 @@ class RequestCoordinator {
   }
 
   post(route_string, json_data_to_send) {
-    let request = this.httpClient;
+    let request = this.getXHR();
     return new Promise(
       function(resolve, reject) {
         request.responseType = "json";

@@ -1,4 +1,8 @@
 class GameResultsPresenter {
+  constructor(requestCoordinator) {
+    this.requestCoordinator = requestCoordinator;
+  }
+
   render(parentElement, gameDetails, players){
     WindowListener.promptOnRedirect();
     let gameDetailsContainer = document.createElement("div");
@@ -15,7 +19,7 @@ class GameResultsPresenter {
 
     let boardLabel = new BoardLabelPresenter;
     boardLabel.render(gameDetailsContainer);
-    let board = new BoardPresenter;
+    let board = new BoardPresenter(this.requestCoordinator);
     board.render(gameDetailsContainer, gameDetails, players);
     
     let gameResults = new EndGameStatePresenter;
@@ -25,11 +29,7 @@ class GameResultsPresenter {
     text.render(gameDetailsContainer, applicationMessages["messages"]["replay_game_prompt"]);
     let submit = new SubmitButtonPresenter;
     let submitButton = submit.render(gameDetailsContainer, "start_game_submit", applicationMessages["messages"]["start_new_game"]);
-    submitButton.onclick = function(){
-      RemoveElements.at(gameDetailsContainer);
-      let gameStart = new GameStartPresenter;
-      gameStart.render();
-    };
+    submitButton.onclick = () => this.startNewGame(this.requestCoordinator, gameDetailsContainer);
     submitButton.addEventListener("keyup", function(event) {
       event.preventDefault();
       if (event.keyCode === 13) {
@@ -39,5 +39,11 @@ class GameResultsPresenter {
     setTimeout(function(){submitButton.focus();});
 
     parent.appendChild(gameDetailsContainer);
+  }
+
+  startNewGame(requestCoordinator, parent) {
+      RemoveElements.at(parent);
+      let gameStart = new GameStartPresenter(requestCoordinator);
+      gameStart.render();
   }
 }

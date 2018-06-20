@@ -1,7 +1,8 @@
 describe("An Undo Button Presenter", function() {
   describe("method called render", function() {
     it("calls updateGamePlayPresentation when there is a move to undo", function() {
-      let presenter = new UndoButtonPresenter;
+      let requestCoordinator = new MockRequestCoordinator;
+      let presenter = new UndoButtonPresenter(requestCoordinator);
       let gameDetails = {
         "game": {
           "language_tag": "en",
@@ -38,7 +39,8 @@ describe("An Undo Button Presenter", function() {
     });
 
     it("doesnt call updateGamePlayPresentation when there is no move to undo", function() {
-      let presenter = new UndoButtonPresenter;
+      let requestCoordinator = new MockRequestCoordinator;
+      let presenter = new UndoButtonPresenter(requestCoordinator);
       let gameDetails = {
         "game": {
           "language_tag": "en",

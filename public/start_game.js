@@ -6,7 +6,8 @@ let requestCoordinator = new RequestCoordinator;
 requestCoordinator.get("/message_content")
 .then(function(responseData){
   applicationMessages = responseData;
-  let gameStart = new GameStartPresenter;
+  let requestCoordinator = new RequestCoordinator;
+  let gameStart = new GameStartPresenter(requestCoordinator);
   gameStart.render();
 }, function(error){console.error("Get message_content: Failed");})
 

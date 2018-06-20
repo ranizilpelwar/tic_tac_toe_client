@@ -1,4 +1,8 @@
 class GamePlayPresenter {
+  constructor(requestCoordinator) {
+    this.requestCoordinator = requestCoordinator;
+  }
+
   render(parentElement, gameDetails, players) {
     WindowListener.promptOnRedirect();
     let gameDetailsContainer = document.createElement("div");
@@ -15,11 +19,11 @@ class GamePlayPresenter {
 
     let boardLabel = new BoardLabelPresenter;
     boardLabel.render(gameDetailsContainer);
-    let board = new BoardPresenter;
+    let board = new BoardPresenter(this.requestCoordinator);
     board.render(gameDetailsContainer, gameDetails, players);
     let nextMovePrompt = new NextMovePromptPresenter;
     nextMovePrompt.render(gameDetailsContainer, currentPlayerSymbol);
-    let playerInputArea = new PlayerTileSelectionPresenter;
+    let playerInputArea = new PlayerTileSelectionPresenter(this.requestCoordinator);
     playerInputArea.render(gameDetailsContainer, gameDetails, players);
     
     if (players.currentPlayerType == applicationMessages["messages"]["human"]){
@@ -30,7 +34,7 @@ class GamePlayPresenter {
   }
 
   displayUndo(gameDetailsContainer, gameDetails, players) {
-    let undo = new UndoButtonPresenter;
+    let undo = new UndoButtonPresenter(this.requestCoordinator);
     undo.render(gameDetailsContainer, gameDetails, players);
   }
 }

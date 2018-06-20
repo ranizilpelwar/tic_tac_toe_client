@@ -1,4 +1,8 @@
 class GameStartPresenter {
+  constructor(requestCoordinator) {
+    this.requestCoordinator = requestCoordinator;
+  }
+
   render() {
     let elementNameOfInsertionPoint = "start_game";
     let gameContentParent = document.createElement("div");
@@ -11,7 +15,7 @@ class GameStartPresenter {
     exceptionArea.setAttribute("id", "exception_div");
     gameContentParent.appendChild(exceptionArea);
     
-    let languageConfig = new LanguageConfigurationPresenter;
+    let languageConfig = new LanguageConfigurationPresenter(this.requestCoordinator);
     languageConfig.render(gameContentParent);
     
     text.render(gameContentParent, applicationMessages["messages"]["match_selection_prompt"]);
@@ -32,12 +36,13 @@ class GameStartPresenter {
     
     let submit = new SubmitButtonPresenter;
     let button = submit.render(gameContentParent, "start_game_submit", applicationMessages["messages"]["start_game"]);
-    button.onclick = function() {
-    let gameCoordinator = new GameCoordinator;
-    gameCoordinator.createGame("start_game");
-    };
-    
+    button.onclick = () => this.createANewGame(this.requestCoordinator);
     let insertionPoint = document.getElementById(elementNameOfInsertionPoint);
     insertionPoint.appendChild(gameContentParent);
+  }
+
+  createANewGame(requestCoordinator) {
+    let gameCoordinator = new GameCoordinator(requestCoordinator);
+    gameCoordinator.createGame("start_game");
   }
 }

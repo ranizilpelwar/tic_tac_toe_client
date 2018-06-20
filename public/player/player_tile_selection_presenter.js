@@ -1,4 +1,8 @@
 class PlayerTileSelectionPresenter {
+  constructor(requestCoordinator) {
+    this.requestCoordinator = requestCoordinator;
+  }
+
   render(parentElement, gameDetails, players) {
     let player1Symbol = players.player1Symbol;
     let player2Symbol = players.player2Symbol;
@@ -42,12 +46,7 @@ class PlayerTileSelectionPresenter {
 
     if (currentPlayerType === applicationMessages["messages"]["human"]) {
       setTimeout(function(){currentInputField.focus();});
-      submitButton.onclick = function() {
-        if (currentInputField.value !== "") {
-          let game = new Game(gameDetails);
-          game.playHumanTurn(players, currentInputField.value);
-        }
-      };
+      submitButton.onclick = () => this.playHumanTurn(this.requestCoordinator, gameDetails, players, currentInputField.value);
       currentInputField.addEventListener("keyup", function(event) {
         event.preventDefault();
         if (event.keyCode === 13 && currentInputField.value !== "") {
@@ -58,10 +57,7 @@ class PlayerTileSelectionPresenter {
     else if (currentPlayerType === applicationMessages["messages"]["computer"]) {
       currentInputField.disabled = true;
       currentInputField.value = thinking_process_for_computers_turn_text;
-      setTimeout(function(){
-        let game = new Game(gameDetails);
-        game.playComputerTurn(players);
-      }, 3000);
+      setTimeout(() => this.playComputerTurn(this.requestCoordinator, gameDetails, players), 3000);
     }
     else {
       throw new PlayersException("unknown player type: " + currentPlayerType);
@@ -73,5 +69,17 @@ class PlayerTileSelectionPresenter {
     parentElement.appendChild(br);
     
     parentElement.appendChild(divPlayer2);
+  }
+
+  playComputerTurn(requestCoordinator, gameDetails, players) {
+    let game = new Game(requestCoordinator, gameDetails);
+    game.playComputerTurn(players);
+  }
+
+  playHumanTurn(requestCoordinator, gameDetails, players, selectedTile) {
+    if (selectedTile !== "") {
+      let game = new Game(requestCoordinator, gameDetails);
+      game.playHumanTurn(players, selectedTile);
+    }
   }
 }
