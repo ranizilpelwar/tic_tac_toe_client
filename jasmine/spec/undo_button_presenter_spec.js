@@ -17,7 +17,7 @@ describe("An Undo Button Presenter", function() {
         }
       };
 
-      let game = new Game(gameDetails);
+      let game = new Game(requestCoordinator, gameDetails);
 
       spyOn(presenter, "updateGamePlayPresentation");
       
@@ -55,7 +55,7 @@ describe("An Undo Button Presenter", function() {
         }
       };
 
-      let game = new Game(gameDetails);
+      let game = new Game(requestCoordinator, gameDetails);
 
       spyOn(presenter, "updateGamePlayPresentation");
       

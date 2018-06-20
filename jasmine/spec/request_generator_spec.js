@@ -14,7 +14,8 @@ describe("A Request Generator", function() {
           "error_message": ""
         }
       };
-      let game = new Game(gameDetails);
+      let requestCoordinator = new MockRequestCoordinator;
+      let game = new Game(requestCoordinator, gameDetails);
 
       let gameSetupData = {
         "matchNumber": 2,
@@ -61,8 +62,8 @@ describe("A Request Generator", function() {
           "error_message": ""
         }
       };
-      let game = new Game(gameDetails);
-
+      let requestCoordinator = new MockRequestCoordinator;
+      let game = new Game(requestCoordinator, gameDetails);
       let gameSetupData = {
         "matchNumber": 2,
         "firstPlayerSymbol": "X",

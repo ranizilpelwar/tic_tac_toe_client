@@ -1,7 +1,19 @@
 class RequestCoordinator {
+
+  constructor(callback = undefined) {
+    if (callback !== undefined) {
+      this.callback = callback;
+    }
+  }
   getXHR() {
-    let httpClient = new XMLHttpRequest();
-    return httpClient;
+    if (this.callback === undefined) {
+      let httpClient = new XMLHttpRequest();
+      return httpClient;
+    }
+    else {
+      let result = this.callback();
+      return result;
+    }
   }
 
   get(route_string) {

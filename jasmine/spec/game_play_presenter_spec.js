@@ -1,7 +1,8 @@
 describe("A Game Play Presenter", function() {
   describe("method called render", function() {
     it("calls the displayUndo function when the current player is a human", function() {
-      let presenter = new GamePlayPresenter;
+      let mockRequestCoordinator = new MockRequestCoordinator;
+      let presenter = new GamePlayPresenter(mockRequestCoordinator);
       let gameDetails = {
         "game": {
           "language_tag": "en",
@@ -16,7 +17,7 @@ describe("A Game Play Presenter", function() {
         }
       };
 
-      let game = new Game(gameDetails);
+      let game = new Game(mockRequestCoordinator, gameDetails);
 
       spyOn(presenter, "displayUndo");
       
@@ -38,7 +39,8 @@ describe("A Game Play Presenter", function() {
     });
 
     it("doesnt call displayUndo when the current player is a Computer", function() {
-      let presenter = new GamePlayPresenter;
+      let mockRequestCoordinator = new MockRequestCoordinator;
+      let presenter = new GamePlayPresenter(mockRequestCoordinator);
       let gameDetails = {
         "game": {
           "language_tag": "en",
@@ -53,7 +55,7 @@ describe("A Game Play Presenter", function() {
         }
       };
 
-      let game = new Game(gameDetails);
+      let game = new Game(mockRequestCoordinator, gameDetails);
 
       spyOn(presenter, "displayUndo");
       

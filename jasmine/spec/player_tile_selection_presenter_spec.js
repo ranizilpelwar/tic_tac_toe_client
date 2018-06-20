@@ -1,7 +1,8 @@
 describe("A PlayerTileSelectionPresenter", function() {
   describe("method called render", function() {
     it("calls setTimeout when the current player is a Human", function() {
-      let presenter = new PlayerTileSelectionPresenter;
+      let mockRequestCoordinator = new MockRequestCoordinator;
+      let presenter = new PlayerTileSelectionPresenter(mockRequestCoordinator);
       let gameDetails = {
         "game": {
           "language_tag": "en",
@@ -16,7 +17,7 @@ describe("A PlayerTileSelectionPresenter", function() {
         }
       };
 
-      let game = new Game(gameDetails);
+      let game = new Game(mockRequestCoordinator, gameDetails);
 
       setTimeout = jasmine.createSpy("setTimeout");
       
