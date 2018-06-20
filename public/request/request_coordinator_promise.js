@@ -1,8 +1,18 @@
 class RequestCoordinator {
+
+  constructor(providedHTTPClient = undefined) {
+    if (providedHTTPClient === undefined) {
+      this.httpClient = new XMLHttpRequest();
+    }
+    else {
+      this.httpClient = providedHTTPClient;
+    }
+  }
+
   get(route_string) {
+    let request = this.httpClient;
     return new Promise (
         function(resolve, reject) {
-          var request = new XMLHttpRequest();
           request.responseType = "json";
           var url = new URIGenerator().uri(route_string);
           request.open("GET", url);
@@ -23,9 +33,9 @@ class RequestCoordinator {
   }
 
   put(route_string, json_data_to_send) {
+    let request = this.httpClient;
     return new Promise (
       function(resolve, reject) {
-        var request = new XMLHttpRequest();
         request.responseType = "json";
         var url = new URIGenerator().uri(route_string);
         request.open("PUT", url);
@@ -47,9 +57,9 @@ class RequestCoordinator {
   }
 
   post(route_string, json_data_to_send) {
+    let request = this.httpClient;
     return new Promise(
       function(resolve, reject) {
-        var request = new XMLHttpRequest();
         request.responseType = "json";
         var url = new URIGenerator().uri(route_string);
         request.open("POST", url);
