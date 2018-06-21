@@ -33,6 +33,13 @@ table {
   color: red;
 }
 
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+.btn-primary {
     background-color: #8064A2 !important;
+    border-color: #8064A2 !important;
+}
+
+.btn-primary:hover {
+    background-color: #800000 !important;
+    border-color: #800000 !important;
+    color: #ffffff;
 }
