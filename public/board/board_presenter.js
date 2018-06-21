@@ -24,7 +24,9 @@ class BoardPresenter {
       }
       table.appendChild(tableRow);
     }
+    let br = document.createElement("br");
     parentElement.appendChild(table);
+    parentElement.appendChild(br);
   }
 
   playAsHumanIfLegal(game, players, textNode) {
