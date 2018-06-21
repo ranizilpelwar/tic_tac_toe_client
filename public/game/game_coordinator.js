@@ -4,7 +4,15 @@ class GameCoordinator {
   }
 
   createGame(elementNameOfInsertionPoint) {
-    let gameSetupData = getGameSetupData();
+    let dataExtractor = new DataExtractor();
+    let gameSetupData = dataExtractor.getGameSetupData();
+    if(dataExtractor.anyErrors) {
+      let exceptionsPresenter = new ExceptionsPresenter;
+      let exceptionArea = document.getElementById("exception_div");
+      let error = new Error("GetGameSetupData");
+      exceptionsPresenter.render(exceptionArea, error, dataExtractor.errorMessages);
+      throw error;
+    }
     let players = new Players(gameSetupData);
     let requestCoordinator = this.requestCoordinator;
     let requestGenerator = new RequestGenerator;
