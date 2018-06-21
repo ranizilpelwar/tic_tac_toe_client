@@ -10,10 +10,6 @@ table {
   border-spacing: 5px;
 }
 
-.board-cell:hover {
-  background-color: #EAA475;
-}
-
 .match_types {
   margin: auto;
   text-align: "center";
@@ -25,7 +21,11 @@ table {
   cursor: pointer;
 }
 
-.language_config_text {
+.board-cell:hover {
+  background-color: #EAA475;
+}
+
+.optional {
   font-style: italic;
 }
 
