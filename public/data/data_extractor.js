@@ -20,7 +20,7 @@ class DataExtractor {
       this.anyErrors = true;
       let exceptionTextTemplate = applicationMessages["messages"]["match_selection_prompt"];
       this.addErrorMessage(exceptionTextTemplate.replace(":", "."));
-      return 0;
+      return "0";
     }
     return selectedMatch[0].value;
   }
@@ -55,18 +55,26 @@ class DataExtractor {
   }
 
   checkIfFirstAndSecondPlayerSymbolsAreTheSame(firstPlayerSymbol, secondPlayerSymbol) {
-    if (firstPlayerSymbol === secondPlayerSymbol && secondPlayerSymbol !== ""){
+    let valid = firstPlayerSymbol.toUpperCase() === secondPlayerSymbol.toUpperCase() && secondPlayerSymbol !== "";
+    if (!valid) {
       this.anyErrors = true;
       this.addErrorMessage(applicationMessages["messages"]["uniqueness_error"]);
     }
+    return valid;
   }
 
   checkIfSelectedFirstPlayerSymbolIsValid(firstPlayerSymbol, secondPlayerSymbol, selectedFirstPlayerSymbol) {
-    if(selectedFirstPlayerSymbol !== "" && selectedFirstPlayerSymbol !== " " 
-        && selectedFirstPlayerSymbol !== firstPlayerSymbol && selectedFirstPlayerSymbol !== secondPlayerSymbol) {
+    let valid = false;
+    let dataIsEntered = selectedFirstPlayerSymbol !== "" && selectedFirstPlayerSymbol !== " ";
+    if (dataIsEntered) {
+      valid = selectedFirstPlayerSymbol.toUpperCase() === firstPlayerSymbol.toUpperCase()
+       || selectedFirstPlayerSymbol.toUpperCase() === secondPlayerSymbol.toUpperCase();
+    }
+    if (!valid) {
       this.anyErrors = true;
       this.addErrorMessage(applicationMessages["messages"]["invalid_selection_error"] + " " + applicationMessages["messages"]["first_player_of_game_prompt"]);
     }
+    return valid;
   }
 
   createDataConstruct(matchNumber, firstPlayerSymbol, secondPlayerSymbol, selectedFirstPlayerSymbol) {
