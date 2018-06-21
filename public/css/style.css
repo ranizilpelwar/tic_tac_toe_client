@@ -28,10 +28,10 @@ table {
   font-style: italic;
 }
 
-#exception_content {
+.warning {
   color: red;
 }
 
-.warning {
+.exception_content {
   color: red;
 }
