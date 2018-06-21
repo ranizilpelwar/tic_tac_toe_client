@@ -3,6 +3,7 @@ class MatchTypesPresenter {
     let matches = responseData["matches"];
     let radioButton; 
     let table = document.createElement("table");
+    table.setAttribute("class", "container");
     for (var index = 0; index < matches.length; index++){
         let tr = document.createElement("tr");   
         let td = document.createElement("td");
