@@ -15,7 +15,7 @@ class BoardPresenter {
         let tableData = document.createElement("td");
         let tileNumber = boardIndex + 1;
         tableData.setAttribute("id", tileNumber);
-        tableData.setAttribute("class", "board");
+        tableData.setAttribute("class", "board board-cell");
         let textNode = document.createTextNode(game.board[boardIndex].toUpperCase());
         tableData.onclick = () => this.playAsHumanIfLegal(game, players, textNode);
         tableData.appendChild(textNode);
@@ -24,7 +24,9 @@ class BoardPresenter {
       }
       table.appendChild(tableRow);
     }
+    let br = document.createElement("br");
     parentElement.appendChild(table);
+    parentElement.appendChild(br);
   }
 
   playAsHumanIfLegal(game, players, textNode) {

@@ -54,25 +54,33 @@ class DataExtractor {
     return selectedFirstPlayerSymbol;
   }
 
-  checkIfFirstAndSecondPlayerSymbolsAreTheSame(firstPlayerSymbol, secondPlayerSymbol) {
-    let valid = firstPlayerSymbol.toUpperCase() === secondPlayerSymbol.toUpperCase() && secondPlayerSymbol !== "";
-    if (!valid) {
-      this.anyErrors = true;
-      this.addErrorMessage(applicationMessages["messages"]["uniqueness_error"]);
+  checkIfFirstAndSecondPlayerSymbolsAreDifferent(firstPlayerSymbol, secondPlayerSymbol) {
+    let valid = false;
+    let dataIsEntered = firstPlayerSymbol !== "" && firstPlayerSymbol !== " "
+                        && secondPlayerSymbol !== "" && secondPlayerSymbol !== " ";
+    if (dataIsEntered) {
+      valid = firstPlayerSymbol.toUpperCase() !== secondPlayerSymbol.toUpperCase();
+      if (!valid) {
+        this.anyErrors = true;
+        this.addErrorMessage(applicationMessages["messages"]["uniqueness_error"]);
+      }
     }
     return valid;
   }
 
   checkIfSelectedFirstPlayerSymbolIsValid(firstPlayerSymbol, secondPlayerSymbol, selectedFirstPlayerSymbol) {
     let valid = false;
-    let dataIsEntered = selectedFirstPlayerSymbol !== "" && selectedFirstPlayerSymbol !== " ";
+    let dataIsEntered = ((firstPlayerSymbol !== "" && firstPlayerSymbol !== " ") ||
+                        (secondPlayerSymbol !== "" && secondPlayerSymbol !== " "))
+                        && (selectedFirstPlayerSymbol !== "" && selectedFirstPlayerSymbol !== " ");
     if (dataIsEntered) {
-      valid = selectedFirstPlayerSymbol.toUpperCase() === firstPlayerSymbol.toUpperCase()
-       || selectedFirstPlayerSymbol.toUpperCase() === secondPlayerSymbol.toUpperCase();
-    }
-    if (!valid) {
-      this.anyErrors = true;
-      this.addErrorMessage(applicationMessages["messages"]["invalid_selection_error"] + " " + applicationMessages["messages"]["first_player_of_game_prompt"]);
+      valid = (selectedFirstPlayerSymbol.toUpperCase() === firstPlayerSymbol.toUpperCase()
+       || selectedFirstPlayerSymbol.toUpperCase() === secondPlayerSymbol.toUpperCase())
+       && (selectedFirstPlayerSymbol !== "" && selectedFirstPlayerSymbol !== " ");
+      if (!valid) {
+        this.anyErrors = true;
+        this.addErrorMessage(applicationMessages["messages"]["invalid_selection_error"] + " " + applicationMessages["messages"]["first_player_of_game_prompt"]);
+      }
     }
     return valid;
   }
@@ -99,7 +107,7 @@ class DataExtractor {
     let firstPlayerSymbol = this.checkIfFirstPlayerSymbolIsProvided(elements);
     let secondPlayerSymbol = this.checkIfSecondPlayerSymbolIsProvided(elements);
     let selectedFirstPlayerSymbol = this.checkIfSelectedFirstPlayerSymbolIsProvided(elements);
-    this.checkIfFirstAndSecondPlayerSymbolsAreTheSame(firstPlayerSymbol, secondPlayerSymbol);
+    this.checkIfFirstAndSecondPlayerSymbolsAreDifferent(firstPlayerSymbol, secondPlayerSymbol);
     this.checkIfSelectedFirstPlayerSymbolIsValid(firstPlayerSymbol, secondPlayerSymbol, selectedFirstPlayerSymbol);
     let gameSetupData = this.createDataConstruct(matchNumber, firstPlayerSymbol, secondPlayerSymbol, selectedFirstPlayerSymbol);
     return gameSetupData;

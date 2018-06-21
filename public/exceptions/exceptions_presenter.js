@@ -7,6 +7,7 @@ class ExceptionsPresenter {
     let div = document.createElement("div");
     console.log(errorObject.name + " " + errorObject.message);
     div.setAttribute("id", "exception_content");
+    div.setAttribute("class", "exception_content");
     for (var line = 0; line < userFriendlyTextArray.length; line++){
       let lineText = userFriendlyTextArray[line];
       console.log(lineText);

@@ -10,6 +10,7 @@ class LanguageConfigurationPresenter {
     let text = new TextPresenter;
     let languageTextElement = text.render(languageConfigDiv, languageConfigText);
     languageTextElement.setAttribute("id", "language_config_text");
+    languageTextElement.setAttribute("class", "language_config_text");
     let submit = new SubmitButtonPresenter;
     let languageButton = submit.render(languageTextElement, "language_config_submit", applicationMessages["messages"]["configure_language"]);
     languageButton.onclick = () => { this.renderLanguageSelectionPage(this.requestCoordinator); }

@@ -189,12 +189,12 @@ describe("A Data Extractor", function() {
     });
   });
 
-  describe("method called checkIfFirstAndSecondPlayerSymbolsAreTheSame", function() {
+  describe("method called checkIfFirstAndSecondPlayerSymbolsAreDifferent", function() {
     it ("returns false if the first player symbol is an empty string", function() {
       let firstPlayerSymbol = "";
       let secondPlayerSymbol = "X";
       let dataExtractor = new DataExtractor;
-      let result = dataExtractor.checkIfFirstAndSecondPlayerSymbolsAreTheSame(firstPlayerSymbol, secondPlayerSymbol);
+      let result = dataExtractor.checkIfFirstAndSecondPlayerSymbolsAreDifferent(firstPlayerSymbol, secondPlayerSymbol);
       expect(result).toBe(false);
     });
 
@@ -202,32 +202,32 @@ describe("A Data Extractor", function() {
       let firstPlayerSymbol = "X";
       let secondPlayerSymbol = "";
       let dataExtractor = new DataExtractor;
-      let result = dataExtractor.checkIfFirstAndSecondPlayerSymbolsAreTheSame(firstPlayerSymbol, secondPlayerSymbol);
+      let result = dataExtractor.checkIfFirstAndSecondPlayerSymbolsAreDifferent(firstPlayerSymbol, secondPlayerSymbol);
       expect(result).toBe(false);
     });
 
-    it ("returns false if the first and second player symbols are not the same", function() {
+    it ("returns true if the first and second player symbols are not the same", function() {
       let firstPlayerSymbol = "X";
       let secondPlayerSymbol = "Y";
       let dataExtractor = new DataExtractor;
-      let result = dataExtractor.checkIfFirstAndSecondPlayerSymbolsAreTheSame(firstPlayerSymbol, secondPlayerSymbol);
-      expect(result).toBe(false);
+      let result = dataExtractor.checkIfFirstAndSecondPlayerSymbolsAreDifferent(firstPlayerSymbol, secondPlayerSymbol);
+      expect(result).toBe(true);
     });
 
-    it ("returns true if the first and second player symbols are the same value", function() {
+    it ("returns false if the first and second player symbols are the same value", function() {
       let firstPlayerSymbol = "X";
       let secondPlayerSymbol = "X";
       let dataExtractor = new DataExtractor;
-      let result = dataExtractor.checkIfFirstAndSecondPlayerSymbolsAreTheSame(firstPlayerSymbol, secondPlayerSymbol);
-      expect(result).toBe(true);
+      let result = dataExtractor.checkIfFirstAndSecondPlayerSymbolsAreDifferent(firstPlayerSymbol, secondPlayerSymbol);
+      expect(result).toBe(false);
     });
 
-    it ("returns true if the first and second player symbols are the same value and different cases", function() {
+    it ("returns false if the first and second player symbols are the same value and different cases", function() {
       let firstPlayerSymbol = "X";
       let secondPlayerSymbol = "x";
       let dataExtractor = new DataExtractor;
-      let result = dataExtractor.checkIfFirstAndSecondPlayerSymbolsAreTheSame(firstPlayerSymbol, secondPlayerSymbol);
-      expect(result).toBe(true);
+      let result = dataExtractor.checkIfFirstAndSecondPlayerSymbolsAreDifferent(firstPlayerSymbol, secondPlayerSymbol);
+      expect(result).toBe(false);
     });
   });
 

@@ -31,6 +31,7 @@ class GameStartFormPresenter {
     text.render(form, applicationMessages["messages"]["match_selection_prompt"]);
     let matchTypesDiv = document.createElement('div');
     matchTypesDiv.setAttribute("id", "match_types");
+    matchTypesDiv.setAttribute("class", "match_types");
     let matchTypes = new MatchTypesPresenter;
     matchTypes.render(matchTypesDiv, applicationMessages);
     form.appendChild(matchTypesDiv);
