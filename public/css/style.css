@@ -10,6 +10,10 @@ table {
   border-spacing: 5px;
 }
 
+.board-cell:hover {
+  background-color: #ffff99;
+}
+
 .match_types {
   margin: auto;
   text-align: "center";
