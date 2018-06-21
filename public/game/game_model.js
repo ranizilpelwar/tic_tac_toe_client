@@ -1,6 +1,7 @@
 class Game {
   
-  constructor(gameDetails){
+  constructor(requestCoordinator, gameDetails){
+    this.requestCoordinator = requestCoordinator;
     this.languageTag = gameDetails["game"]["language_tag"];
     this.recordMoves = gameDetails["game"]["record_moves"];
     this.matchNumber = gameDetails["game"]["match_number"];
@@ -47,20 +48,20 @@ class Game {
   playHumanTurn(players, selectedTileOnBoard) {
     let requestGenerator = new RequestGenerator;
     let dataToSend = requestGenerator.humanPlayerNextMove(this, players, selectedTileOnBoard);
-    let requestCoordinator = new RequestCoordinator;
+    let requestCoordinator = this.requestCoordinator;
     requestCoordinator.put("/human_players_turn", dataToSend)
     .then(
       function(updatedGameDetails){
-        let updatedGame = new Game(updatedGameDetails);
+        let updatedGame = new Game(requestCoordinator, updatedGameDetails);
         let gameElements = document.getElementById("game_content");
         let parent = RemoveElements.at(gameElements);
         players.refreshCurrent(updatedGameDetails["game"]["current_player_symbol"]);
         if(updatedGame.isGameOver){
-          let gameResults = new GameResultsPresenter;
+          let gameResults = new GameResultsPresenter(requestCoordinator);
           gameResults.render(parent, updatedGameDetails, players);
         }
         else {
-          let gamePlay = new GamePlayPresenter;
+          let gamePlay = new GamePlayPresenter(requestCoordinator);
           gamePlay.render(parent, updatedGameDetails, players);
         }
       }, 
@@ -77,20 +78,20 @@ class Game {
   playComputerTurn(players) {
     let requestGenerator = new RequestGenerator;
     let dataToSend = requestGenerator.game(this, players);
-    let requestCoordinator = new RequestCoordinator;
+    let requestCoordinator = this.requestCoordinator;
     requestCoordinator.put("/computer_players_turn", dataToSend)
       .then(
         function(updatedGameDetails) {
-          let updatedGame = new Game(updatedGameDetails);
+          let updatedGame = new Game(requestCoordinator, updatedGameDetails);
           let gameElements = document.getElementById("game_content");
           let parent = RemoveElements.at(gameElements);
           players.refreshCurrent(updatedGameDetails["game"]["current_player_symbol"]);
           if(updatedGame.isGameOver){
-            let gameResults = new GameResultsPresenter;
+            let gameResults = new GameResultsPresenter(requestCoordinator);
             gameResults.render(parent, updatedGameDetails, players);
           }
           else {
-            let gamePlay = new GamePlayPresenter;
+            let gamePlay = new GamePlayPresenter(requestCoordinator);
             gamePlay.render(parent, updatedGameDetails, players);
           }
         }, 
