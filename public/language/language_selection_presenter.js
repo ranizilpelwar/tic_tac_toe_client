@@ -27,11 +27,11 @@ class LanguageSelectionPresenter {
 
     let submit = new SubmitButtonPresenter;
     let button = submit.render(languageContentParent, "language_selection_submit", applicationMessages["messages"]["configure_language"]);
-    button.onclick = () => { this.updateApplicationWithNewLanguageSelection(this.requestCoordinator) };
+    button.onclick = () => { this.updateApplicationWithNewLanguageSelection(this.requestCoordinator, promptText) };
     parentElement.appendChild(languageContentParent);
   }
 
-  updateApplicationWithNewLanguageSelection(requestCoordinator) {
+  updateApplicationWithNewLanguageSelection(requestCoordinator, elementToWarn) {
     let inputElements = document.getElementsByTagName("input");
     let inputElementsArray = Array.from(inputElements);
     let selectedLanguageRadioButtons = inputElementsArray.filter(x => x.type === "radio" && x.checked === true);
@@ -44,7 +44,7 @@ class LanguageSelectionPresenter {
       gameCoordinator.refreshApplicationMessages(languageTag);
     }
     else {
-      promptText.style.color = "red";
+      elementToWarn.setAttribute("class", "warning");
     }
   }
 }

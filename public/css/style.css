@@ -31,3 +31,7 @@ table {
 #exception_content {
   color: red;
 }
+
+.warning {
+  color: red;
+}
