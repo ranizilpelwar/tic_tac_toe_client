@@ -1,7 +1,6 @@
 class MockRequestCoordinator {
-  getXHR() {
-    let httpClient = new MockXHR("", 200);
-    return httpClient;
+  constructor(requestCreator) {
+    this.requestCreator = requestCreator;
   }
 
   get(route_string) {

@@ -8,16 +8,18 @@ class BoardPresenter {
     let table = document.createElement("table");
     table.setAttribute("class", "board");
     let boardIndex = 0;
-    for (var row = 1; row <= 3; row++){
+    for (var row = 1; row <= 3; row++) {
       let tableRow = document.createElement("tr");
       tableRow.setAttribute("id", "board");
-      for (var column = 1; column <= 3; column++){
+      tableRow.setAttribute("data-game", game);
+      for (var column = 1; column <= 3; column++) {
         let tableData = document.createElement("td");
         let tileNumber = boardIndex + 1;
         tableData.setAttribute("id", tileNumber);
         tableData.setAttribute("class", "board board-cell");
         let textNode = document.createTextNode(game.board[boardIndex].toUpperCase());
-        tableData.onclick = () => this.playAsHumanIfLegal(game, players, textNode);
+        tableData.onclick = (event) =>
+          this.playAsHumanIfLegal(game, players, textNode);
         tableData.appendChild(textNode);
         tableRow.appendChild(tableData);
         boardIndex = boardIndex + 1;

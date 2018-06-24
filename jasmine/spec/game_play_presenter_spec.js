@@ -1,7 +1,8 @@
 describe("A Game Play Presenter", function() {
   describe("method called render", function() {
     it("calls the displayUndo function when the current player is a human", function() {
-      let mockRequestCoordinator = new MockRequestCoordinator;
+      let mockRequestCreator = new MockRequestCreator("", 200);
+      let mockRequestCoordinator = new MockRequestCoordinator(mockRequestCreator);
       let presenter = new GamePlayPresenter(mockRequestCoordinator);
       let gameDetails = {
         "game": {
@@ -39,7 +40,8 @@ describe("A Game Play Presenter", function() {
     });
 
     it("doesnt call displayUndo when the current player is a Computer", function() {
-      let mockRequestCoordinator = new MockRequestCoordinator;
+      let mockRequestCreator = new MockRequestCreator("", 200);
+      let mockRequestCoordinator = new MockRequestCoordinator(mockRequestCreator);
       let presenter = new GamePlayPresenter(mockRequestCoordinator);
       let gameDetails = {
         "game": {

@@ -1,7 +1,8 @@
 describe("A PlayerTileSelectionPresenter", function() {
   describe("method called render", function() {
     it("calls setTimeout when the current player is a Human", function() {
-      let mockRequestCoordinator = new MockRequestCoordinator;
+      let mockRequestCreator = new MockRequestCreator("", 200);
+      let mockRequestCoordinator = new MockRequestCoordinator(mockRequestCreator);
       let presenter = new PlayerTileSelectionPresenter(mockRequestCoordinator);
       let gameDetails = {
         "game": {
