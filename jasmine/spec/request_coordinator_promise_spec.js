@@ -18,17 +18,47 @@ describe("A Request Coordinator", function() {
       expect(MockXHR.prototype.send).toHaveBeenCalled();
     });
 
-    it("should return a resolve", function(done) {
+ 
+    it("should call resolve when the request is successful", function(done) {
       let promisedData = { "messages": "welcome" };
       let mockRequestCreator = new MockRequestCreator(promisedData, 200);
       let requestCoordinator = new RequestCoordinator(mockRequestCreator);
-      spyOn(requestCoordinator, 'get').and.returnValue(Promise.resolve(promisedData));
-
-      requestCoordinator.get("/message_content")
+      requestCoordinator.get("/message_content", promisedData)
       .then(function(result) {
-        expect(requestCoordinator.get).toHaveBeenCalledWith("/message_content");
         expect(result).toBe(promisedData);
       });
+      done();
+    });
+
+    it("should reject when the response status comes back with an error code", function(done) {
+      let promisedData = { "errors": {
+                              "error_message": "error" 
+                            }
+      };
+      let mockRequestCreator = new MockRequestCreator(promisedData, 400);
+      let requestCoordinator = new RequestCoordinator(mockRequestCreator);
+      requestCoordinator.get("/message_content", promisedData)
+      .then(
+        function(result) {}, 
+        function(error) {
+          expect(error).toEqual(jasmine.any(Error));
+        });
+      done();
+    });
+
+    it("should reject when there is an error in the request", function(done) {
+      let promisedData = { "errors": {
+                              "error_message": "error" 
+                            }
+      };
+      let mockRequestCreator = new MockRequestCreatorFailure(promisedData, 400);
+      let requestCoordinator = new RequestCoordinator(mockRequestCreator);
+      requestCoordinator.get("/message_content", promisedData)
+      .then(
+        function(result) {}, 
+        function(error) {
+          expect(error).toEqual(jasmine.any(Error));
+        });
       done();
     });
   });
@@ -52,17 +82,46 @@ describe("A Request Coordinator", function() {
       expect(MockXHR.prototype.send).toHaveBeenCalled();
     });
 
-    it("should return a resolve", function(done) {
+    it("should call resolve when the request is successful", function(done) {
       let promisedData = { "messages": "welcome" };
       let mockRequestCreator = new MockRequestCreator(promisedData, 200);
       let requestCoordinator = new RequestCoordinator(mockRequestCreator);
-      spyOn(requestCoordinator, 'put').and.returnValue(Promise.resolve(promisedData));
-
-      requestCoordinator.put("/message_content")
+      requestCoordinator.put("/message_content", promisedData)
       .then(function(result) {
-        expect(requestCoordinator.put).toHaveBeenCalledWith("/message_content");
         expect(result).toBe(promisedData);
       });
+      done();
+    });
+
+    it("should reject when the response status comes back with an error code", function(done) {
+      let promisedData = { "errors": {
+                              "error_message": "error" 
+                            }
+      };
+      let mockRequestCreator = new MockRequestCreator(promisedData, 400);
+      let requestCoordinator = new RequestCoordinator(mockRequestCreator);
+      requestCoordinator.put("/message_content", promisedData)
+      .then(
+        function(result) {}, 
+        function(error) {
+          expect(error).toEqual(jasmine.any(Error));
+        });
+      done();
+    });
+
+    it("should reject when there is an error in the request", function(done) {
+      let promisedData = { "errors": {
+                              "error_message": "error" 
+                            }
+      };
+      let mockRequestCreator = new MockRequestCreatorFailure(promisedData, 400);
+      let requestCoordinator = new RequestCoordinator(mockRequestCreator);
+      requestCoordinator.put("/message_content", promisedData)
+      .then(
+        function(result) {}, 
+        function(error) {
+          expect(error).toEqual(jasmine.any(Error));
+        });
       done();
     });
   });
@@ -97,7 +156,7 @@ describe("A Request Coordinator", function() {
       done();
     });
 
-    it("should reject when there is an error in the request", function(done) {
+    it("should reject when the response status comes back with an error code", function(done) {
       let promisedData = { "errors": {
                               "error_message": "error" 
                             }
@@ -113,5 +172,20 @@ describe("A Request Coordinator", function() {
       done();
     });
 
+    it("should reject when there is an error in the request", function(done) {
+      let promisedData = { "errors": {
+                              "error_message": "error" 
+                            }
+      };
+      let mockRequestCreator = new MockRequestCreatorFailure(promisedData, 400);
+      let requestCoordinator = new RequestCoordinator(mockRequestCreator);
+      requestCoordinator.post("/message_content", promisedData)
+      .then(
+        function(result) {}, 
+        function(error) {
+          expect(error).toEqual(jasmine.any(Error));
+        });
+      done();
+    });
   });
 });
