@@ -1,5 +1,4 @@
 require 'sinatra'
-require 'sinatra/reloader'
 
 set :port, 8080
 
