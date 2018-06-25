@@ -1,23 +1,11 @@
 class RequestCoordinator {
 
-  constructor(callback = undefined) {
-    if (callback !== undefined) {
-      this.callback = callback;
-    }
-  }
-  getXHR() {
-    if (this.callback === undefined) {
-      let httpClient = new XMLHttpRequest();
-      return httpClient;
-    }
-    else {
-      let result = this.callback();
-      return result;
-    }
+  constructor(requestCreator) {
+    this.requestCreator = requestCreator;
   }
 
   get(route_string) {
-    let request = this.getXHR();
+    let request = this.requestCreator.getRequest();
     return new Promise (
         function(resolve, reject) {
           request.responseType = "json";
@@ -28,11 +16,11 @@ class RequestCoordinator {
               resolve(request.response);
             }
             else {
-              reject(Error(request.statusText + request.response["errors"]["error_message"]));
+              reject(new Error(request.statusText + request.response["errors"]["error_message"]));
             }
           };
           request.onerror = function() {
-            reject(Error("Network Error"));
+            reject(new Error("Network Error"));
           };
           request.send();
         }
@@ -40,7 +28,7 @@ class RequestCoordinator {
   }
 
   put(route_string, json_data_to_send) {
-    let request = this.getXHR();
+    let request = this.requestCreator.getRequest();
     return new Promise (
       function(resolve, reject) {
         request.responseType = "json";
@@ -52,11 +40,11 @@ class RequestCoordinator {
             resolve(request.response);
           }
           else {
-            reject(Error(request.statusText + request.response["errors"]["error_message"]));
+            reject(new Error(request.statusText + request.response["errors"]["error_message"]));
           }
         };
         request.onerror = function() {
-          reject(Error("Network Error"));
+          reject(new Error("Network Error"));
         };
         request.send(json_data_to_send);
       }
@@ -64,7 +52,7 @@ class RequestCoordinator {
   }
 
   post(route_string, json_data_to_send) {
-    let request = this.getXHR();
+    let request = this.requestCreator.getRequest();
     return new Promise(
       function(resolve, reject) {
         request.responseType = "json";
@@ -76,11 +64,11 @@ class RequestCoordinator {
             resolve(request.response);
           }
           else {
-            reject(Error(request.statusText + request.response["errors"]["error_message"]));
+            reject(new Error(request.statusText + request.response["errors"]["error_message"]));
           }
         };
         request.onerror = function() {
-          reject(Error("Network Error"));
+          reject(new Error("Network Error"));
         };
         request.send(json_data_to_send);
       }

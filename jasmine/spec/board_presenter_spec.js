@@ -1,7 +1,8 @@
 describe("A BoardPresenter Presenter", function() { 
   describe("method called playAsHumanIfLegal", function() {
     it("calls the playHumanTurn function when the current player is a human", function() {
-      let mockRequestCoordinator = new MockRequestCoordinator;
+      let mockRequestCreator = new MockRequestCreator("", 200);
+      let mockRequestCoordinator = new MockRequestCoordinator(mockRequestCreator);
       let presenter = new BoardPresenter(mockRequestCoordinator);
       let gameDetails = {
         "game": {
@@ -36,7 +37,8 @@ describe("A BoardPresenter Presenter", function() {
     });
 
     it("doesn't call playHumanTurn function when the current player is a computer", function() {
-      let mockRequestCoordinator = new MockRequestCoordinator;
+      let mockRequestCreator = new MockRequestCreator("", 200);
+      let mockRequestCoordinator = new MockRequestCoordinator(mockRequestCreator);
       let presenter = new BoardPresenter(mockRequestCoordinator);
       let gameDetails = {
         "game": {
@@ -71,7 +73,8 @@ describe("A BoardPresenter Presenter", function() {
     });
 
     it("doesn't call playHumanTurn function when the game is over", function() {
-      let mockRequestCoordinator = new MockRequestCoordinator;
+      let mockRequestCreator = new MockRequestCreator("", 200);
+      let mockRequestCoordinator = new MockRequestCoordinator(mockRequestCreator);
       let presenter = new BoardPresenter(mockRequestCoordinator);
       let gameDetails = {
         "game": {
@@ -111,7 +114,8 @@ describe("A BoardPresenter Presenter", function() {
     });
 
     it("doesn't call playHumanTurn function when the tile is occupied", function() {
-      let mockRequestCoordinator = new MockRequestCoordinator;
+      let mockRequestCreator = new MockRequestCreator("", 200);
+      let mockRequestCoordinator = new MockRequestCoordinator(mockRequestCreator);
       let presenter = new BoardPresenter(mockRequestCoordinator);
       let gameDetails = {
         "game": {

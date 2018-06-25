@@ -1,4 +1,4 @@
-class MockXHR {
+class MockXHRFailure {
   constructor(expectedResult, statusCode) {
     this.result = expectedResult;
     this.status = statusCode;
@@ -10,7 +10,7 @@ class MockXHR {
 
   send() { 
     this.response = this.result;
-    this.onload(); 
+    this.onerror(); 
   }
 
   setRequestHeader(contentType, format) {}
