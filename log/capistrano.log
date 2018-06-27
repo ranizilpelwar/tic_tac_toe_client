@@ -117,3 +117,13 @@
   INFO ---------------------------------------------------------------------------
   INFO [75e5308a] Running /usr/bin/env mkdir -p /tmp as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
  DEBUG [75e5308a] Command: /usr/bin/env mkdir -p /tmp
+  INFO ---------------------------------------------------------------------------
+  INFO START 2018-06-27 14:55:28 -0400 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [b8025d7a] Running /usr/bin/env mkdir -p /tmp as ec2-user@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [b8025d7a] Command: /usr/bin/env mkdir -p /tmp
+  INFO ---------------------------------------------------------------------------
+  INFO START 2018-06-27 14:55:49 -0400 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [e56a9ca2] Running /usr/bin/env mkdir -p /tmp as ec2-user@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [e56a9ca2] Command: /usr/bin/env mkdir -p /tmp
