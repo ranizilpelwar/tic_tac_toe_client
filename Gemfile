@@ -1,6 +1,13 @@
 source "https://rubygems.org"
 ruby "2.4.4"
+gem "capistrano", require: false
+gem "backports"
+gem "diff-lcs"
+gem "multi_json"
+gem "mustermann"
+gem "rack-protection"
 gem "sinatra"
+gem "sinatra-contrib"
 gem "rspec"
 gem "json"
 gem "tic_tac_toe_rz"
