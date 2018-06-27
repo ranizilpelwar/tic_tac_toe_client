@@ -58,3 +58,62 @@
  DEBUG [215e97f2] Command: if test ! -d /var/www/tic_tac_toe_client/releases; then echo "Directory does not exist '/var/www/tic_tac_toe_client/releases'" 1>&2; false; fi
   INFO [316c6e72] Running /usr/bin/env echo "Branch master (at ) deployed as release 20180627160504 by ranizilpelwar" >> /var/www/tic_tac_toe_client/revisions.log as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
  DEBUG [316c6e72] Command: cd /var/www/tic_tac_toe_client/releases && /usr/bin/env echo "Branch master (at ) deployed as release 20180627160504 by ranizilpelwar" >> /var/www/tic_tac_toe_client/revisions.log
+  INFO ---------------------------------------------------------------------------
+  INFO START 2018-06-27 14:51:39 -0400 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [c97cfe0c] Running /usr/bin/env mkdir -p /tmp as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [c97cfe0c] Command: /usr/bin/env mkdir -p /tmp
+  INFO [ad04c63f] Running /usr/bin/env #<StringIO:0x00007fc236477340> /tmp/git-ssh-tic_tac_toe_client-production-ranizilpelwar.sh as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [ad04c63f] Command: /usr/bin/env #<StringIO:0x00007fc236477340> /tmp/git-ssh-tic_tac_toe_client-production-ranizilpelwar.sh
+  INFO [9c282b39] Running /usr/bin/env chmod 700 /tmp/git-ssh-tic_tac_toe_client-production-ranizilpelwar.sh as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [9c282b39] Command: /usr/bin/env chmod 700 /tmp/git-ssh-tic_tac_toe_client-production-ranizilpelwar.sh
+  INFO [bb7ad7ee] Running /usr/bin/env git ls-remote https://github.com/ranizilpelwar/tic_tac_toe_client.git HEAD as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [bb7ad7ee] Command: ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-tic_tac_toe_client-production-ranizilpelwar.sh" ; /usr/bin/env git ls-remote https://github.com/ranizilpelwar/tic_tac_toe_client.git HEAD )
+  INFO [3f4522ba] Running /usr/bin/env mkdir -p /var/www/tic_tac_toe_client/shared /var/www/tic_tac_toe_client/releases as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [3f4522ba] Command: /usr/bin/env mkdir -p /var/www/tic_tac_toe_client/shared /var/www/tic_tac_toe_client/releases
+ DEBUG [0fe572d6] Running [ -f /var/www/tic_tac_toe_client/current/REVISION ] as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [0fe572d6] Command: [ -f /var/www/tic_tac_toe_client/current/REVISION ]
+ DEBUG [72511eda] Running /usr/bin/env cat /var/www/tic_tac_toe_client/current/REVISION 2>/dev/null as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [72511eda] Command: /usr/bin/env cat /var/www/tic_tac_toe_client/current/REVISION 2>/dev/null
+ DEBUG [5e91a4dd] Running [ -f /var/www/tic_tac_toe_client/repo/HEAD ] as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [5e91a4dd] Command: [ -f /var/www/tic_tac_toe_client/repo/HEAD ]
+  INFO The repository mirror is at /var/www/tic_tac_toe_client/repo
+ DEBUG [5a625319] Running if test ! -d /var/www/tic_tac_toe_client/repo; then echo "Directory does not exist '/var/www/tic_tac_toe_client/repo'" 1>&2; false; fi as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [5a625319] Command: if test ! -d /var/www/tic_tac_toe_client/repo; then echo "Directory does not exist '/var/www/tic_tac_toe_client/repo'" 1>&2; false; fi
+  INFO [92749007] Running /usr/bin/env git remote set-url origin https://github.com/ranizilpelwar/tic_tac_toe_client.git as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [92749007] Command: cd /var/www/tic_tac_toe_client/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-tic_tac_toe_client-production-ranizilpelwar.sh" ; /usr/bin/env git remote set-url origin https://github.com/ranizilpelwar/tic_tac_toe_client.git )
+  INFO [f80cd7ff] Running /usr/bin/env git remote update --prune as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [f80cd7ff] Command: cd /var/www/tic_tac_toe_client/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-tic_tac_toe_client-production-ranizilpelwar.sh" ; /usr/bin/env git remote update --prune )
+ DEBUG [eb63c39f] Running if test ! -d /var/www/tic_tac_toe_client/repo; then echo "Directory does not exist '/var/www/tic_tac_toe_client/repo'" 1>&2; false; fi as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [eb63c39f] Command: if test ! -d /var/www/tic_tac_toe_client/repo; then echo "Directory does not exist '/var/www/tic_tac_toe_client/repo'" 1>&2; false; fi
+  INFO [4869d399] Running /usr/bin/env mkdir -p /var/www/tic_tac_toe_client/releases/20180627185139 as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [4869d399] Command: cd /var/www/tic_tac_toe_client/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-tic_tac_toe_client-production-ranizilpelwar.sh" ; /usr/bin/env mkdir -p /var/www/tic_tac_toe_client/releases/20180627185139 )
+  INFO [9cc675a9] Running /usr/bin/env git archive master | /usr/bin/env tar -x -f - -C /var/www/tic_tac_toe_client/releases/20180627185139 as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [9cc675a9] Command: cd /var/www/tic_tac_toe_client/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-tic_tac_toe_client-production-ranizilpelwar.sh" ; /usr/bin/env git archive master | /usr/bin/env tar -x -f - -C /var/www/tic_tac_toe_client/releases/20180627185139 )
+ DEBUG [f11fa592] Running if test ! -d /var/www/tic_tac_toe_client/repo; then echo "Directory does not exist '/var/www/tic_tac_toe_client/repo'" 1>&2; false; fi as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [f11fa592] Command: if test ! -d /var/www/tic_tac_toe_client/repo; then echo "Directory does not exist '/var/www/tic_tac_toe_client/repo'" 1>&2; false; fi
+ DEBUG [6cdff291] Running /usr/bin/env git rev-list --max-count=1 master as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [6cdff291] Command: cd /var/www/tic_tac_toe_client/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-tic_tac_toe_client-production-ranizilpelwar.sh" ; /usr/bin/env git rev-list --max-count=1 master )
+ DEBUG [1042092c] Running if test ! -d /var/www/tic_tac_toe_client/releases/20180627185139; then echo "Directory does not exist '/var/www/tic_tac_toe_client/releases/20180627185139'" 1>&2; false; fi as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [1042092c] Command: if test ! -d /var/www/tic_tac_toe_client/releases/20180627185139; then echo "Directory does not exist '/var/www/tic_tac_toe_client/releases/20180627185139'" 1>&2; false; fi
+  INFO [440f1b63] Running /usr/bin/env echo "" > REVISION as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [440f1b63] Command: cd /var/www/tic_tac_toe_client/releases/20180627185139 && /usr/bin/env echo "" > REVISION
+ DEBUG [e3778658] Running if test ! -d /var/www/tic_tac_toe_client/releases/20180627185139; then echo "Directory does not exist '/var/www/tic_tac_toe_client/releases/20180627185139'" 1>&2; false; fi as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [e3778658] Command: if test ! -d /var/www/tic_tac_toe_client/releases/20180627185139; then echo "Directory does not exist '/var/www/tic_tac_toe_client/releases/20180627185139'" 1>&2; false; fi
+ DEBUG [a6ee27fe] Running /usr/bin/env bundle check --path /var/www/tic_tac_toe_client/shared/bundle as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [a6ee27fe] Command: cd /var/www/tic_tac_toe_client/releases/20180627185139 && /usr/bin/env bundle check --path /var/www/tic_tac_toe_client/shared/bundle
+  INFO [97991844] Running /usr/bin/env ln -s /var/www/tic_tac_toe_client/releases/20180627185139 /var/www/tic_tac_toe_client/releases/current as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [97991844] Command: /usr/bin/env ln -s /var/www/tic_tac_toe_client/releases/20180627185139 /var/www/tic_tac_toe_client/releases/current
+  INFO [3d06c5d3] Running /usr/bin/env mv /var/www/tic_tac_toe_client/releases/current /var/www/tic_tac_toe_client as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [3d06c5d3] Command: /usr/bin/env mv /var/www/tic_tac_toe_client/releases/current /var/www/tic_tac_toe_client
+ DEBUG [cd201e2b] Running /usr/bin/env ls -x /var/www/tic_tac_toe_client/releases as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [cd201e2b] Command: /usr/bin/env ls -x /var/www/tic_tac_toe_client/releases
+ DEBUG [9a6bfdbc] Running if test ! -d /var/www/tic_tac_toe_client/releases; then echo "Directory does not exist '/var/www/tic_tac_toe_client/releases'" 1>&2; false; fi as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [9a6bfdbc] Command: if test ! -d /var/www/tic_tac_toe_client/releases; then echo "Directory does not exist '/var/www/tic_tac_toe_client/releases'" 1>&2; false; fi
+  INFO [914986fb] Running /usr/bin/env echo "Branch master (at ) deployed as release 20180627185139 by ranizilpelwar" >> /var/www/tic_tac_toe_client/revisions.log as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [914986fb] Command: cd /var/www/tic_tac_toe_client/releases && /usr/bin/env echo "Branch master (at ) deployed as release 20180627185139 by ranizilpelwar" >> /var/www/tic_tac_toe_client/revisions.log
+  INFO ---------------------------------------------------------------------------
+  INFO START 2018-06-27 14:52:10 -0400 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [75e5308a] Running /usr/bin/env mkdir -p /tmp as tictactoeclientuser@ec2-13-58-135-33.us-east-2.compute.amazonaws.com
+ DEBUG [75e5308a] Command: /usr/bin/env mkdir -p /tmp
