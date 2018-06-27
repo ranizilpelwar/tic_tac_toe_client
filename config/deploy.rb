@@ -1,4 +1,4 @@
-require "bundler/capistrano"
+#require "bundler/capistrano"
 
 set :application, "tic_tac_toe_client"
 set :repo_url, "https://github.com/ranizilpelwar/tic_tac_toe_client.git"
