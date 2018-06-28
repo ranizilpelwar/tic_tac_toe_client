@@ -8,6 +8,7 @@ set :ssh_options, {
   keys: %w[/Users/ranizilpelwar/documents/github/tic_tac_toe_client/Admin.pem]
   #keys: %w[/users/ranizilpelwar/.ssh/id_rsa.pub]
 }
+set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 # namespace :deploy do
 
 #   desc "Restart application"
