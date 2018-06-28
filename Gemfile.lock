@@ -38,7 +38,6 @@ GEM
     rack-protection (2.0.3)
       rack
     rake (12.3.1)
-    rbenv-rehash (0.3)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -88,7 +87,6 @@ DEPENDENCIES
   multi_json
   mustermann
   rack-protection
-  rbenv-rehash
   rspec
   sinatra
   sinatra-contrib
