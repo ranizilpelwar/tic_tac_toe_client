@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 ruby "2.4.4"
-gem "rbenv-rehash"
+#gem "rbenv-rehash"
 gem "capistrano", require: false
 gem "capistrano-rbenv"
 gem "capistrano-bundler"
