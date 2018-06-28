@@ -8,7 +8,8 @@ set :ssh_options, {
   keys: %w[/Users/ranizilpelwar/documents/github/tic_tac_toe_client/Admin.pem]
   #keys: %w[/users/ranizilpelwar/.ssh/id_rsa.pub]
 }
-set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
+set :default_env, { path: "/usr/local/bin:$PATH" }
+#set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} /usr/local/rvm/rubies/ruby-2.4.4/bin/ruby"
 # namespace :deploy do
 
 #   desc "Restart application"
