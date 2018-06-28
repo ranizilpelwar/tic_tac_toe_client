@@ -8,8 +8,10 @@
 # server "db.example.com", user: "deploy", roles: %w{db}
 
 set :stage, :production
+#server "ec2-18-188-188-202.us-east-2.compute.amazonaws.com", user: "ranizilpelwar", roles: %w{web app db}
 server "ec2-13-58-135-33.us-east-2.compute.amazonaws.com", user: "tictactoeclientuser", roles: %w{web app db}
 set :branch, ENV["REVISION"] || ENV["BRANCH_NAME"] || "master"
+
 
 # role-based syntax
 # ==================

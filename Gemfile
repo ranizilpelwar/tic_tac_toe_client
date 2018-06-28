@@ -2,6 +2,7 @@ source "https://rubygems.org"
 ruby "2.4.4"
 gem "capistrano", require: false
 gem "capistrano-bundler"
+gem "capistrano-rvm"
 gem "backports"
 gem "diff-lcs"
 gem "multi_json"
